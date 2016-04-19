@@ -835,9 +835,6 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
-.form {
-  position: relative; }
-
 .text-input {
   width: auto; }
 
