@@ -21,10 +21,28 @@ module.exports = function (grunt) {
                   bower: true
                 }
             },
-            dist: {
+            timeInput: {
                 files: {
-                    'css/noprefix/px-datetime-common-sketch.css': 'sass/px-datetime-common-sketch.scss',
-                    'css/noprefix/px-datetime-common.css': 'sass/px-datetime-common-predix.scss'
+                    'css/noprefix/px-time-input-sketch.css': 'sass/px-time-input-sketch.scss',
+                    'css/noprefix/px-time-input.css': 'sass/px-time-input-predix.scss'
+                }
+            },
+            timeRangePicker: {
+                files: {
+                    'css/noprefix/px-time-rangepicker-sketch.css': 'sass/px-time-rangepicker-sketch.scss',
+                    'css/noprefix/px-time-rangepicker.css': 'sass/px-time-rangepicker-predix.scss'
+                }
+            },
+            buttons: {
+                files: {
+                    'css/noprefix/px-datetime-buttons-sketch.css': 'sass/px-datetime-buttons-sketch.scss',
+                    'css/noprefix/px-datetime-buttons.css': 'sass/px-datetime-buttons-predix.scss'
+                }
+            },
+            presets: {
+                files: {
+                    'css/noprefix/px-datetime-presets-sketch.css': 'sass/px-datetime-presets-sketch.scss',
+                    'css/noprefix/px-datetime-presets.css': 'sass/px-datetime-presets-predix.scss'
                 }
             }
         },

@@ -1,0 +1,132 @@
+<script>
+/*
+  Name:
+  validate
+
+  Description:
+  blah blah blah
+
+  Dependencies: none
+
+  @polymerBehavior validate
+*/
+
+var validate = {
+  properties: {
+    disabled: {
+      type: Boolean,
+      value: false,
+      reflectToAttribute: true
+    },
+    /**
+     * Boolean stating if the current component is valid
+     *
+     * @property isValid
+     * @type Boolearn
+     * @default true
+    */
+    isValid:{
+      type:Boolean,
+      value:true,
+      notify:true
+    },
+    /**
+     * Boolean stating if the neighbor, dependent component has passed validation
+     *
+     * Example: Date-time-input can be either a date input or a time input. If you want a full date-time, you need both.
+     * If 'this' is a time input, you want the neighbor date input to also have passed validation before accepting the full date-time.
+     *
+     * @property neighborValid
+     * @type Boolearn
+     * @default true
+    */
+    neighborValid:{
+      type:Boolean,
+      value:true
+    }
+
+  },
+  /**
+   * Validation for date-time-input && time-input
+   *
+   * @method _validateInput
+   */
+  _validateInput: function() {
+    this.parentNode.classList.remove('is-focused');
+    // if the component datetime string is a valid datetime
+    if (moment(this.dateTimeWorkingCopy, this.momentFormat, true).isValid()) {
+      // turn off input box error outline
+      this.toggleClass('validation-error', false, this.$$('input'));
+
+      /*
+        The input box only has date or time.
+        Clone the moment object so we have a full date-time.
+
+        We want to use clone so it stays in utc or local time
+      */
+      var newMoment = this.moment.clone();
+      // just use the relevant fields, so ok if not in utc timemoment
+      var typedInMoment = moment(this.dateTimeWorkingCopy, this.momentFormat);
+
+      // since the input box only has date or time, just reset that portion of the moment object
+      if (this.dateOrTime.toLowerCase() === 'date') { // if i'm typing in a date field, set the new date
+        newMoment.date(1); // first, 'zero' the date back to the first of the month to prevent any rolling effects (if a month doesn't have 30/31 days)
+        newMoment.year(typedInMoment.year()); // set the year
+        newMoment.month(typedInMoment.month()); // then the month
+        newMoment.date(typedInMoment.date()); // and finally the date, to make sure we don't have any rolling effects
+      }
+      else {
+        newMoment.hour(typedInMoment.hour());
+        newMoment.minute(typedInMoment.minute());
+        newMoment.second(typedInMoment.second());
+      }
+
+      this.set('isValid', true);
+      // if the neighbor is also valid, then we can set our moment object
+      if(this.neighborValid && !this.moment.isSame(newMoment,'second')) {
+        this.set('moment', newMoment);
+        this.fire('moment-changed',{'moment':newMoment})
+      }
+      return true;
+
+    } else { //the input box string is not a valid date/time
+      // sets placeholder text when necessary
+      if (this.momentFormat === "MM/DD/YYYY") {
+        this.$$('input').placeholder = this.momentFormat;
+      } else {
+        this.$$('input').placeholder = "HH:MM:SS ?M";
+      }
+      // turn on the error outline
+      this.toggleClass('validation-error', true, this.$$('input'));
+      this.set('isValid', false);
+      this._submitButtonState(false);
+
+      return false;
+    }
+  },
+  _submitButtonState: function(state) {
+      this.set('isSubmitButtonValid', state);
+  },
+  /**
+   * Validation for range fields. Makes sure the ranges are in chronological order
+   *
+   * @method _validateInput
+   */
+  _validateRangeAndBroadcastChanges: function() {
+    // if the from date is before the to date, everything is ok
+    if(this.fromMoment.isBefore(this.toMoment)) {
+      this._toggleErrorClasses(false);
+      this._submitButtonState(this.allFieldsValid);
+      return true;
+
+    } else {
+      // toggle validation errors
+      this._toggleErrorClasses(true);
+      this._submitButtonState(false);
+      return false;
+    }
+  }
+};
+
+
+</script>

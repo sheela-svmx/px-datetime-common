@@ -1,0 +1,99 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<script src="../moment/moment.js"></script>
+
+
+<!--
+Date time button component.
+
+##### Usage
+
+    <px-datetime-button>
+    </px-rangepicker-modal>
+-->
+
+<dom-module id="px-datetime-buttons">
+  <link rel="import" type="css" href="css/px-datetime-buttons.css"/>
+  <template>
+    <template is="dom-if" if="{{ !hideCancel }}">
+      <button class="btn u-mr--" on-click="_fireCancelEvent">Cancel</button>
+    </template>
+
+    <template is="dom-if" if="{{ !hideSubmit }}">
+      <button class$="{{submitBtnClasses('btn btn--primary', isSubmitButtonValid)}}"
+              type=submit
+              on-click="_fireSubmitEvent"
+              id="submitButton"
+              disabled="{{!isSubmitButtonValid}}">
+      <i class$="{{displayOptions.submitButtonIcon}}"></i>{{displayOptions.submitButtonText}}</button>
+    </template>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+
+    is: 'px-date-time-buttons',
+
+    behaviors: [
+      pxDatetimeCommon,
+      validate
+    ],
+
+    properties: {
+      /**
+       * (optional)
+       *
+       * Display configuration that allows optional display patterns
+       *
+       * @default no presets
+       */
+      displayOptions: {
+        type: Object,
+        value: {
+          displayType: 'normal',
+          submitButtonText: 'Apply',
+          submitButtonIcon: ''
+        },
+      },
+      /**
+       *
+       * Hides the Submit button when true
+       *
+       * @default false
+       */
+       hideSubmit:{
+        type:Boolean,
+        value:false
+       },
+       /**
+        *
+        * Hides the Cancel button when 'hide'
+        *
+        * @default 'show'
+        */
+       hideCancel:{
+        type:Boolean,
+        value:false
+       }
+    },
+    observers: [
+      '_submitButtonState(isSubmitButtonValid)'
+    ],
+    _fireCancelEvent:function(){
+      console.log("cancel clicked");
+      this.fire('date-time-button',{ action:false });
+    },
+    _fireSubmitEvent:function(){
+      console.log("submit clicked");
+      this.fire('date-time-button',{ action:true });
+    },
+    submitBtnClasses: function(base, submitButtonValid) {
+      return (submitButtonValid) ? base : base + ' btn--disabled';
+    },
+    _isEqual: function(source, target) {
+      console.log(source);
+      console.log(target);
+      return source === target;
+    },
+
+  });
+</script>

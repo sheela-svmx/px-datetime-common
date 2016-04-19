@@ -1,0 +1,179 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="validate.html" />
+<!--
+Range field component which displays a time or date and font awesome icon.
+
+##### Usage
+
+    <px-datetime-entry moment="{{...}}" date-or-time="Date">
+    </px-datetime-entry>
+
+-->
+<dom-module id="px-datetime-entry">
+  <link rel="import" type="css" href="css/px-range-fields.css"/>
+  <template>
+    <div class="range-field__field flex flex--middle">
+      <label class="label--inline">
+        <span class="a11y">{{dateOrTime}}</span>
+        <i id="icon" class="fa fa-fw dtIcon"></i>
+        <input
+          id="dtImport"
+          type="text"
+          class="text-input--bare"
+          value="{{dateTimeWorkingCopy::input}}"
+          on-focus="_handleFocus"
+          on-click="_handleClick"
+          on-blur="_validateInput"
+          on-input="_inputValueChanged"
+          />
+      </label>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-datetime-entry',
+
+    behaviors: [
+      validate,
+      Polymer.IronA11yKeysBehavior
+    ],
+
+    properties: {
+
+      /**
+       * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
+       */
+      moment: {
+        type: Object,
+        observer: '_updateAndValidateWorkingCopy',
+        notify: true
+      },
+
+      /**
+       * Date or Time icon/text
+       *
+       * Format is 'Date' or 'Time'
+       *
+       * Can only be configured statically; not data-bindable
+       *
+       * @property dateOrTime
+       * @type string
+       * @default none
+       */
+      dateOrTime: {
+        type: String
+      },
+
+      /**
+       * (optional)
+       *
+       * Moment format string for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
+       *
+       * Can only be configured statically; not data-bindable
+       *
+       * @default 'MM/DD/YYYY' for date or 'hh:mm:ss A' for time
+       */
+      momentFormat: {
+        type: String
+      },
+      /**
+       * A flag that tells us whether the Submit/Apply button is valid, and should be active.
+       * @private
+       */
+      isSubmitButtonValid: {
+        type: Boolean,
+        value: true,
+        notify: true
+      },
+      _editTimeout:{
+        type:Object,
+        value: function(){ return {} }
+      },
+      keyEventTarget: {
+        type: Object,
+        value: function() {
+          return this.$.dtImport;
+        }
+      },
+    },
+
+    /**
+     * Key bindings for iron-a11y-keys-behavior
+     * @private
+     */
+    keyBindings: {
+      'enter' : '_onEnter',
+      'esc' : '_onEsc'
+    },
+
+    _updateAndValidateWorkingCopy: function() {
+      this.set('dateTimeWorkingCopy', this.moment.format(this.momentFormat));
+      this.toggleClass('validation-error', false, this.$$('input'));
+    },
+
+    ready: function() {
+      if (this.dateOrTime.toLowerCase() === 'date') {
+        this.toggleClass("fa-calendar", true, this.$.icon);
+        if (!this.momentFormat) {
+          this.momentFormat = 'MM/DD/YYYY'; // default date format
+        }
+      } else {
+        this.toggleClass("fa-clock-o", true, this.$.icon);
+        if (!this.momentFormat) {
+          this.momentFormat = 'hh:mm:ss A'; // default time format
+        }
+      }
+    },
+
+    _handleClick: function() {
+      this.fire('px-clicked-range-field');
+    },
+
+    _handleFocus: function() {
+      this.fire('px-focused-range-field');
+      this.toggleClass('validation-error', false, this.$$('input'));
+    },
+    /**
+     * Focus on the input in this range field
+     */
+    focus: function() {
+      this.querySelector('input').focus();
+    },
+    /**
+     * Listner attached to the input and sets up a timeout to trigger validation.
+     *
+     * @method _inputValueChanged
+     */
+    _inputValueChanged: function(evt){
+      clearTimeout(this._editTimeout);
+      this._editTimeout = setTimeout(function(){
+        this._validateInput();
+      }.bind(this), 500);
+    },
+    /**
+     * When ENTER is clicked
+     *
+     * @method _onEnter
+     */
+    _onEnter:function(){
+      this._validateInput();
+      setTimeout(function(){
+        if(this.isSubmitButtonValid){
+          this.fire('date-time-button',{ action:true });
+        }
+      }.bind(this),10);
+    },
+    /**
+     * When ESC is clicked
+     *
+     * @method _onEnter
+     */
+    _onEsc:function(){
+      this.fire('date-time-button',{ action:false });
+    }
+  });
+</script>
