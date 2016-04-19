@@ -39,6 +39,12 @@ module.exports = function (grunt) {
                     'css/noprefix/px-datetime-buttons.css': 'sass/px-datetime-buttons-predix.scss'
                 }
             },
+            entry: {
+                files: {
+                    'css/noprefix/px-datetime-entry-sketch.css': 'sass/px-datetime-entry-sketch.scss',
+                    'css/noprefix/px-datetime-entry.css': 'sass/px-datetime-entry-predix.scss'
+                }
+            },
             presets: {
                 files: {
                     'css/noprefix/px-datetime-presets-sketch.css': 'sass/px-datetime-presets-sketch.scss',
