@@ -163,7 +163,7 @@ Range field component which displays a time or date and font awesome icon.
       this._validateInput();
       setTimeout(function(){
         if(this.isSubmitButtonValid){
-          this.fire('date-time-button',{ action:true });
+          this.fire('datetime-button-clicked',{ action:true });
         }
       }.bind(this),10);
     },
@@ -173,7 +173,7 @@ Range field component which displays a time or date and font awesome icon.
      * @method _onEnter
      */
     _onEsc:function(){
-      this.fire('date-time-button',{ action:false });
+      this.fire('datetime-button-clicked',{ action:false });
     }
   });
 </script>

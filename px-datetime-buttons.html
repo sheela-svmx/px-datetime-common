@@ -83,11 +83,11 @@ Date time button component.
     ],
     _fireCancelEvent:function(){
       console.log("cancel clicked");
-      this.fire('date-time-button',{ action:false });
+      this.fire('datetime-button-clicked',{ action:false });
     },
     _fireSubmitEvent:function(){
       console.log("submit clicked");
-      this.fire('date-time-button',{ action:true });
+      this.fire('datetime-button-clicked',{ action:true });
     },
     submitBtnClasses: function(base, submitButtonValid) {
       return (submitButtonValid) ? base : base + ' btn--disabled';
