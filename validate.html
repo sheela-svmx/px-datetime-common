@@ -13,6 +13,12 @@
 
 var validate = {
   properties: {
+    /**
+     * Boolean stating if validation is disabled
+     *
+     * @type Boolearn
+     * @default true
+    */
     disabled: {
       type: Boolean,
       value: false,
@@ -21,7 +27,6 @@ var validate = {
     /**
      * Boolean stating if the current component is valid
      *
-     * @property isValid
      * @type Boolearn
      * @default true
     */
@@ -36,7 +41,6 @@ var validate = {
      * Example: Date-time-input can be either a date input or a time input. If you want a full date-time, you need both.
      * If 'this' is a time input, you want the neighbor date input to also have passed validation before accepting the full date-time.
      *
-     * @property neighborValid
      * @type Boolearn
      * @default true
     */

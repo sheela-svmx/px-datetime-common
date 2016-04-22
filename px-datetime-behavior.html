@@ -22,11 +22,10 @@ var pxDatetimeBehavior = {
     /**
      * (optional)
      *
-     * Set this attribute when you do want to allow future dates in the date range picker.
+     * Set this attribute when you do want to allow future dates in the px-date-panel component.
+     * This only affects the visual calendar date picker, users can always type in dates/times or choose times that are in the future.
      *
-     * If not set, then future dates will be disabled and unclickable in the date picker.
-     *
-     * Note: this only affects the visual calendar date picker, users can always type in dates/times or choose times that are in the future.
+     * @default false (future dates will be disabled and unclickable in the date-panel)
      */
     allowFutureDates: {
       type: Boolean,
@@ -38,8 +37,6 @@ var pxDatetimeBehavior = {
      *
      * Display configuration that allows optional display patterns
      *
-     *```
-     * ```
      *
      * @default no presets
      */
@@ -47,7 +44,7 @@ var pxDatetimeBehavior = {
       type: Object,
       value: {
         displayType: 'normal',
-        submitButtonText: 'Apply',
+        submitButtonText: 'Submit',
         submitButtonIcon: ''
       }
     },
