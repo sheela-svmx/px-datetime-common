@@ -21,7 +21,7 @@ var pxDatetimeRangeBehavior = {
     /**
      * (optional)
      *
-     * The preset date/time ranges to be displayed.  Defaults to: Last Day, Last Week, Last Year
+     * The preset date/time ranges to be displayed.
      *
      *```
      *   [
@@ -38,14 +38,14 @@ var pxDatetimeRangeBehavior = {
      *   ]
      * ```
      *
-     * @default no presets
+     * @default no presetRanges
      */
-    presetRanges: Object,
+    presetRanges: Object, //may be useless
 
     /**
-     * Range selected in the time picker - as ISO8601 strings
+     * This is the object you use to instantiate px-datetime components and retrive it through 2-way data-binding
      *
-     * Format
+     * Format ISO8601 strings
      * ```
      * {
      *    "from": "2013-01-07T22:44:30.652Z",
@@ -53,9 +53,9 @@ var pxDatetimeRangeBehavior = {
      * }
      * ```
      *
-     * This is a 2-way data-bindable object which will be changed when the user Submits their new selected range.
+     * This object which will be changed when the user Submits their new selected range.
      *
-     * @default the last week
+     * @default the last 7 days
      */
     range: {
       type: Object,
@@ -84,13 +84,19 @@ var pxDatetimeRangeBehavior = {
       type: Object,
       notify: true
     },
-
+    /**
+     * Helper attribute passed down by px-datetime components
+     *
+     * Used by px-calendar
+     */
     firstRangeDate: {
       type: Object,
       notify: true
     },
     /**
-     * Moment object end date & time
+     * Helper attribute passed down by px-datetime components
+     *
+     * Used by px-calendar
      */
     secondRangeDate: {
       type: Object,
@@ -99,6 +105,11 @@ var pxDatetimeRangeBehavior = {
 
   }, //properties close bracket
 
+  /**
+   * Coverts 'toMoment' and 'fromMoment' to ISO8601 strings, then set the range with the strings.
+   *
+   * Triggered from click on cancel, submit, esc, or enter
+   */
   _setRange: function() {
     // set to and from based on inputed range
     this.set('fromMoment', this._convertISOtoMoment(this.range.from));

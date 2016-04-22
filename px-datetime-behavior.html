@@ -8,6 +8,7 @@
 
   Description:
   blah blah blah
+  TODO
 
   Dependencies: momentjs
 
@@ -18,7 +19,6 @@
 var pxDatetimeBehavior = {
 
   properties: {
-
     /**
      * (optional)
      *
@@ -35,24 +35,28 @@ var pxDatetimeBehavior = {
     /**
      * (optional)
      *
-     * Display configuration that allows optional display patterns
+     * Changes text on the submit button in px-datetime-buttons
      *
+     *```
+     *   {
+     *     "submitButtonText": " Click Here",
+     *     "submitButtonIcon": "fa fa-hand-pointer-o"
+     *   }
+     * ```
      *
-     * @default no presets
      */
     displayOptions: {
       type: Object,
       value: {
-        displayType: 'normal',
-        submitButtonText: 'Here',
-        submitButtonIcon: 'fa-angellist'
+        submitButtonText: 'Apply',
+        submitButtonIcon: ''
       }
     },
 
     /**
      * (optional)
      *
-     * The preset date/times to be displayed.  Defaults to: Today, 7 days Ago, 1 Year Ago
+     * The preset date/times to be displayed in the panel.  Defaults to: Today, 7 days Ago, 1 Year Ago
      *
      *```
      *   [
@@ -72,35 +76,8 @@ var pxDatetimeBehavior = {
     presets: Object,
 
     /**
-     * TODO: Rename datetime or somethign like that
-     Range selected in the time picker - as ISO8601 strings
-     *
-     * Format
-     * ```
-     * {
-     *    "from": "2013-01-07T22:44:30.652Z",
-     *    "to" : "2013-02-04T22:44:30.652Z"
-     * }
-     * ```
-     *
-     * This is a 2-way data-bindable object which will be changed when the user Submits their new selected range.
-     *
-     * @default the last week
-     */
-    // range: {
-    //   type: Object,
-    //   notify: true,
-    //   reflectToAttribute: true, // need both notify & reflectToAttribute for bind-polymer to work
-    //   value: function() {
-    //     return {
-    //       from: moment().subtract(7, 'day').toISOString(),
-    //       to: moment().toISOString()
-    //     };
-    //   }
-    // },
-
-    /**
-     * A flag that tells us whether the Submit/Apply button is valid, and should be active.
+     * A flag set in validate. Determines if the entry is valid and can be submitted.
+     * If validation fails then isSubmitButtonValid is false; the user can not submit the entry.
      * @private
      */
     isSubmitButtonValid: {
@@ -112,8 +89,8 @@ var pxDatetimeBehavior = {
     /**
      * (optional)
      *
-     * By default, the rangepicker will display the time in your browser's timezone.  If you add
-     * the is-utc attribute on px-rangepicker, it will display the time as a UTC (GMT timezone) time.
+     * By default, px-datetime components will display the time in your browser's timezone.  If you add
+     * the is-utc attribute it will display the time as a UTC (GMT timezone) time.
      *
      * @default false
      */
@@ -125,12 +102,9 @@ var pxDatetimeBehavior = {
   }, //properties close bracket
 
   /**
-   * _convertISOtoMoment
+   * Takes an ISO 8601 String and returns a moment object
    *
-   * Takes an ISO 8601 String and return a moment object
-   *
-   *
-   * @private
+   * @param {String} timeString
    */
   _convertISOtoMoment: function(timeString) {
     if(this.isUtc) {
