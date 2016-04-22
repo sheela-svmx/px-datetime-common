@@ -4,7 +4,7 @@
   validate
 
   Description:
-  blah blah blah
+  A collection of validation scripts for datetime components
 
   Dependencies: none
 
@@ -14,20 +14,9 @@
 var validate = {
   properties: {
     /**
-     * Boolean stating if validation is disabled
+     * Boolean stating if the current component is valid. Gets updated in _validateInput
      *
-     * @type Boolearn
-     * @default true
-    */
-    disabled: {
-      type: Boolean,
-      value: false,
-      reflectToAttribute: true
-    },
-    /**
-     * Boolean stating if the current component is valid
-     *
-     * @type Boolearn
+     * @type Boolean
      * @default true
     */
     isValid:{
@@ -51,9 +40,10 @@ var validate = {
 
   },
   /**
-   * Validation for date-time-input && time-input
+   * Validation function for date-time-input && time-input
    *
    * @method _validateInput
+   * @return {Boolean} passed validation
    */
   _validateInput: function() {
     this.parentNode.classList.remove('is-focused');
@@ -108,13 +98,20 @@ var validate = {
       return false;
     }
   },
+  /**
+   * Sets the button state based on if validation has been passed or not. This in turn enables or disables the Submit button.
+   *
+   * @method _validateInput
+   * @param {Boolean} state Where the validation has passed or failed
+   */
   _submitButtonState: function(state) {
       this.set('isSubmitButtonValid', state);
   },
   /**
-   * Validation for range fields. Makes sure the ranges are in chronological order
+   * Validation for the range. Makes sure the ranges are in chronological order
    *
    * @method _validateInput
+   * @return {Boolean} passed range validation
    */
   _validateRangeAndBroadcastChanges: function() {
     // if the from date is before the to date, everything is ok
