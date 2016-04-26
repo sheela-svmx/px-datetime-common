@@ -20,7 +20,7 @@ var pxDatetimeBehavior = {
 
   properties: {
     /**
-     * (optional)
+     * (optional: px-{datetime}-panel)
      *
      * Set this attribute when you do want to allow future dates in the px-date-panel component.
      * This only affects the visual calendar date picker, users can always type in dates/times or choose times that are in the future.
@@ -33,7 +33,7 @@ var pxDatetimeBehavior = {
     },
 
     /**
-     * (optional)
+     * (optional: px-datetime-buttons)
      *
      * Changes text on the submit button in px-datetime-buttons
      *
@@ -54,7 +54,7 @@ var pxDatetimeBehavior = {
     },
 
     /**
-     * (optional)
+     * (optional: px-{datetime}-panel)
      *
      * The preset date/times to be displayed in the panel.  Defaults to: Today, 7 days Ago, 1 Year Ago
      *
@@ -78,6 +78,7 @@ var pxDatetimeBehavior = {
     /**
      * A flag set in validate. Determines if the entry is valid and can be submitted.
      * If validation fails then isSubmitButtonValid is false; the user can not submit the entry.
+     *
      * @private
      */
     isSubmitButtonValid: {

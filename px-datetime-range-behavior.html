@@ -19,7 +19,7 @@ var pxDatetimeRangeBehavior = {
   properties: {
 
     /**
-     * (optional)
+     * (optional:  px-{datetime}-panel)
      *
      * The preset date/time ranges to be displayed.
      *
@@ -43,6 +43,8 @@ var pxDatetimeRangeBehavior = {
     presetRanges: Object, //may be useless
 
     /**
+     * (required: px-{datetime}-range-{picker})
+     *
      * This is the object you use to instantiate px-datetime components and retrive it through 2-way data-binding
      *
      * Format ISO8601 strings
@@ -75,6 +77,8 @@ var pxDatetimeRangeBehavior = {
      * This is the working copy moment object for px-rangepicker, px-datetime-range-field and px-datetime-entry
      *
      * used in '_setRange' to set 'range'
+     *
+     * @private
      */
     fromMoment: {
       type: Object,
@@ -87,6 +91,8 @@ var pxDatetimeRangeBehavior = {
      * This is the working copy moment object for px-rangepicker, px-datetime-range-field and px-datetime-entry
      *
      * used in '_setRange' to set 'range'
+     *
+     * @private
      */
     toMoment: {
       type: Object,
@@ -96,6 +102,8 @@ var pxDatetimeRangeBehavior = {
      * Helper attribute passed down by px-datetime components
      *
      * Used by px-calendar
+     *
+     * @private
      */
     firstRangeDate: {
       type: Object,
@@ -105,6 +113,8 @@ var pxDatetimeRangeBehavior = {
      * Helper attribute passed down by px-datetime components
      *
      * Used by px-calendar
+     *
+     * @private
      */
     secondRangeDate: {
       type: Object,

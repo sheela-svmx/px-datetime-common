@@ -16,8 +16,9 @@ var validate = {
     /**
      * Boolean stating if the current component is valid. Gets updated in _validateInput
      *
-     * @type Boolean
      * @default true
+     *
+     * @private
     */
     isValid:{
       type:Boolean,
@@ -30,8 +31,9 @@ var validate = {
      * Example: Date-time-input can be either a date input or a time input. If you want a full date-time, you need both.
      * If 'this' is a time input, you want the neighbor date input to also have passed validation before accepting the full date-time.
      *
-     * @type Boolearn
      * @default true
+     *
+     * @private
     */
     neighborValid:{
       type:Boolean,
@@ -42,7 +44,6 @@ var validate = {
   /**
    * Validation function for date-time-input && time-input
    *
-   * @method _validateInput
    * @return {Boolean} passed validation
    */
   _validateInput: function() {
@@ -101,7 +102,6 @@ var validate = {
   /**
    * Sets the button state based on if validation has been passed or not. This in turn enables or disables the Submit button.
    *
-   * @method _validateInput
    * @param {Boolean} state Where the validation has passed or failed
    */
   _submitButtonState: function(state) {
@@ -110,7 +110,6 @@ var validate = {
   /**
    * Validation for the range. Makes sure the ranges are in chronological order
    *
-   * @method _validateInput
    * @return {Boolean} passed range validation
    */
   _validateRangeAndBroadcastChanges: function() {
