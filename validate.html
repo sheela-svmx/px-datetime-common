@@ -1,12 +1,10 @@
 <script>
-/*
-  Name:
-  validate
+/**
+  ```validate```
 
-  Description:
-  A collection of validation scripts for datetime components
+  A collection of validation scripts for px-datetime components
 
-  Dependencies: none
+  Dependencies: momentjs
 
   @polymerBehavior validate
 */
@@ -14,7 +12,7 @@
 var validate = {
   properties: {
     /**
-     * Boolean stating if the current component is valid. Gets updated in _validateInput
+     * Boolean stating if the current component is valid. Gets updated in '_validateInput'
      *
      * @default true
      *
@@ -28,7 +26,7 @@ var validate = {
     /**
      * Boolean stating if the neighbor, dependent component has passed validation
      *
-     * Example: px-datetime-entry can be either a date input or a time input. If you want a full date-time, you need both.
+     * Example: 'px-datetime-entry' can be either a date input or a time input. If you want a full date-time, you need both.
      * If 'this' is a time input, you want the neighbor date input to also have passed validation before accepting the full date-time.
      *
      * @default true
@@ -42,7 +40,7 @@ var validate = {
 
   },
   /**
-   * Validation function for px-datetime-entry and px-time-input
+   * Validation function for 'px-datetime-entry' and 'px-time-input'
    *
    * @return {Boolean} passed validation
    */

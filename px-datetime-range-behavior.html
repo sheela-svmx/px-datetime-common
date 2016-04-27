@@ -2,14 +2,12 @@
 
 <script>
 
-/*
-  Name:
-  pxDatetimeRangeBehavior
+/**
+  ```pxDatetimeRangeBehavior```
 
-  Description:
-  blah blah blah
+  This behavior is for all ```px-{datetime}-range-{picker}``` components.
 
-  Dependencies:momentjs
+  Dependencies: momentjs
 
   @polymerBehavior pxDatetimeRangeBehavior
 */
@@ -19,7 +17,7 @@ var pxDatetimeRangeBehavior = {
   properties: {
 
     /**
-     * (optional:  px-{datetime}-range-panel)
+     * (optional:  'px-{datetime}-range-panel')
      *
      * The preset date/time ranges to be displayed.
      *
@@ -43,7 +41,7 @@ var pxDatetimeRangeBehavior = {
     presetRanges: Object, //may be useless
 
     /**
-     * (required: px-{datetime}-range-{picker})
+     * (required: 'px-{datetime}-range-{picker}')
      *
      * This is the object you use to instantiate px-datetime components and retrive it through 2-way data-binding
      *
@@ -74,7 +72,7 @@ var pxDatetimeRangeBehavior = {
     /**
      * Moment object start date & time
      *
-     * This is the working copy moment object for px-rangepicker, px-datetime-range-field and px-datetime-entry
+     * This is the working copy moment object for 'px-rangepicker', 'px-datetime-range-field' and 'px-datetime-entry'
      *
      * used in '_setRange' to set 'range'
      *
@@ -88,7 +86,7 @@ var pxDatetimeRangeBehavior = {
     /**
      * Moment object end date & time
      *
-     * This is the working copy moment object for px-rangepicker, px-datetime-range-field and px-datetime-entry
+     * This is the working copy moment object for 'px-rangepicker', 'px-datetime-range-field' and 'px-datetime-entry'
      *
      * used in '_setRange' to set 'range'
      *
