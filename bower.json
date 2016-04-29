@@ -16,7 +16,7 @@
     "dependencies": {
         "moment": "~2.10.6",
         "polymer": "~1.4.0",
-        "px-theme": "#~0.4.0",
+        "px-theme": "#~0.7.0",
         "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
         "px-calendar":"https://github.com/PredixDev/px-calendar.git"
     },
