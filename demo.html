@@ -9,32 +9,52 @@
         <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
         <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
         <link rel="import" href="px-datetime-buttons.html"/>
+        <link rel="import" href="px-datetime-entry.html"/>
         <link rel="import" href="../px-theme/px-theme.html"/>
+        <link rel="import" href="px-datetime-imports.html" />
+
     </head>
 
     <body>
 
         <h3>Demo</h3>
-
         <p>
             Although related, examples are /not/ the same as the test fixtures.
             Tests are tests, examples are examples.
         </p>
-
         <p>
             Also see the <a href="index.html">documentation</a> and the <a href="test/fixture.html">UI test fixture</a>.
         </p>
 
-        <p>
-            Click on the counter to make it increment:
-        </p>
+        <px-datetime-entry
+          id="dateEntry"
+          date-or-time = 'Date'
+        ></px-datetime-entry>
 
+        <px-datetime-entry
+          id="timeEntry"
+          date-or-time = 'Time'
+        ></px-datetime-entry>
         <!-- instance 1, "predix" theme
         display-options = '{
           "submitButtonText": "here",
           "submitButtonIcon": "fa fa-angellist"}'>
         -->
+        <br/>
+
         <px-datetime-buttons>
         </px-datetime-buttons>
+
+        <script type="text/javascript">
+
+          document.addEventListener('WebComponentsReady', function() {
+            var dateEntry = Polymer.dom(document).querySelector('#dateEntry');
+            var timeEntry = Polymer.dom(document).querySelector('#timeEntry');
+            var obj = moment("2016-04-05T08:00:00Z");
+            dateEntry.set('moment',obj);
+            timeEntry.set('moment',obj);
+          });
+
+        </script>
     </body>
 </html>

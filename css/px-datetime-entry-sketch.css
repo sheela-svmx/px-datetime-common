@@ -826,15 +826,28 @@ button.btn {
   width: auto; }
 
 .text-input--bare {
+  border: none;
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  text-align: center;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  width: 1.3333333333rem;
+  border-radius: 3px; }
   .text-input--bare:focus {
     outline: 0; }
+  .text-input--bare::-moz-selection {
+    background: none; }
+  .text-input--bare::selection {
+    background: none; }
 
 .range-field__field .text-input--bare {
   font-size: 1rem;
   line-height: 1.3333333333;
-  width: 6rem;
   font-family: var(--px-font-family); }
 
 .range-field__field label {

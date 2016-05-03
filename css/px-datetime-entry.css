@@ -839,15 +839,28 @@ button.btn {
   width: auto; }
 
 .text-input--bare {
+  border: none;
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  text-align: center;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  width: 1.3333333333rem;
+  border-radius: 3px; }
   .text-input--bare:focus {
     outline: 0; }
+  .text-input--bare::-moz-selection {
+    background: none; }
+  .text-input--bare::selection {
+    background: none; }
 
 .range-field__field .text-input--bare {
   font-size: 1rem;
   line-height: 1.3333333333;
-  width: 6rem;
   font-family: var(--px-font-family); }
 
 .range-field__field label {
@@ -963,8 +976,11 @@ button.btn {
   margin-top: 0 !important;
   margin-bottom: 0 !important; }
 
-span {
+.dtLabel {
   color: #9999a3; }
+
+.is-selected {
+  background-color: #b2d7ff; }
 
 .is-focused {
   border-color: #0a9ec1;
@@ -974,6 +990,3 @@ span {
 .dtIcon,
 .dtIcon label {
   color: #7c7c84; }
-
-.text-input--bare {
-  background: transparent; }

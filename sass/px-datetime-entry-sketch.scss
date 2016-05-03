@@ -47,17 +47,28 @@ $inuit-enable-validation-states : true;
 }
 
 .text-input--bare {
+  border: none;
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+  user-select: none;
+  text-align: center;
+
   margin: 0;
   padding: 0;
+  width:$inuit-base-spacing-unit--large;
+  border-radius: 3px;
   &:focus {
     outline: 0;
+  }
+  &::selection{
+    background: none;
   }
 }
 
 .range-field__field {
   .text-input--bare {
     @include inuit-font-size(15px);
-    width: calculateRem(90px);
+    // width: calculateRem(90px);
     font-family: var(--px-font-family);
   }
   label {

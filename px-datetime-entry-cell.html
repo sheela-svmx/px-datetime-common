@@ -12,52 +12,18 @@ Range field component which displays a time or date and font awesome icon.
 
 -->
 <dom-module id="px-datetime-entry">
-  <link rel="import" type="css" href="css/px-datetime-entry.css"/>
+  <link rel="import" type="css" href="css/px-datetime-entry-cell.css"/>
   <template>
-    <div class="range-field__field flex flex--middle">
-      <label class="label--inline">
-        <span class="a11y dtLabel">{{dateOrTime}}</span>
-        <i id="icon" class="fa fa-fw dtIcon"></i>
-        <input
-          id="dtEntry1"
-          order='1'
-          class="text-input--bare"
-          on-focus="_handleFocus"
-          on-blur="_handleBlur"
-          on-input="_inputValueChanged"
-          value="{{dtWorkingCopy1}}"
-          maxlength="2">
-        </input><span id="dtEntrySymbol">:</span><input
-          id="dtEntry2"
-          order='2'
-          class="text-input--bare"
-          on-focus="_handleFocus"
-          on-blur="_handleBlur"
-          value="{{dtWorkingCopy2}}"
-          maxlength="2">
-        </input>
-        <span
-          id="dtEntrySymbol"
-        >:</span>
-        <input
-          id="dtEntry3"
-          order='3'
-          class="text-input--bare"
-          on-focus="_handleFocus"
-          on-blur="_handleBlur"
-          value="{{dtWorkingCopy3}}"
-          maxlength="2">
-        </input>
-        <input
-          id="dtEntry4"
-          order='4'
-          class="text-input--bare"
-          on-focus="_handleFocus"
-          on-blur="_handleBlur"
-          maxlength="2">
-        </input>
-      </label>
-    </div>
+    <input
+      id="dtEntry"
+      order='{{order}}'
+      class="text-input--bare"
+      on-focus="_handleFocus"
+      on-blur="_handleBlur"
+      on-input="_inputValueChanged"
+      value="{{dtWorkingCopy}}"
+      maxlength="{{maxlength}}">
+    </input>
   </template>
 </dom-module>
 
@@ -130,7 +96,7 @@ Range field component which displays a time or date and font awesome icon.
           return this.$.dtEntry1;
         }
       },
-      _dtWorkingCopy1:{
+      _dtWorkingCopy:{
         type:String,
         notify: true
       }
@@ -150,50 +116,26 @@ Range field component which displays a time or date and font awesome icon.
       ': \\ / -' : '_moveCursor',
     },
 
+    stopKeyboardEventPropagation:true
+
     _updateAndValidateWorkingCopy: function() {
-      this.set('dtWorkingCopy1', this.moment.format('MM'));
-      this.set('dtWorkingCopy2', this.moment.format('DD'));
-      this.set('dtWorkingCopy3', this.moment.format('YY'));
+      this.set('dtWorkingCopy', this.moment.format(this.format));
       this.toggleClass('validation-error', false, this.$$('input'));
     },
 
     ready: function() {
-      if (this.dateOrTime.toLowerCase() === 'date') {
-        this.toggleClass("fa-calendar", true, this.$.icon);
-        if (!this.momentFormat) {
-          this.momentFormat = 'MM/DD/YYYY'; // default date format
-        }
-      } else {
-        this.toggleClass("fa-clock-o", true, this.$.icon);
-        if (!this.momentFormat) {
-          this.momentFormat = 'hh:mm:ss A'; // default time format
-        }
-      }
     },
 
     _handleFocus: function(evt) {
       var ne = Polymer.dom(evt);
       console.log(ne);
       this.toggleClass("is-selected", true, ne.rootTarget);
-      // ne.rootTarget.select()
-      // this.fire('px-clicked-range-field');
     },
-
-    // _handleFocus: function() {
-    //   this.fire('px-focused-range-field');
-    //   this.toggleClass('validation-error', false, this.$$('input'));
-    // },
 
     _handleBlur: function(evt) {
       var ne = Polymer.dom(evt);
       this.toggleClass("is-selected", false, ne.rootTarget);
       this._validateInput();
-    },
-    /**
-     * Focus on the input in this range field
-     */
-    focus: function() {
-      this.querySelector('input').focus();
     },
     /**
      * Listner attached to the input and sets up a timeout to trigger validation.
@@ -241,9 +183,9 @@ Range field component which displays a time or date and font awesome icon.
       }
 
       if(this.dateOrTime.toLowerCase() === 'date'){
-        this._parseDate(ne.event.detail.keyboardEvent.target, digit);
+        this._parseDate(digit);
       } else {
-        this._parseTime(ne.event.detail.keyboardEvent.target, digit);
+        this._parseTime(digit);
       }
 
       evt.preventDefault();
@@ -257,13 +199,12 @@ Range field component which displays a time or date and font awesome icon.
     _alpha : function(){
 
     },
-    _parseDate: function(elem,digit){
-      console.log(elem);
+    _parseDate: function(digit){
       console.log(digit);
+      //
     },
 
-    _parseTime: function(elem,digit){
-      console.log(elem);
+    _parseTime: function(digit){
       console.log(digit);
     }
 
