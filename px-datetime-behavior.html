@@ -94,7 +94,51 @@ var pxDatetimeBehavior = {
     isUtc: {
       type: Boolean,
       value: false
-    }
+    },
+
+    /**
+     * (optional)
+     *
+     * Moment format string for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
+     *
+     * Can only be configured statically; not data-bindable
+     *
+     * @property dateFormat
+     * @type String
+     * @default 'MM/DD/YYYY'
+     */
+    dateFormat: {
+      type: String,
+      notify: true,
+      value: "MM/DD/YYYY"
+    },
+
+    /**
+     * (optional)
+     *
+     * Moment format string to display/validate against (see http://momentjs.com/docs/#/parsing/string-format/)
+     *
+     * Can only be configured statically; not data-bindable
+     *
+     * @property timeFormat
+     * @type String
+     * @default 'hh:mm:ss A' for time
+     */
+    timeFormat: {
+      type: String,
+      notify: true,
+      value: "hh:mm:ss A"
+    },
+
+    /**
+     * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
+     *
+     * @private
+     */
+    momentObj: {
+      type: Object,
+      notify: true
+    },
 
   }, //properties close bracket
 

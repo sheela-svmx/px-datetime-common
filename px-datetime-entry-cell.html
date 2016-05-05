@@ -2,6 +2,7 @@
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="validate.html" />
 <link rel="import" href="px-datetime-imports.html" />
+<link rel="import" href="px-datetime-behavior.html" />
 <!--
 Range field component which displays a time or date and font awesome icon.
 
@@ -11,17 +12,18 @@ Range field component which displays a time or date and font awesome icon.
     </px-datetime-entry>
 
 -->
-<dom-module id="px-datetime-entry">
+<dom-module id="px-datetime-entry-cell">
   <link rel="import" type="css" href="css/px-datetime-entry-cell.css"/>
   <template>
     <input
       id="dtEntry"
+      readonly
       order='{{order}}'
       class="text-input--bare"
       on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-input="_inputValueChanged"
-      value="{{dtWorkingCopy}}"
+      value="[[dtWorkingCopy]]"
       maxlength="{{maxlength}}">
     </input>
   </template>
@@ -30,77 +32,64 @@ Range field component which displays a time or date and font awesome icon.
 <script>
   Polymer({
 
-    is: 'px-datetime-entry',
+    is: 'px-datetime-entry-cell',
 
     behaviors: [
+      pxDatetimeBehavior,
       validate,
       Polymer.IronA11yKeysBehavior
     ],
 
     properties: {
-
       /**
-       * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
-       */
-      moment: {
-        type: Object,
-        observer: '_updateAndValidateWorkingCopy',
-        notify: true
-      },
-
-      /**
-       * Date or Time icon/text
-       *
-       * Format is 'Date' or 'Time'
-       *
-       * Can only be configured statically; not data-bindable
-       *
-       * @property dateOrTime
-       * @type string
-       * @default none
-       */
-      dateOrTime: {
-        type: String
-      },
-
-      /**
-       * (optional)
        *
        * Moment format string for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
        *
        * Can only be configured statically; not data-bindable
        *
-       * @default 'MM/DD/YYYY' for date or 'hh:mm:ss A' for time
+       * @private
        */
       momentFormat: {
         type: String
       },
       /**
-       * A flag that tells us whether the Submit/Apply button is valid, and should be active.
+       *
+       * Holder for a timeout object to trigger validation after x-seconds when a user types in an input.
+       *
        * @private
        */
-      isSubmitButtonValid: {
-        type: Boolean,
-        value: true,
-        notify: true
-      },
-
-      _editTimeout:{
+      _validationAutoTimeout:{
         type:Object,
         value: function(){ return {} }
       },
-
+      /**
+       *
+       * IronA11yKeysBehavior: element to which key events are attached
+       *
+       *
+       * @private
+       */
       keyEventTarget: {
         type: Object,
         value: function() {
-          return this.$.dtEntry1;
+          return this.$.dtEntry;
         }
       },
-      _dtWorkingCopy:{
+      /**
+       *
+       * The string displayed in the input and editited by the user
+       *
+       * @private
+       */
+      dtWorkingCopy:{
         type:String,
         notify: true
       }
     },
+
+    observers:[
+      '_updateAndValidateWorkingCopy(momentObj)'
+    ],
 
     /**
      * Key bindings for iron-a11y-keys-behavior
@@ -109,33 +98,74 @@ Range field component which displays a time or date and font awesome icon.
     keyBindings: {
       'enter' : '_onEnter',
       'esc' : '_onEsc',
-      '1 2 3 4 5 6 7 8 9 0' : '_digit',
-      'a p' : '_alpha',
-      'down up' : '_incrementNumber',
-      'left right tab' : '_moveCursor',
-      ': \\ / -' : '_moveCursor',
+      'left right' : '_moveFocus',
+      'tab' : '_checkValue',
+      'backspace del':'_deleteEntry'
     },
 
-    stopKeyboardEventPropagation:true
+    ready: function(){
+      this._addGeneralKeyBindings();
+      if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+        this.toggleClass('input-width-6',true,this.$.dtEntry);
+      } else {
+        var len = (this.momentFormat.length === 1) ? 2 : this.momentFormat.length;
+        this.toggleClass('input-width-' + len, true , this.$.dtEntry);
+      }
+
+    },
+
+    _addGeneralKeyBindings: function(){
+      if(this.format === 'A'){
+        this.addOwnKeyBinding('a p','_alpha');
+        this.addOwnKeyBinding('down up', '_toggleAMPM');
+      } else {
+        this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
+        this.addOwnKeyBinding('down up', '_incrementNumber');
+      }
+    },
+
+    _addSeparatorKeyBinding: function(){
+      // TODO just apply the correct separator char
+      this.addOwnKeyBinding(': \\ / -','_moveFocus');
+    },
 
     _updateAndValidateWorkingCopy: function() {
-      this.set('dtWorkingCopy', this.moment.format(this.format));
+      this.set('dtWorkingCopy', this.momentObj.format(this.momentFormat));
       this.toggleClass('validation-error', false, this.$$('input'));
-    },
-
-    ready: function() {
     },
 
     _handleFocus: function(evt) {
       var ne = Polymer.dom(evt);
       console.log(ne);
       this.toggleClass("is-selected", true, ne.rootTarget);
+      this.removeOwnKeyBindings();
+      this._addGeneralKeyBindings();
+      // propagate the focus event up to entry to apply inline edit styles if applicable
+      this.fire('cell-focused');
+    },
+
+    _moveFocus : function(){
+      console.log("_moveFocus");
+      this._checkValue();
+
+      setTimeout(function(){
+        this.fire('entry-cell-move');
+      }.bind(this),10);
+    },
+
+    _checkValue: function(){
+      console.log('_checkValue');
+      if(this.dtWorkingCopy.length === 1){
+        this.set('dtWorkingCopy', '0' + this.dtWorkingCopy);
+      }
     },
 
     _handleBlur: function(evt) {
       var ne = Polymer.dom(evt);
       this.toggleClass("is-selected", false, ne.rootTarget);
-      this._validateInput();
+      this.fire('cell-blured');
+      // TODO validate on lbur
+      console.log('blur');
     },
     /**
      * Listner attached to the input and sets up a timeout to trigger validation.
@@ -143,8 +173,8 @@ Range field component which displays a time or date and font awesome icon.
      * @method _inputValueChanged
      */
     _inputValueChanged: function(evt){
-      clearTimeout(this._editTimeout);
-      this._editTimeout = setTimeout(function(){
+      clearTimeout(this._validationAutoTimeout);
+      this._validationAutoTimeout = setTimeout(function(){
         this._validateInput();
       }.bind(this), 500);
     },
@@ -165,7 +195,7 @@ Range field component which displays a time or date and font awesome icon.
     /**
      * When ESC is clicked
      *
-     * @method _onEnter
+     * @method _onEsc
      */
     _onEsc:function(){
       this.fire('datetime-button-clicked',{ action:false });
@@ -174,39 +204,42 @@ Range field component which displays a time or date and font awesome icon.
       var ne = Polymer.dom(evt);
       var digit;
 
-      if (evt.detail.keyboardEvent.key !== undefined) {
-        digit = evt.detail.keyboardEvent.key;
-      } else if (evt.detail.keyboardEvent.keyIdentifier !== undefined) {
-        digit = evt.detail.keyboardEvent.keyIdentifier;
-      } else if (evt.detail.keyboardEvent.keyCode !== undefined) {
-        digit = evt.detail.keyboardEvent.keyCode;
-      }
+      digit = this._returnKey(evt.detail.keyboardEvent);
+      console.log(this.dtWorkingCopy);
+      if(this.dtWorkingCopy.length === 2){
+        this.set('dtWorkingCopy', '');
+        this._addSeparatorKeyBinding();
+    }
 
-      if(this.dateOrTime.toLowerCase() === 'date'){
-        this._parseDate(digit);
-      } else {
-        this._parseTime(digit);
-      }
+      this.set('dtWorkingCopy', this.dtWorkingCopy + digit);
 
-      evt.preventDefault();
+      if(this.dtWorkingCopy.length === 2){
+        console.log('jump');
+        this._moveFocus();
+      }
     },
-    _moveCursor : function(){
-      console.log("move");
-    },
+
     _incrementNumber : function(){
       console.log('up down')
     },
     _alpha : function(){
 
     },
-    _parseDate: function(digit){
-      console.log(digit);
-      //
+
+    _returnKey: function(detail){
+      if (detail.key !== undefined) {
+        return detail.key;
+      } else if (detail.keyCode !== undefined) {
+        return String.fromCharCode(detail.keyCode);
+      } else if (detail.keyIdentifier !== undefined) {
+        return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
+      } else  {
+        console.error("Cant proces keyboard event");
+      }
     },
-
-    _parseTime: function(digit){
-      console.log(digit);
+    _deleteEntry: function(evt){
+      this.set('dtWorkingCopy', '');
+      evt.preventDefault();
     }
-
   });
 </script>

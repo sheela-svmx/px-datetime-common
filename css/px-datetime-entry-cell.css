@@ -9,6 +9,19 @@
  * under which the software has been supplied.
  */
 /*
+THIS FILE SHOULD CONTAIN ONLY RULES SPECIFIC TO PREDIX BRANDING
+common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
+*/
+/*
+ * Copyright (c) 2014 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+/*
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
 Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 */
@@ -746,6 +759,12 @@ textarea {
   color: #7c7c84; }
 
 /**
+   * Text inputs with no styles.
+   */
+.text-input--bare {
+  border: 0 !important; }
+
+/**
    * Styles for validation states
    */
 .validation-warning {
@@ -816,18 +835,38 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
-.range-field__field label {
-  margin: 0; }
+.text-input--bare {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 3px;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.3333333333;
+  font-family: var(--px-font-family);
+  line-height: 1; }
+  .text-input--bare:focus {
+    outline: 0; }
+  .text-input--bare::-moz-selection {
+    background: none; }
+  .text-input--bare::selection {
+    background: none; }
 
-.text-input {
-  width: auto; }
+.input-width-2 {
+  width: 1.3333333333rem; }
 
-.dtIcon {
-  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
-          transform: scale(0.7, 0.7) translate(0, -3px); }
+.input-width-3 {
+  width: 2rem; }
 
-.dtEntrySymbol {
-  margin: -4px; }
+.input-width-4 {
+  width: 2.3333333333rem; }
+
+.input-width-6 {
+  width: 3rem; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
@@ -938,3 +977,13 @@ button.btn {
 .u-mv0 {
   margin-top: 0 !important;
   margin-bottom: 0 !important; }
+
+.is-selected {
+  background-color: #b2d7ff; }
+
+.is-focused {
+  border-color: #0a9ec1;
+  box-shadow: inset 0 0 0 1px #d1d0d8; }
+
+.text-input {
+  color: black; }
