@@ -35,12 +35,15 @@ Range field component which displays a time or date and font awesome icon.
               class="cell"
               order='{{index}}'
               moment-obj="[[momentObj]]"
-              moment-format='[[item]]'>
+              moment-format='[[item]]'
+              symbol=[[_returnSymbol(index)]]>
             </px-datetime-entry-cell>
-            <span
-              class="dtEntrySymbol"
-              symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
-            </span>
+            <template is="dom-if" if={{_isSymbol(index)}}>
+              <span
+                class="dtEntrySymbol"
+                symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
+              </span>
+            </template>
           </template>
       </div>
     </div>
@@ -105,7 +108,10 @@ Range field component which displays a time or date and font awesome icon.
       },
       _symbolCharArray:{
         type: Array,
-        notify: true
+        notify: true,
+        value: function(){
+          return []
+        }
       }
     },
 
@@ -126,7 +132,7 @@ Range field component which displays a time or date and font awesome icon.
       // console.log(this.momentFormat.indexOf('MM'));
       // var re = /\w+\s/g;
 
-      var re = /[MDYAaHhkmsSzZ]+/g;
+      var re = /[MDYAaHhkmsSzZXx]+/g;
       var reSymbol = /\W+/g;
 
       this._cellFormatArray = this.momentFormat.match(re);
@@ -136,16 +142,18 @@ Range field component which displays a time or date and font awesome icon.
       this.notifyPath('_symbolCharArray',this._symbolCharArray);
     },
 
-    _ifSymbol: function(index){
-
+    _isSymbol: function(i){
+      if(this._symbolCharArray === null || typeof(this._symbolCharArray[i]) === 'undefined'){
+        return false
+      }
+      return true
     },
 
     _returnSymbol: function(i){
-      if(typeof(this._symbolCharArray[i]) === 'undefined'){
-        return
+      if(this._symbolCharArray === null || typeof(this._symbolCharArray[i]) === 'undefined'){
+        return ''
       }
-      var arr = this._symbolCharArray[i].split(' ').join('\xa0');
-      return arr
+      return this._symbolCharArray[i].split(' ').join('\xa0');
     },
 
     _setIcon: function(){
@@ -171,18 +179,17 @@ Range field component which displays a time or date and font awesome icon.
         var elem = this.$$("#cell" + entryCellOrder);
         elem.$.dtEntry.focus();
       }
-
-      this._validateInput();
     },
 
     _handleFocus: function(){
-      console.log('entry focus');
       if(this.inlineEdit){
         this.toggleClass('text-input', true, this.$.wrapper);
       }
     },
     _handleBlur: function(){
       console.log('entry blur');
+      this._validateInput();
+
       if(this.inlineEdit){
         this.toggleClass('text-input', false, this.$.wrapper);
       }

@@ -43,7 +43,6 @@ $inuit-enable-validation-states : true;
 // Component
 
 .text-input--bare {
-  user-select: none;
   text-align: center;
 
   margin: 0;
@@ -59,22 +58,34 @@ $inuit-enable-validation-states : true;
     outline: 0;
   }
   &::selection{
-    background: none;
+    // background: transparent;
+  }
+
+  &::-webkit-input-placeholder {
+    padding-top: 0.2rem;
+    font-size: 0.8rem;
+  }
+  &::-moz-placeholder {
+    padding-top: 0.2rem;
+    font-size: 0.8rem;
+  }
+  &:-ms-input-placeholder {
+    padding-top: 0.2rem;
+    font-size: 0.8rem;
   }
 }
 
+@for $i from 3 through 13 {
+  .input-width-#{$i}{
+    width: $inuit-base-spacing-unit--small * $i * 0.85
+  }
+}
+
+.input-width-1,
 .input-width-2 {
-  width:$inuit-base-spacing-unit--large;
+  width:$inuit-base-spacing-unit--small * 2.1;
 }
-.input-width-3 {
-  width:$inuit-base-spacing-unit--small * 3;
-}
-.input-width-4 {
-  width:$inuit-base-spacing-unit--small * 3.5;
-}
-.input-width-6 {
-  width:$inuit-base-spacing-unit--small * 4.5;
-}
+
 
 // Trumps
 $inuit-enable-margins--tiny     : true;

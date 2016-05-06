@@ -4,12 +4,17 @@
 <link rel="import" href="px-datetime-imports.html" />
 <link rel="import" href="px-datetime-behavior.html" />
 <!--
-Range field component which displays a time or date and font awesome icon.
+Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to only valid characters.
 
 ##### Usage
 
-    <px-datetime-entry moment="{{...}}" date-or-time="Date">
-    </px-datetime-entry>
+  <px-datetime-entry-cell
+    id="cell{{index}}"
+    class="cell"
+    order='{{index}}'
+    moment-obj="[[momentObj]]"
+    moment-format='[[item]]'>
+  </px-datetime-entry-cell>
 
 -->
 <dom-module id="px-datetime-entry-cell">
@@ -23,8 +28,11 @@ Range field component which displays a time or date and font awesome icon.
       on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-input="_inputValueChanged"
+      on-paste="_handlePaste"
+      on-copy="_handleCopy"
       value="[[dtWorkingCopy]]"
-      maxlength="{{maxlength}}">
+      maxlength="[[maxlength]]"
+      placeholder='[[momentFormat]]'>
     </input>
   </template>
 </dom-module>
@@ -83,7 +91,21 @@ Range field component which displays a time or date and font awesome icon.
        */
       dtWorkingCopy:{
         type:String,
-        notify: true
+        notify: true,
+        observer: '_sizeInputs'
+      },
+      /**
+       *
+       * The separator character
+       *
+       * @private
+       */
+      symbol:{
+        type:String
+      },
+
+      cellLength:{
+        type: Number
       }
     },
 
@@ -100,22 +122,42 @@ Range field component which displays a time or date and font awesome icon.
       'esc' : '_onEsc',
       'left right' : '_moveFocus',
       'tab' : '_checkValue',
-      'backspace del':'_deleteEntry'
+      'backspace del':'_deleteEntry',
     },
-
-    ready: function(){
+    /**
+     * On ready, check what type of cell this is, toggle class to make it wide enough for the input, and set up key bindings.
+     *
+     */
+    attached: function(){
       this._addGeneralKeyBindings();
-      if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
-        this.toggleClass('input-width-6',true,this.$.dtEntry);
-      } else {
-        var len = (this.momentFormat.length === 1) ? 2 : this.momentFormat.length;
-        this.toggleClass('input-width-' + len, true , this.$.dtEntry);
-      }
+
+      // if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+      //   // TODO add key bindings for + - :
+      // } else {
+      //   var len = (this.momentFormat.length === 1) ? 2 : this.momentFormat.length;
+      // }
 
     },
+    /**
+     *
+     *
+     * @method
+     */
+    _sizeInputs: function(){
+      if(!this.$.dtEntry.classList.contains('input-width')){
+        this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
+        this.toggleClass('input-width', true , this.$.dtEntry);
+        this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
+      }
+    },
 
+    /**
+     * Sets up regular key bindings
+     *
+     * @method _addGeneralKeyBindings
+     */
     _addGeneralKeyBindings: function(){
-      if(this.format === 'A'){
+      if(this.momentFormat === 'A' || this.momentFormat === 'a'){
         this.addOwnKeyBinding('a p','_alpha');
         this.addOwnKeyBinding('down up', '_toggleAMPM');
       } else {
@@ -124,48 +166,74 @@ Range field component which displays a time or date and font awesome icon.
       }
     },
 
+    /**
+     * Sets up separator keybindings
+     *
+     * @method _addSeparatorKeyBinding
+     */
     _addSeparatorKeyBinding: function(){
-      // TODO just apply the correct separator char
-      this.addOwnKeyBinding(': \\ / -','_moveFocus');
+      var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
+      this.addOwnKeyBinding(separator,'_moveFocus');
     },
-
+    /**
+     *
+     *
+     * @method _updateAndValidateWorkingCopy
+     */
     _updateAndValidateWorkingCopy: function() {
       this.set('dtWorkingCopy', this.momentObj.format(this.momentFormat));
       this.toggleClass('validation-error', false, this.$$('input'));
     },
-
+    /**
+     *
+     *
+     * @method _handleFocus
+     */
     _handleFocus: function(evt) {
       var ne = Polymer.dom(evt);
-      console.log(ne);
       this.toggleClass("is-selected", true, ne.rootTarget);
+
       this.removeOwnKeyBindings();
       this._addGeneralKeyBindings();
+
       // propagate the focus event up to entry to apply inline edit styles if applicable
       this.fire('cell-focused');
     },
-
+    /**
+     *
+     *
+     * @method _moveFocus
+     */
     _moveFocus : function(){
-      console.log("_moveFocus");
-      this._checkValue();
-
       setTimeout(function(){
         this.fire('entry-cell-move');
       }.bind(this),10);
     },
-
+    /**
+     *
+     *
+     * @method
+     */
     _checkValue: function(){
-      console.log('_checkValue');
-      if(this.dtWorkingCopy.length === 1){
+      // console.log('_checkValue');
+      if(this.dtWorkingCopy.length === 1 &&
+      ['MM','DD','hh','mm','ss'].indexOf(this.momentFormat) >= 0){
         this.set('dtWorkingCopy', '0' + this.dtWorkingCopy);
       }
     },
-
+    /**
+     *
+     *
+     * @method
+     */
     _handleBlur: function(evt) {
       var ne = Polymer.dom(evt);
+      console.log('blur');
+
+      this._checkValue();
+
       this.toggleClass("is-selected", false, ne.rootTarget);
       this.fire('cell-blured');
-      // TODO validate on lbur
-      console.log('blur');
     },
     /**
      * Listner attached to the input and sets up a timeout to trigger validation.
@@ -200,32 +268,54 @@ Range field component which displays a time or date and font awesome icon.
     _onEsc:function(){
       this.fire('datetime-button-clicked',{ action:false });
     },
+    /**
+     * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)
+     *
+     * @method _digit
+     */
     _digit: function(evt){
       var ne = Polymer.dom(evt);
       var digit;
 
+      //set the key that was clicked to digit
       digit = this._returnKey(evt.detail.keyboardEvent);
-      console.log(this.dtWorkingCopy);
-      if(this.dtWorkingCopy.length === 2){
+
+      // if already at full length, we just entered the input, so delete it
+      if(this.dtWorkingCopy.length === this.cellLength){
         this.set('dtWorkingCopy', '');
         this._addSeparatorKeyBinding();
-    }
+      }
 
+      // add the new digit in
       this.set('dtWorkingCopy', this.dtWorkingCopy + digit);
 
-      if(this.dtWorkingCopy.length === 2){
+      // if it is full, we're done with this cell, go to the next
+      if(this.dtWorkingCopy.length === this.cellLength){
         console.log('jump');
         this._moveFocus();
       }
     },
-
+    /**
+     *
+     *
+     * @method
+     */
     _incrementNumber : function(){
       console.log('up down')
     },
+    /**
+     *
+     *
+     * @method
+     */
     _alpha : function(){
 
     },
-
+    /**
+     *
+     *
+     * @method
+     */
     _returnKey: function(detail){
       if (detail.key !== undefined) {
         return detail.key;
@@ -237,9 +327,39 @@ Range field component which displays a time or date and font awesome icon.
         console.error("Cant proces keyboard event");
       }
     },
+    /**
+     *
+     *
+     * @method
+     */
     _deleteEntry: function(evt){
       this.set('dtWorkingCopy', '');
       evt.preventDefault();
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _handlePaste: function(evt){
+      console.log('pasted');
+      console.log(evt);
+      data = evt.clipboardData;
+      console.log(data);
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _handleCopy: function(evt){
+      this.$.dtEntry.select();
+
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.log('Unable to copy');
+      }
     }
   });
 </script>
