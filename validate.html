@@ -45,7 +45,6 @@ var validate = {
    * @return {Boolean} passed validation
    */
   _validateInput: function() {
-    console.log('validate');
     Polymer.dom(this).parentNode.classList.remove('is-focused');
 
 
@@ -56,17 +55,15 @@ var validate = {
     for (var i = 0; i < inputArr.length; i++) {
       inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
     }
-    console.log("inputStr  "  + inputStr);
-    console.log("momentFormat  "  + this.momentFormat);
-    console.log(moment(inputStr, this.momentFormat, true));
+    // console.log("inputStr  "  + inputStr);
+    // console.log("momentFormat  "  + this.momentFormat);
+    // console.log(moment(inputStr, this.momentFormat, true));
 
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
 
     // if the component datetime string is a valid datetime
     if(moment(inputStr, this.momentFormat, true).isValid()) {
-      // alert('Date is valid');
-      console.log("passed");
       // turn off input box error outline
       this.toggleClass('validation-error', false, this.$.wrapper);
       /*
@@ -100,7 +97,6 @@ var validate = {
       return true;
 
     } else { //the input box string is not a valid date/time
-      console.log("failed");
       // turn on the error outline
       this.toggleClass('validation-error', true, this.$.wrapper);
       this.set('isValid', false);

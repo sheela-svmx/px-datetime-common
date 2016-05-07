@@ -32,7 +32,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       value="[[dtWorkingCopy]]"
       maxlength="[[maxlength]]"
-      placeholder='[[momentFormat]]'>
+      placeholder='[[_placeholderText(momentFormat)]]'>
     </input>
   </template>
 </dom-module>
@@ -106,6 +106,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
       cellLength:{
         type: Number
+      },
+      order: {
+        type:Number,
+        reflectToAttribute:true
       }
     },
 
@@ -120,7 +124,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     keyBindings: {
       'enter' : '_onEnter',
       'esc' : '_onEsc',
-      'left right' : '_moveFocus',
+      'right' : '_moveFocusForward',
+      'left' : '_moveFocusBack',
       'tab' : '_checkValue',
       'backspace del':'_deleteEntry',
     },
@@ -164,6 +169,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
         this.addOwnKeyBinding('down up', '_incrementNumber');
       }
+
+      if(this.momentFormat === 'Z'){
+        this.addOwnKeyBinding('+ - :','_digit');
+      } else if (this.momentFormat === 'ZZ') {
+        this.addOwnKeyBinding('+ -','_digit');
+      }
     },
 
     /**
@@ -173,7 +184,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _addSeparatorKeyBinding: function(){
       var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
-      this.addOwnKeyBinding(separator,'_moveFocus');
+      this.addOwnKeyBinding(separator,'_moveFocusForward');
     },
     /**
      *
@@ -202,24 +213,57 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     /**
      *
      *
-     * @method _moveFocus
+     * @method _moveFocusForward
      */
-    _moveFocus : function(){
+    _moveFocusBack : function(){
       setTimeout(function(){
-        this.fire('entry-cell-move');
+        this.fire('entry-cell-move', { 'dir' : -1 });
       }.bind(this),10);
     },
     /**
      *
      *
+     * @method _moveFocusForward
+     */
+    _moveFocusForward : function(){
+      setTimeout(function(){
+        this.fire('entry-cell-move', { 'dir' : 1 });
+      }.bind(this),10);
+    },
+    /**
+     * Checks that the value has the correct number of digits for our format
+     *
      * @method
      */
     _checkValue: function(){
-      // console.log('_checkValue');
+      //if our format requires two digits and we only have one, add a 0 in front
       if(this.dtWorkingCopy.length === 1 &&
-      ['MM','DD','hh','mm','ss'].indexOf(this.momentFormat) >= 0){
+      ['MM','DD','HH','hh','kk','mm','ss'].indexOf(this.momentFormat) >= 0){
         this.set('dtWorkingCopy', '0' + this.dtWorkingCopy);
       }
+      //if the format is YYYY or Y and the input is 2 characters then covert the input to a 4 characters year representation
+      else if(this.dtWorkingCopy.length === 2 && this.momentFormat === 'YYYY'){
+        var mo = moment(this.dtWorkingCopy, 'YY');
+        this.set('dtWorkingCopy',mo.format(this.momentFormat));
+      }
+      // else if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+      //   var mo = moment.tz(this.dtWorkingCopy);
+      //   if(mo.isValid()){
+      //     console.log(mo);
+      //     console.log('f ' + mo.format(this.momentFormat));
+      //
+      //     this.set('dtWorkingCopy', mo.format(this.momentFormat));
+      //     console.log("z" + this.dtWorkingCopy);
+      //   } else {
+      //     console.log("go away fat man");
+      //   }
+      // }
+      else if(this.momentFormat[0] === 'S' && this.dtWorkingCopy.length < this.momentFormat.length){
+        var dtNumber = parseInt(this.dtWorkingCopy);
+        dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.dtWorkingCopy.length));
+        this.set('dtWorkingCopy', dtNumber.toString());
+      }
+
     },
     /**
      *
@@ -228,7 +272,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _handleBlur: function(evt) {
       var ne = Polymer.dom(evt);
-      console.log('blur');
 
       this._checkValue();
 
@@ -243,7 +286,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _inputValueChanged: function(evt){
       clearTimeout(this._validationAutoTimeout);
       this._validationAutoTimeout = setTimeout(function(){
-        this._validateInput();
+        this.fire('cell-validate');
       }.bind(this), 500);
     },
     /**
@@ -252,8 +295,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _onEnter
      */
     _onEnter:function(){
-      console.log("Enter");
-      this._validateInput();
+      this.fire('cell-validate');
       setTimeout(function(){
         if(this.isSubmitButtonValid){
           this.fire('datetime-button-clicked',{ action:true });
@@ -291,8 +333,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
       // if it is full, we're done with this cell, go to the next
       if(this.dtWorkingCopy.length === this.cellLength){
-        console.log('jump');
-        this._moveFocus();
+        this._moveFocusForward();
       }
     },
     /**
@@ -320,7 +361,17 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if (detail.key !== undefined) {
         return detail.key;
       } else if (detail.keyCode !== undefined) {
-        return String.fromCharCode(detail.keyCode);
+        var _to_ascii = {
+          '107': '43', //+
+          '109': '45', //-
+          '173': '45', //-
+          '186': '58', //:
+          '187': '43', //+
+          '189': '45'  //-
+        };
+        console.log(detail.keyCode);
+        var key = (_to_ascii[detail.keyCode]) ? _to_ascii[detail.keyCode] : detail.keyCode;
+        return String.fromCharCode(key);
       } else if (detail.keyIdentifier !== undefined) {
         return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
       } else  {
@@ -334,7 +385,28 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _deleteEntry: function(evt){
       this.set('dtWorkingCopy', '');
+
       evt.preventDefault();
+    },
+    /**
+     *
+     *
+     * @method
+     * TODO When we deal with time zones we need to add that in here
+     */
+    _placeholderText(momentFormat){
+      var phText = {
+        'Z': String.fromCharCode(177) + 'xx:xx',
+        'ZZ': String.fromCharCode(177) + 'xxxx',
+        'X': 'epoch time (s)',
+        'x': 'epoch time (ms)'
+      };
+
+      if(phText[momentFormat]){
+        return phText[momentFormat];
+      }
+
+      return momentFormat;
     },
     /**
      *

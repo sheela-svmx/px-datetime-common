@@ -119,6 +119,7 @@ Range field component which displays a time or date and font awesome icon.
       'entry-cell-move': '_entryCellMove',
       'cell-focused': '_handleFocus',
       'cell-blured': '_handleBlur',
+      'cell-validate': '_validateInput'
     },
 
     ready: function(){
@@ -167,15 +168,19 @@ Range field component which displays a time or date and font awesome icon.
     _entryCellMove: function(evt){
       var ne = Polymer.dom(evt);
       var entryCellOrder = ne.rootTarget.order;
+      console.log('_entryCellMove');
 
-      if(this.dateOrTime.toLowerCase() === 'date' && entryCellOrder === 3){
-        // fire something up to advance to next entry
+      if(entryCellOrder === this._cellFormatArray.length - 1 && evt.detail.dir === 1){
+        console.log('END of cells');
 
-        // TODO what if dev set does not have AM PM aka 24 hour clock has three boxes, not 4
-      } else if(this.dateOrTime.toLowerCase() === 'time' && entryCellOrder === 4){
-        // fire something up to advance to next entry
-      }else{
-        entryCellOrder = parseInt(entryCellOrder) + 1;
+        // TODO fire something up to advance to next entry
+      } else if(entryCellOrder === 0 && evt.detail.dir === -1){
+        // TODO fire something up to advance to previous entry
+        console.log('END of cells');
+
+      } else {
+        console.log(evt.detail.dir);
+        entryCellOrder = parseInt(entryCellOrder) + evt.detail.dir;
         var elem = this.$$("#cell" + entryCellOrder);
         elem.$.dtEntry.focus();
       }
@@ -187,7 +192,6 @@ Range field component which displays a time or date and font awesome icon.
       }
     },
     _handleBlur: function(){
-      console.log('entry blur');
       this._validateInput();
 
       if(this.inlineEdit){
