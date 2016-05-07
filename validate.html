@@ -45,21 +45,39 @@ var validate = {
    * @return {Boolean} passed validation
    */
   _validateInput: function() {
-    this.parentNode.classList.remove('is-focused');
-    // if the component datetime string is a valid datetime
-    if (moment(this.dateTimeWorkingCopy, this.momentFormat, true).isValid()) {
-      // turn off input box error outline
-      this.toggleClass('validation-error', false, this.$$('input'));
+    console.log('validate');
+    Polymer.dom(this).parentNode.classList.remove('is-focused');
 
+
+    var inputStr = '',
+        inputArr = Polymer.dom(this.root).querySelectorAll('.cell');
+
+    //Create a string from all of the fields put together
+    for (var i = 0; i < inputArr.length; i++) {
+      inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
+    }
+    console.log("inputStr  "  + inputStr);
+    console.log("momentFormat  "  + this.momentFormat);
+    console.log(moment(inputStr, this.momentFormat, true));
+
+    //added to be able to use Moment strict parsing
+    inputStr = inputStr.split('\xa0').join(' ');
+
+    // if the component datetime string is a valid datetime
+    if(moment(inputStr, this.momentFormat, true).isValid()) {
+      // alert('Date is valid');
+      console.log("passed");
+      // turn off input box error outline
+      this.toggleClass('validation-error', false, this.$.wrapper);
       /*
         The input box only has date or time.
         Clone the moment object so we have a full date-time.
 
         We want to use clone so it stays in utc or local time
       */
-      var newMoment = this.moment.clone();
+      var newMoment = this.momentObj.clone();
       // just use the relevant fields, so ok if not in utc timemoment
-      var typedInMoment = moment(this.dateTimeWorkingCopy, this.momentFormat);
+      var typedInMoment = moment(inputStr, this.momentFormat);
 
       // since the input box only has date or time, just reset that portion of the moment object
       if (this.dateOrTime.toLowerCase() === 'date') { // if i'm typing in a date field, set the new date
@@ -67,8 +85,7 @@ var validate = {
         newMoment.year(typedInMoment.year()); // set the year
         newMoment.month(typedInMoment.month()); // then the month
         newMoment.date(typedInMoment.date()); // and finally the date, to make sure we don't have any rolling effects
-      }
-      else {
+      } else {
         newMoment.hour(typedInMoment.hour());
         newMoment.minute(typedInMoment.minute());
         newMoment.second(typedInMoment.second());
@@ -76,21 +93,16 @@ var validate = {
 
       this.set('isValid', true);
       // if the neighbor is also valid, then we can set our moment object
-      if(this.neighborValid && !this.moment.isSame(newMoment,'second')) {
+      if(this.neighborValid && !this.momentObj.isSame(newMoment,'second')) {
         this.set('moment', newMoment);
         this.fire('moment-changed',{'moment':newMoment})
       }
       return true;
 
     } else { //the input box string is not a valid date/time
-      // sets placeholder text when necessary
-      if (this.momentFormat === "MM/DD/YYYY") {
-        this.$$('input').placeholder = this.momentFormat;
-      } else {
-        this.$$('input').placeholder = "HH:MM:SS ?M";
-      }
+      console.log("failed");
       // turn on the error outline
-      this.toggleClass('validation-error', true, this.$$('input'));
+      this.toggleClass('validation-error', true, this.$.wrapper);
       this.set('isValid', false);
       this._submitButtonState(false);
 

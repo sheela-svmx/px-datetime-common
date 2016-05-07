@@ -746,6 +746,12 @@ textarea {
   color: #7c7c84; }
 
 /**
+   * Text inputs with no styles.
+   */
+.text-input--bare {
+  border: 0 !important; }
+
+/**
    * Styles for validation states
    */
 .validation-warning {
@@ -816,18 +822,64 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
-.range-field__field label {
-  margin: 0; }
+.text-input--bare {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 3px;
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.3333333333;
+  font-family: var(--px-font-family);
+  line-height: 1; }
+  .text-input--bare:focus {
+    outline: 0; }
+  .text-input--bare::-webkit-input-placeholder {
+    padding-top: 0.2rem;
+    font-size: 0.8rem; }
+  .text-input--bare::-moz-placeholder {
+    padding-top: 0.2rem;
+    font-size: 0.8rem; }
+  .text-input--bare:-ms-input-placeholder {
+    padding-top: 0.2rem;
+    font-size: 0.8rem; }
 
-.text-input {
-  width: auto; }
+.input-width-3 {
+  width: 1.7rem; }
 
-.dtIcon {
-  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
-          transform: scale(0.7, 0.7) translate(0, -3px); }
+.input-width-4 {
+  width: 2.2666666667rem; }
 
-.dtEntrySymbol {
-  margin: -4px; }
+.input-width-5 {
+  width: 2.8333333333rem; }
+
+.input-width-6 {
+  width: 3.4rem; }
+
+.input-width-7 {
+  width: 3.9666666667rem; }
+
+.input-width-8 {
+  width: 4.5333333333rem; }
+
+.input-width-9 {
+  width: 5.1rem; }
+
+.input-width-10 {
+  width: 5.6666666667rem; }
+
+.input-width-11 {
+  width: 6.2333333333rem; }
+
+.input-width-12 {
+  width: 6.8rem; }
+
+.input-width-13 {
+  width: 7.3666666667rem; }
+
+.input-width-1,
+.input-width-2 {
+  width: 1.4rem; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro

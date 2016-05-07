@@ -759,12 +759,6 @@ textarea {
   color: #7c7c84; }
 
 /**
-   * Text inputs with no styles.
-   */
-.text-input--bare {
-  border: 0 !important; }
-
-/**
    * Styles for validation states
    */
 .validation-warning {
@@ -835,23 +829,18 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
+.range-field__field label {
+  margin: 0; }
+
 .text-input {
   width: auto; }
 
-.text-input--bare {
-  margin: 0;
-  padding: 0; }
-  .text-input--bare:focus {
-    outline: 0; }
+.dtIcon {
+  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
+          transform: scale(0.7, 0.7) translate(0, -3px); }
 
-.range-field__field .text-input--bare {
-  font-size: 1rem;
-  line-height: 1.3333333333;
-  width: 6rem;
-  font-family: var(--px-font-family); }
-
-.range-field__field label {
-  margin: 0; }
+.dtEntrySymbol {
+  margin: -4px; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
@@ -963,17 +952,10 @@ button.btn {
   margin-top: 0 !important;
   margin-bottom: 0 !important; }
 
-span {
+.dtLabel {
   color: #9999a3; }
-
-.is-focused {
-  border-color: #0a9ec1;
-  box-shadow: inset 0 0 0 1px #d1d0d8; }
 
 .text-input, .text-input label,
 .dtIcon,
 .dtIcon label {
   color: #7c7c84; }
-
-.text-input--bare {
-  background: transparent; }

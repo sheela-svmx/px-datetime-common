@@ -1,0 +1,365 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="validate.html" />
+<link rel="import" href="px-datetime-imports.html" />
+<link rel="import" href="px-datetime-behavior.html" />
+<!--
+Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to only valid characters.
+
+##### Usage
+
+  <px-datetime-entry-cell
+    id="cell{{index}}"
+    class="cell"
+    order='{{index}}'
+    moment-obj="[[momentObj]]"
+    moment-format='[[item]]'>
+  </px-datetime-entry-cell>
+
+-->
+<dom-module id="px-datetime-entry-cell">
+  <link rel="import" type="css" href="css/px-datetime-entry-cell.css"/>
+  <template>
+    <input
+      id="dtEntry"
+      readonly
+      order='{{order}}'
+      class="text-input--bare"
+      on-focus="_handleFocus"
+      on-blur="_handleBlur"
+      on-input="_inputValueChanged"
+      on-paste="_handlePaste"
+      on-copy="_handleCopy"
+      value="[[dtWorkingCopy]]"
+      maxlength="[[maxlength]]"
+      placeholder='[[momentFormat]]'>
+    </input>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-datetime-entry-cell',
+
+    behaviors: [
+      pxDatetimeBehavior,
+      validate,
+      Polymer.IronA11yKeysBehavior
+    ],
+
+    properties: {
+      /**
+       *
+       * Moment format string for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
+       *
+       * Can only be configured statically; not data-bindable
+       *
+       * @private
+       */
+      momentFormat: {
+        type: String
+      },
+      /**
+       *
+       * Holder for a timeout object to trigger validation after x-seconds when a user types in an input.
+       *
+       * @private
+       */
+      _validationAutoTimeout:{
+        type:Object,
+        value: function(){ return {} }
+      },
+      /**
+       *
+       * IronA11yKeysBehavior: element to which key events are attached
+       *
+       *
+       * @private
+       */
+      keyEventTarget: {
+        type: Object,
+        value: function() {
+          return this.$.dtEntry;
+        }
+      },
+      /**
+       *
+       * The string displayed in the input and editited by the user
+       *
+       * @private
+       */
+      dtWorkingCopy:{
+        type:String,
+        notify: true,
+        observer: '_sizeInputs'
+      },
+      /**
+       *
+       * The separator character
+       *
+       * @private
+       */
+      symbol:{
+        type:String
+      },
+
+      cellLength:{
+        type: Number
+      }
+    },
+
+    observers:[
+      '_updateAndValidateWorkingCopy(momentObj)'
+    ],
+
+    /**
+     * Key bindings for iron-a11y-keys-behavior
+     * @private
+     */
+    keyBindings: {
+      'enter' : '_onEnter',
+      'esc' : '_onEsc',
+      'left right' : '_moveFocus',
+      'tab' : '_checkValue',
+      'backspace del':'_deleteEntry',
+    },
+    /**
+     * On ready, check what type of cell this is, toggle class to make it wide enough for the input, and set up key bindings.
+     *
+     */
+    attached: function(){
+      this._addGeneralKeyBindings();
+
+      // if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+      //   // TODO add key bindings for + - :
+      // } else {
+      //   var len = (this.momentFormat.length === 1) ? 2 : this.momentFormat.length;
+      // }
+
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _sizeInputs: function(){
+      if(!this.$.dtEntry.classList.contains('input-width')){
+        this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
+        this.toggleClass('input-width', true , this.$.dtEntry);
+        this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
+      }
+    },
+
+    /**
+     * Sets up regular key bindings
+     *
+     * @method _addGeneralKeyBindings
+     */
+    _addGeneralKeyBindings: function(){
+      if(this.momentFormat === 'A' || this.momentFormat === 'a'){
+        this.addOwnKeyBinding('a p','_alpha');
+        this.addOwnKeyBinding('down up', '_toggleAMPM');
+      } else {
+        this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
+        this.addOwnKeyBinding('down up', '_incrementNumber');
+      }
+    },
+
+    /**
+     * Sets up separator keybindings
+     *
+     * @method _addSeparatorKeyBinding
+     */
+    _addSeparatorKeyBinding: function(){
+      var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
+      this.addOwnKeyBinding(separator,'_moveFocus');
+    },
+    /**
+     *
+     *
+     * @method _updateAndValidateWorkingCopy
+     */
+    _updateAndValidateWorkingCopy: function() {
+      this.set('dtWorkingCopy', this.momentObj.format(this.momentFormat));
+      this.toggleClass('validation-error', false, this.$$('input'));
+    },
+    /**
+     *
+     *
+     * @method _handleFocus
+     */
+    _handleFocus: function(evt) {
+      var ne = Polymer.dom(evt);
+      this.toggleClass("is-selected", true, ne.rootTarget);
+
+      this.removeOwnKeyBindings();
+      this._addGeneralKeyBindings();
+
+      // propagate the focus event up to entry to apply inline edit styles if applicable
+      this.fire('cell-focused');
+    },
+    /**
+     *
+     *
+     * @method _moveFocus
+     */
+    _moveFocus : function(){
+      setTimeout(function(){
+        this.fire('entry-cell-move');
+      }.bind(this),10);
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _checkValue: function(){
+      // console.log('_checkValue');
+      if(this.dtWorkingCopy.length === 1 &&
+      ['MM','DD','hh','mm','ss'].indexOf(this.momentFormat) >= 0){
+        this.set('dtWorkingCopy', '0' + this.dtWorkingCopy);
+      }
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _handleBlur: function(evt) {
+      var ne = Polymer.dom(evt);
+      console.log('blur');
+
+      this._checkValue();
+
+      this.toggleClass("is-selected", false, ne.rootTarget);
+      this.fire('cell-blured');
+    },
+    /**
+     * Listner attached to the input and sets up a timeout to trigger validation.
+     *
+     * @method _inputValueChanged
+     */
+    _inputValueChanged: function(evt){
+      clearTimeout(this._validationAutoTimeout);
+      this._validationAutoTimeout = setTimeout(function(){
+        this._validateInput();
+      }.bind(this), 500);
+    },
+    /**
+     * When ENTER is clicked
+     *
+     * @method _onEnter
+     */
+    _onEnter:function(){
+      console.log("Enter");
+      this._validateInput();
+      setTimeout(function(){
+        if(this.isSubmitButtonValid){
+          this.fire('datetime-button-clicked',{ action:true });
+        }
+      }.bind(this),10);
+    },
+    /**
+     * When ESC is clicked
+     *
+     * @method _onEsc
+     */
+    _onEsc:function(){
+      this.fire('datetime-button-clicked',{ action:false });
+    },
+    /**
+     * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)
+     *
+     * @method _digit
+     */
+    _digit: function(evt){
+      var ne = Polymer.dom(evt);
+      var digit;
+
+      //set the key that was clicked to digit
+      digit = this._returnKey(evt.detail.keyboardEvent);
+
+      // if already at full length, we just entered the input, so delete it
+      if(this.dtWorkingCopy.length === this.cellLength){
+        this.set('dtWorkingCopy', '');
+        this._addSeparatorKeyBinding();
+      }
+
+      // add the new digit in
+      this.set('dtWorkingCopy', this.dtWorkingCopy + digit);
+
+      // if it is full, we're done with this cell, go to the next
+      if(this.dtWorkingCopy.length === this.cellLength){
+        console.log('jump');
+        this._moveFocus();
+      }
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _incrementNumber : function(){
+      console.log('up down')
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _alpha : function(){
+
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _returnKey: function(detail){
+      if (detail.key !== undefined) {
+        return detail.key;
+      } else if (detail.keyCode !== undefined) {
+        return String.fromCharCode(detail.keyCode);
+      } else if (detail.keyIdentifier !== undefined) {
+        return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
+      } else  {
+        console.error("Cant proces keyboard event");
+      }
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _deleteEntry: function(evt){
+      this.set('dtWorkingCopy', '');
+      evt.preventDefault();
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _handlePaste: function(evt){
+      console.log('pasted');
+      console.log(evt);
+      data = evt.clipboardData;
+      console.log(data);
+    },
+    /**
+     *
+     *
+     * @method
+     */
+    _handleCopy: function(evt){
+      this.$.dtEntry.select();
+
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.log('Unable to copy');
+      }
+    }
+  });
+</script>
