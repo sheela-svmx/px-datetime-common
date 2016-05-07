@@ -120,17 +120,34 @@ var pxDatetimeRangeBehavior = {
     },
 
   }, //properties close bracket
-
   /**
-   * Coverts 'toMoment' and 'fromMoment' to ISO8601 strings, then set the range with the strings.
+   * for legacy purposes
+   */
+  _setRange: function() {
+    this._setMomentFromRange();
+  },
+  /**
+   * Converts range into from and to moments
    *
    * Triggered from a click on cancel, submit, esc, or enter
    */
-  _setRange: function() {
+  _setMomentFromRange: function() {
     // set to and from based on inputed range
     this.set('fromMoment', this._convertISOtoMoment(this.range.from));
     this.set('toMoment', this._convertISOtoMoment(this.range.to));
-  }
+  },
+  /**
+   * Converts 'toMoment' and 'fromMoment' to ISO8601 strings, then set the range with the strings.
+   *
+   * Triggered from a click on cancel, submit, esc, or enter
+   */
+  _setRangeFromMoment: function() {
+    var newRange = {
+      from: this.fromMoment.toISOString(),
+      to: this.toMoment.toISOString()
+    };
+    this.set('range', newRange);
+  },
 }; //pxRangeCommon close bracket
 
 
