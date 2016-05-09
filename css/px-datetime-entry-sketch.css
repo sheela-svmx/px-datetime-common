@@ -816,8 +816,10 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
-.range-field__field label {
-  margin: 0; }
+.range-field__field {
+  cursor: pointer; }
+  .range-field__field label {
+    margin: 0; }
 
 .text-input {
   width: auto; }

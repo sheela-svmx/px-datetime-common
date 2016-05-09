@@ -19,7 +19,7 @@ Range field component which displays a time or date and font awesome icon.
 <dom-module id="px-datetime-entry">
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
-    <div class="range-field__field">
+    <div class="range-field__field flex">
       <div id='wrapper'>
         <label class="label--inline">
           <span class="a11y dtLabel">{{dateOrTime}}</span>
@@ -91,17 +91,7 @@ Range field component which displays a time or date and font awesome icon.
         type:Object,
         value: function(){ return {} }
       },
-      /**
-       * A flag that turns on inline edit, changing the input styles
-       *
-       * @property inlineEdit
-       * @type Boolean
-       * @default false
-       */
-      inlineEdit: {
-        type: Boolean,
-        value: false
-      },
+
       _cellFormatArray:{
         type: Array,
         notify: true
@@ -117,8 +107,6 @@ Range field component which displays a time or date and font awesome icon.
 
     listeners: {
       'entry-cell-move': '_entryCellMove',
-      'cell-focused': '_handleFocus',
-      'cell-blured': '_handleBlur',
       'cell-validate': '_validateInput'
     },
 
@@ -183,19 +171,6 @@ Range field component which displays a time or date and font awesome icon.
         entryCellOrder = parseInt(entryCellOrder) + evt.detail.dir;
         var elem = this.$$("#cell" + entryCellOrder);
         elem.$.dtEntry.focus();
-      }
-    },
-
-    _handleFocus: function(){
-      if(this.inlineEdit){
-        this.toggleClass('text-input', true, this.$.wrapper);
-      }
-    },
-    _handleBlur: function(){
-      this._validateInput();
-
-      if(this.inlineEdit){
-        this.toggleClass('text-input', false, this.$.wrapper);
       }
     }
   });
