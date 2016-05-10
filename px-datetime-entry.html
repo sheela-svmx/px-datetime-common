@@ -109,7 +109,8 @@ Range field component which displays a time or date and font awesome icon.
     listeners: {
       'entry-cell-move': '_entryCellMove',
       'cell-blured': '_handleBlur',
-      'cell-validate': '_validateInput'
+      'cell-validate': '_validateInput',
+      'moment-changed': '_handleMoment'
     },
 
     ready: function(){
@@ -181,5 +182,9 @@ Range field component which displays a time or date and font awesome icon.
     _handleBlur: function(){
       this._validateInput();
     },
+
+    _handleMoment: function(evt){
+      this.set('momentObj',evt.detail.momentObj);
+    }
   });
 </script>

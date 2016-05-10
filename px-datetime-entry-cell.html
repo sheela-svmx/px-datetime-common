@@ -342,57 +342,18 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _incrementNumber : function(evt){
-      var key = evt.detail.combo,
-          tempMoment = this.momentObj.clone(),
-          tempInt = parseInt(this.dtWorkingCopy),
-          endOfMonth = tempMoment.endOf('month');
-
-      console.log(this.isValid);
-
-      if(this.isValid){
-        this._momentIncrement(key);
-      } else {
-        console.log('in else');
-        if(key === 'up'){
-          tempInt += 1;
-        } else { //down
-          tempInt -= 1;
-        }
-        this.set('dtWorkingCopy', ''+tempInt);
-        this._checkValue();
-      }
-
-      this.fire('cell-validate');
-    },
-
-    _momentIncrement: function(key){
-      var formatType = {
-        'Y' : 'y', //years
-        'M' : 'M', //months
-        'D' : 'd', // days
-        'H' : 'h', //hours
-        'h' : 'h', //hours
-        'k' : 'h', //hours
-        'm' : 'm', //minutes
-        's' : 's', //seconds
-        'X' : 's', //seconds
-        'S' : 'ms', //milliseconds
-        'x' : 'ms' //milliseconds
-      };
+      console.log('Arrow');
+      var key = evt.detail.combo;
       var tempMoment = this.momentObj.clone();
 
       if(key === 'up'){
-        tempMoment.add(1,formatType[this.momentFormat[0]]);
-
+        tempMoment.add(1, this._convertMomentFormat());
       } else { //down
-        // if we are dealing with days, and the month has changed....
-        if(formatType[this.momentFormat[0]] === 'd' && tempMoment.date() === 1){
-          tempMoment.endOf('month');
-        } else{
-          tempMoment.subtract(1,formatType[this.momentFormat[0]]);
-        }
+        tempMoment.subtract(1, this._convertMomentFormat());
       }
-      this.set('dtWorkingCopy', tempMoment.format(this.momentFormat));
+      // since this cannot be invalid, fire so it sets above and let changes trickle.
+      this.fire('moment-changed',{'momentObj':tempMoment})
+
     },
     /**
      *
@@ -520,6 +481,29 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       } catch (err) {
         console.log('Unable to copy');
       }
+    },
+    /**
+     * Format strings and setting/modification strings are different (?!?!)
+     * This method converts one to the other
+     *
+     * @method
+     */
+    _convertMomentFormat: function(){
+      var momentTypeConversion = {
+        'Y' : 'y',  //years
+        'M' : 'M',  //months
+        'D' : 'd',  // days
+        'H' : 'h',  //hours
+        'h' : 'h',  //hours
+        'k' : 'h',  //hours
+        'm' : 'm',  //minutes
+        's' : 's',  //seconds
+        'X' : 's',  //seconds
+        'S' : 'ms', //milliseconds
+        'x' : 'ms'  //milliseconds
+      };
+      // take the first char of the moment format and convert it to the other format
+      return momentTypeConversion[this.momentFormat[0]]
     }
   });
 </script>
