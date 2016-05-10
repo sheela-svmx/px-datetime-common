@@ -127,7 +127,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack',
       'tab' : '_checkValue',
-      'backspace del':'_deleteEntry',
+      'backspace del':'_deleteEntry'
     },
     /**
      * On ready, check what type of cell this is, toggle class to make it wide enough for the input, and set up key bindings.
@@ -163,7 +163,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _addGeneralKeyBindings: function(){
       if(this.momentFormat === 'A' || this.momentFormat === 'a'){
-        this.addOwnKeyBinding('a p','_alpha');
+        this.addOwnKeyBinding('a p','_toggleAMPM');
         this.addOwnKeyBinding('down up', '_toggleAMPM');
       } else {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
@@ -184,6 +184,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _addSeparatorKeyBinding: function(){
       var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
+      console.log(separator);
       this.addOwnKeyBinding(separator,'_moveFocusForward');
     },
     /**
@@ -317,10 +318,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _digit: function(evt){
       var ne = Polymer.dom(evt);
-      var digit;
 
       //set the key that was clicked to digit
-      digit = this._returnKey(evt.detail.keyboardEvent);
+      var digit = evt.detail.combo;
 
       // if already at full length, we just entered the input, so delete it
       if(this.dtWorkingCopy.length === this.cellLength){
@@ -341,43 +341,131 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *
      * @method
      */
-    _incrementNumber : function(){
-      console.log('up down')
-    },
-    /**
-     *
-     *
-     * @method
-     */
-    _alpha : function(){
+    _incrementNumber : function(evt){
+      var key = evt.detail.combo,
+          tempMoment = this.momentObj.clone(),
+          tempInt = parseInt(this.dtWorkingCopy),
+          endOfMonth = tempMoment.endOf('month');
 
+      console.log(this.isValid);
+
+      if(this.isValid){
+        this._momentIncrement(key);
+      } else {
+        console.log('in else');
+        if(key === 'up'){
+          tempInt += 1;
+        } else { //down
+          tempInt -= 1;
+        }
+        this.set('dtWorkingCopy', ''+tempInt);
+        this._checkValue();
+      }
+
+      this.fire('cell-validate');
+    },
+
+    _momentIncrement: function(key){
+      var formatType = {
+        'Y' : 'y', //years
+        'M' : 'M', //months
+        'D' : 'd', // days
+        'H' : 'h', //hours
+        'h' : 'h', //hours
+        'k' : 'h', //hours
+        'm' : 'm', //minutes
+        's' : 's', //seconds
+        'X' : 's', //seconds
+        'S' : 'ms', //milliseconds
+        'x' : 'ms' //milliseconds
+      };
+      var tempMoment = this.momentObj.clone();
+
+      if(key === 'up'){
+        tempMoment.add(1,formatType[this.momentFormat[0]]);
+
+      } else { //down
+        // if we are dealing with days, and the month has changed....
+        if(formatType[this.momentFormat[0]] === 'd' && tempMoment.date() === 1){
+          tempMoment.endOf('month');
+        } else{
+          tempMoment.subtract(1,formatType[this.momentFormat[0]]);
+        }
+      }
+      this.set('dtWorkingCopy', tempMoment.format(this.momentFormat));
     },
     /**
      *
      *
      * @method
      */
-    _returnKey: function(detail){
-      if (detail.key !== undefined) {
-        return detail.key;
-      } else if (detail.keyCode !== undefined) {
-        var _to_ascii = {
-          '107': '43', //+
-          '109': '45', //-
-          '173': '45', //-
-          '186': '58', //:
-          '187': '43', //+
-          '189': '45'  //-
-        };
-        console.log(detail.keyCode);
-        var key = (_to_ascii[detail.keyCode]) ? _to_ascii[detail.keyCode] : detail.keyCode;
-        return String.fromCharCode(key);
-      } else if (detail.keyIdentifier !== undefined) {
-        return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
-      } else  {
-        console.error("Cant proces keyboard event");
+    _toggleAMPM : function(evt){
+      var ne = Polymer.dom(evt),
+          key = evt.detail.combo;
+
+      if(key === 'A' || key === 'a'){
+        this._setAMPM('AM');
+        this._moveFocusForward();
+
+      } else if(key === 'P' || key === 'p'){
+        this._setAMPM('PM');
+        this._moveFocusForward();
+
+      } else if(key === 'up' || key === 'down'){
+        if(this.dtWorkingCopy === 'AM' || this.dtWorkingCopy === 'am'){
+          this._setAMPM('PM');
+        } else {
+          this._setAMPM('AM');
+        }
       }
     },
+    /**
+     *
+     *
+     * @method
+     */
+     _setAMPM:function(ampm){
+       var mo = moment('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat);
+       this.set('dtWorkingCopy', mo.format(this.momentFormat));
+     },
+
+    /**
+     *
+     *
+     * @method
+     */
+    // _returnKey: function(detail){
+    //   console.log('RETURN KEY');
+    //   if (detail.key !== undefined) {
+    //     return detail.key;
+    //   } else if (detail.keyCode !== undefined) {
+    //     var _to_ascii = {
+    //       '107': '43', //+
+    //       '109': '45', //-
+    //       '173': '45', //-
+    //       '186': '58', //:
+    //       '187': '43', //+
+    //       '189': '45'  //-
+    //     };
+    //     console.log(detail.keyCode);
+    //     if(detail.keyCode === 38){
+    //       return 'ArrowUp'
+    //     } else if(detail.keyCode === 40){
+    //       return 'ArrowDown'
+    //     }
+    //
+    //     var key = (_to_ascii[detail.keyCode]) ? _to_ascii[detail.keyCode] : detail.keyCode;
+    //     return String.fromCharCode(key);
+    //   } else if (detail.keyIdentifier !== undefined) {
+    //     if(detail.keyIdentifier === 'Up' || detail.keyIdentifier === 'Down'){
+    //       return 'Arrow' + detail.keyIdentifier
+    //     }
+    //     // convert unicode in the form U+FFF to 0xFFF which is valid for js.
+    //     return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
+    //   } else  {
+    //     console.error("Cant proces keyboard event");
+    //   }
+    // },
     /**
      *
      *

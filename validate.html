@@ -36,7 +36,9 @@ var validate = {
     neighborValid:{
       type:Boolean,
       value:true
-    }
+    },
+
+
 
   },
   /**
@@ -91,8 +93,8 @@ var validate = {
       this.set('isValid', true);
       // if the neighbor is also valid, then we can set our moment object
       if(this.neighborValid && !this.momentObj.isSame(newMoment,'second')) {
-        this.set('moment', newMoment);
-        this.fire('moment-changed',{'moment':newMoment})
+        this.set('momentObj', newMoment);
+        this.fire('moment-changed',{'momentObj':newMoment})
       }
       return true;
 

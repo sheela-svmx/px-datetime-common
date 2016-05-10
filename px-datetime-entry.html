@@ -36,7 +36,8 @@ Range field component which displays a time or date and font awesome icon.
               order='{{index}}'
               moment-obj="[[momentObj]]"
               moment-format='[[item]]'
-              symbol=[[_returnSymbol(index)]]>
+              symbol=[[_returnSymbol(index)]]
+              is-valid$={{isValid}}>
             </px-datetime-entry-cell>
             <template is="dom-if" if={{_isSymbol(index)}}>
               <span
@@ -107,6 +108,7 @@ Range field component which displays a time or date and font awesome icon.
 
     listeners: {
       'entry-cell-move': '_entryCellMove',
+      'cell-blured': '_handleBlur',
       'cell-validate': '_validateInput'
     },
 
@@ -160,11 +162,13 @@ Range field component which displays a time or date and font awesome icon.
 
       if(entryCellOrder === this._cellFormatArray.length - 1 && evt.detail.dir === 1){
         console.log('END of cells');
-
+        this.fire('next-field');
         // TODO fire something up to advance to next entry
+
       } else if(entryCellOrder === 0 && evt.detail.dir === -1){
         // TODO fire something up to advance to previous entry
         console.log('END of cells');
+        this.fire('previous-field');
 
       } else {
         console.log(evt.detail.dir);
@@ -172,6 +176,10 @@ Range field component which displays a time or date and font awesome icon.
         var elem = this.$$("#cell" + entryCellOrder);
         elem.$.dtEntry.focus();
       }
-    }
+    },
+
+    _handleBlur: function(){
+      this._validateInput();
+    },
   });
 </script>
