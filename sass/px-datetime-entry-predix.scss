@@ -21,6 +21,13 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
 
 @import 'px-datetime-entry-sketch.scss';
 
+:host{
+  --dropdown_bg_default: transparent;
+  --dropdown_bg_hover: transparent;
+  --dropdown_bg_opened: transparent;
+  --dropdown_border_color: 0;
+}
+
 // Component
 .dtLabel {
   color: $gray6;

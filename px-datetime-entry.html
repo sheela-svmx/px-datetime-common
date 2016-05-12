@@ -5,6 +5,7 @@
 <link rel="import" href="px-datetime-behavior.html" />
 <link rel="import" href="px-datetime-entry-cell.html" />
 <link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html" />
+<link rel="import" href="../px-dropdown/px-dropdown.html" />
 
 
 <!--
@@ -19,8 +20,9 @@ Range field component which displays a time or date and font awesome icon.
 <dom-module id="px-datetime-entry">
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
-    <div class="range-field__field flex">
-      <div id='wrapper'>
+
+      <div id='wrapper' class="flex">
+        <div class="flex__item--middle flex__item">
         <label class="label--inline">
           <span class="a11y dtLabel">{{dateOrTime}}</span>
           <iron-icon
@@ -37,7 +39,8 @@ Range field component which displays a time or date and font awesome icon.
               moment-obj="[[momentObj]]"
               moment-format='[[item]]'
               symbol=[[_returnSymbol(index)]]
-              is-valid$={{isValid}}>
+              is-valid$={{isValid}}
+              time-zone="[[timeZone]]">
             </px-datetime-entry-cell>
             <template is="dom-if" if={{_isSymbol(index)}}>
               <span
@@ -46,8 +49,23 @@ Range field component which displays a time or date and font awesome icon.
               </span>
             </template>
           </template>
+        </div>
+        <div class="flex__item--middle">
+          <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
+            <px-dropdown id="dropdown" display-value="[[_timeZoneAbbr]]" value="{{timeZone}}" class="flex__item" on-change="_dropdownChanged">
+              <px-dropdown-content
+                extend-dropdown="true"
+                extend-dropdown-by="120"
+                items="{{_getTimeZoneList()}}">
+              </px-dropdown-content>
+            </px-dropdown>
+          </template>
+          <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
+            <span class="u-ml--">{{_timeZoneAbbr}}</span>
+          </template>
+        </div>
       </div>
-    </div>
+
   </template>
 </dom-module>
 
@@ -92,7 +110,6 @@ Range field component which displays a time or date and font awesome icon.
         type:Object,
         value: function(){ return {} }
       },
-
       _cellFormatArray:{
         type: Array,
         notify: true
@@ -103,6 +120,44 @@ Range field component which displays a time or date and font awesome icon.
         value: function(){
           return []
         }
+      },
+      /**
+       *
+       * Moment-timezone string for using a specific timezone. See
+       * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
+       *
+       * if not provided tries to guess the current local
+       */
+      timeZone: {
+        type: String,
+        value: function() {
+          return moment.tz.guess();
+        },
+        observer: '_timeZoneChanged'
+      },
+      /**
+       *
+       * Can be set to show the timezone. Can have 2 values:
+       *  'dropdown': shows the time zone as a dropdown which the user can use to
+       * select a different time zone
+       *  'text': shows the time zone as text, non editable
+       *
+       */
+      showTimeZone: {
+        type: String,
+        value: ''
+      },
+      /**
+       *
+       * abbreviated timezone string for using a specific timezone. See
+       * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
+       *
+       *
+       * @private
+       */
+      _timeZoneAbbr: {
+        type: String,
+        computed: '_getTimezoneAbbr(timeZone, momentObj)'
       }
     },
 
@@ -114,17 +169,12 @@ Range field component which displays a time or date and font awesome icon.
     },
 
     ready: function(){
-      // dateFormat()
+
       this._splitFormat();
     },
 
     _splitFormat:function(){
-      // this.momentFormat.indexOf('MM');
-
-      // console.log(this.momentFormat.indexOf('MM'));
-      // var re = /\w+\s/g;
-
-      var re = /[MDYAaHhkmsSzZXx]+/g;
+      var re = /[MDYAaHhkmsSZXx]+/g;
       var reSymbol = /\W+/g;
 
       this._cellFormatArray = this.momentFormat.match(re);
@@ -159,20 +209,14 @@ Range field component which displays a time or date and font awesome icon.
     _entryCellMove: function(evt){
       var ne = Polymer.dom(evt);
       var entryCellOrder = ne.rootTarget.order;
-      console.log('_entryCellMove');
 
       if(entryCellOrder === this._cellFormatArray.length - 1 && evt.detail.dir === 1){
-        console.log('END of cells');
+
         this.fire('next-field');
-        // TODO fire something up to advance to next entry
-
       } else if(entryCellOrder === 0 && evt.detail.dir === -1){
-        // TODO fire something up to advance to previous entry
-        console.log('END of cells');
-        this.fire('previous-field');
 
+        this.fire('previous-field');
       } else {
-        console.log(evt.detail.dir);
         entryCellOrder = parseInt(entryCellOrder) + evt.detail.dir;
         var elem = this.$$("#cell" + entryCellOrder);
         elem.$.dtEntry.focus();
@@ -185,6 +229,29 @@ Range field component which displays a time or date and font awesome icon.
 
     _handleMoment: function(evt){
       this.set('momentObj',evt.detail.momentObj);
+    },
+    _getTimezoneAbbr: function(timeZone, momentObj) {
+      return moment.tz.zone(timeZone).abbr(momentObj);
+    },
+    _dropdownChanged: function() {
+      //we need to re-set the value because the dropdown sets display value AFTER value
+      this.$$('px-dropdown').displayValue = this._timeZoneAbbr;
+    },
+    _getTimeZoneList: function() {
+      return moment.tz.names();
+    },
+    _timeZoneChanged: function() {
+      if(this.momentObj) {
+        var newMom = this.momentObj.clone().tz(this.timeZone);
+        this.set('momentObj', newMom);
+        //this.notifyPath('momentObj', this.momentObj);
+      }
+    },
+    _showTimeZoneText: function(showTimeZone) {
+      return showTimeZone === "text";
+    },
+    _showTimeZoneDropdown: function(showTimeZone) {
+      return showTimeZone === "dropdown";
     }
   });
 </script>

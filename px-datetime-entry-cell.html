@@ -110,6 +110,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       order: {
         type:Number,
         reflectToAttribute:true
+      },
+      timeZone:{
+        type:String,
+        value: ''
       }
     },
 
@@ -193,7 +197,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _updateAndValidateWorkingCopy
      */
     _updateAndValidateWorkingCopy: function() {
-      this.set('dtWorkingCopy', this.momentObj.format(this.momentFormat));
+
+      this.set('dtWorkingCopy', this.momentObj.tz(this.timeZone).format(this.momentFormat));
       this.toggleClass('validation-error', false, this.$$('input'));
     },
     /**
@@ -387,7 +392,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
      _setAMPM:function(ampm){
        var mo = moment('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat);
-       this.set('dtWorkingCopy', mo.format(this.momentFormat));
+       this.set('dtWorkingCopy', mo.tz(this.timeZone).format(this.momentFormat));
      },
 
     /**

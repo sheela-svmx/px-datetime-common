@@ -821,15 +821,17 @@ button.btn {
   .range-field__field label {
     margin: 0; }
 
-.text-input {
-  width: auto; }
-
 .dtIcon {
   -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
           transform: scale(0.7, 0.7) translate(0, -3px); }
 
 .dtEntrySymbol {
   margin: -5px; }
+
+.flex__item--max-grow {
+  -webkit-flex: 12;
+      -ms-flex: 12;
+          flex: 12; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
@@ -892,26 +894,33 @@ button.btn {
 /**
      * Add large margins.
      */
-.u-m\00002b {
+.u-m\00002b
+{
   margin: 1.3333333333rem !important; }
 
-.u-mt\00002b {
+.u-mt\00002b
+{
   margin-top: 1.3333333333rem !important; }
 
-.u-mr\00002b {
+.u-mr\00002b
+{
   margin-right: 1.3333333333rem !important; }
 
-.u-mb\00002b {
+.u-mb\00002b
+{
   margin-bottom: 1.3333333333rem !important; }
 
-.u-ml\00002b {
+.u-ml\00002b
+{
   margin-left: 1.3333333333rem !important; }
 
-.u-mh\00002b {
+.u-mh\00002b
+{
   margin-right: 1.3333333333rem !important;
   margin-left: 1.3333333333rem !important; }
 
-.u-mv\00002b {
+.u-mv\00002b
+{
   margin-top: 1.3333333333rem !important;
   margin-bottom: 1.3333333333rem !important; }
 

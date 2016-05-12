@@ -77,7 +77,7 @@ var validate = {
       */
       var newMoment = this.momentObj.clone();
       // just use the relevant fields, so ok if not in utc timemoment
-      var typedInMoment = moment(inputStr, this.momentFormat);
+      var typedInMoment = moment.tz(inputStr, this.momentFormat, this.timeZone);
       console.log(newMoment.format('MM/DD/YYYY hh:mm:ss'));
       console.log(typedInMoment.format('MM/DD/YYYY hh:mm:ss'));
 

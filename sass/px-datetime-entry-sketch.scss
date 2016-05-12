@@ -48,16 +48,16 @@ $inuit-enable-validation-states : true;
   }
 }
 
-.text-input{
-  width: auto;
-}
-
 .dtIcon{
   transform: scale(0.7, 0.7) translate(0, -3px);
 }
 
 .dtEntrySymbol{
   margin:-5px;
+}
+
+.flex__item--max-grow {
+  flex: 12;
 }
 
 // Trumps
