@@ -12,7 +12,10 @@ Range field component which displays a time or date and font awesome icon.
 
 ##### Usage
 
-    <px-datetime-entry moment="{{...}}" date-or-time="Date">
+    <px-datetime-entry
+      moment="{{...}}"??
+      date-or-time="Date"
+      moment-format="MM/DD/YYYY">
     </px-datetime-entry>
 
 @demo demo.html
@@ -83,7 +86,7 @@ Range field component which displays a time or date and font awesome icon.
        *
        * Can only be configured statically; not data-bindable
        *
-       * @private
+       *
        */
       momentFormat: {
         type: String
