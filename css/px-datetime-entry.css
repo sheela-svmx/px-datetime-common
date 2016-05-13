@@ -839,17 +839,15 @@ button.btn {
           transform: scale(0.7, 0.7) translate(0, -3px); }
 
 .dtEntrySymbol {
-  margin: -2px; }
+  margin: -5px; }
 
 .flex__item--max-grow {
   -webkit-flex: 12;
       -ms-flex: 12;
           flex: 12; }
 
-.inline-flex {
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex; }
+.inline-block {
+  display: inline-block; }
 
 .timezone__dropdown {
   width: 10rem; }

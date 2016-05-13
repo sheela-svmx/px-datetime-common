@@ -20,36 +20,36 @@ Range field component which displays a time or date and font awesome icon.
 <dom-module id="px-datetime-entry">
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
-    <span id='wrapper' class="inline-flex wrapper">
-      <span class="flex__item--middle flex__item--max-grow flex">
-        <label class="label--inline">
-          <span class="a11y dtLabel">{{dateOrTime}}</span>
-          <iron-icon
-            id="icon"
-            class="fa fa-fw dtIcon"
-            icon="[[_setIcon(dateOrTime)]]">
-          </iron-icon>
-        </label>
-        <template is="dom-repeat" items="{{_cellFormatArray}}">
-          <px-datetime-entry-cell
-            id="cell{{index}}"
-            class="cell flex__item flex__item--middle"
-            order='{{index}}'
-            moment-obj="[[momentObj]]"
-            moment-format='[[item]]'
-            symbol=[[_returnSymbol(index)]]
-            is-valid$={{isValid}}
-            time-zone="[[timeZone]]">
-          </px-datetime-entry-cell>
-          <template is="dom-if" if={{_isSymbol(index)}}>
-            <span
-              class="dtEntrySymbol flex__item flex__item--middle"
-              symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
-            </span>
+    <div id='wrapper' class="wrapper" style="display:inline-flex; align-items:baseline">
+      <div class="inline-block">
+          <label class="label--inline">
+            <span class="a11y dtLabel">{{dateOrTime}}</span>
+            <iron-icon
+              id="icon"
+              class="fa fa-fw dtIcon"
+              icon="[[_setIcon(dateOrTime)]]">
+            </iron-icon>
+          </label>
+          <template is="dom-repeat" items="{{_cellFormatArray}}">
+            <px-datetime-entry-cell
+              id="cell{{index}}"
+              class="cell"
+              order='{{index}}'
+              moment-obj="[[momentObj]]"
+              moment-format='[[item]]'
+              symbol=[[_returnSymbol(index)]]
+              is-valid$={{isValid}}
+              time-zone="[[timeZone]]">
+            </px-datetime-entry-cell>
+            <template is="dom-if" if={{_isSymbol(index)}}>
+              <span
+                class="dtEntrySymbol"
+                symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
+              </span>
+            </template>
           </template>
-        </template>
-      </span>
-      <span class="flex__item flex__item--middle">
+      </div>
+      <span class="inline-block">
         <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
           <px-dropdown id="dropdown" display-value="[[_timeZoneAbbr]]" value="{{timeZone}}" on-change="_dropdownChanged">
             <px-dropdown-content
@@ -63,7 +63,7 @@ Range field component which displays a time or date and font awesome icon.
           <span class="u-ml--">{{_timeZoneAbbr}}</span>
         </template>
       </span>
-    </span>
+    </div>
   </template>
 </dom-module>
 
