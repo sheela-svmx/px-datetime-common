@@ -839,12 +839,20 @@ button.btn {
           transform: scale(0.7, 0.7) translate(0, -3px); }
 
 .dtEntrySymbol {
-  margin: -5px; }
+  margin: -2px; }
 
 .flex__item--max-grow {
   -webkit-flex: 12;
       -ms-flex: 12;
           flex: 12; }
+
+.inline-flex {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex; }
+
+.timezone__dropdown {
+  width: 10rem; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
@@ -965,8 +973,8 @@ button.btn {
 
 :host {
   --dropdown_bg_default: transparent;
-  --dropdown_bg_hover: transparent;
-  --dropdown_bg_opened: transparent;
+  --dropdown_bg_hover: #efeff4;
+  --dropdown_bg_opened: #efeff4;
   --dropdown_border_color: 0; }
 
 .dtLabel {

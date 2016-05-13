@@ -151,6 +151,10 @@ module.exports = function (grunt) {
         'concurrent:devmode'
     ]);
 
+    grunt.registerTask('designer', 'for designers to look at', [
+        'depserve'
+    ]);
+
     // First run task.
     grunt.registerTask('firstrun', 'Basic first run', function() {
         grunt.config.set('depserveOpenUrl', '/index.html');

@@ -20,9 +20,8 @@ Range field component which displays a time or date and font awesome icon.
 <dom-module id="px-datetime-entry">
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
-
-      <div id='wrapper' class="flex">
-        <div class="flex__item--middle flex__item">
+    <span id='wrapper' class="inline-flex wrapper">
+      <span class="flex__item--middle flex__item--max-grow flex">
         <label class="label--inline">
           <span class="a11y dtLabel">{{dateOrTime}}</span>
           <iron-icon
@@ -31,41 +30,40 @@ Range field component which displays a time or date and font awesome icon.
             icon="[[_setIcon(dateOrTime)]]">
           </iron-icon>
         </label>
-          <template is="dom-repeat" items="{{_cellFormatArray}}">
-            <px-datetime-entry-cell
-              id="cell{{index}}"
-              class="cell"
-              order='{{index}}'
-              moment-obj="[[momentObj]]"
-              moment-format='[[item]]'
-              symbol=[[_returnSymbol(index)]]
-              is-valid$={{isValid}}
-              time-zone="[[timeZone]]">
-            </px-datetime-entry-cell>
-            <template is="dom-if" if={{_isSymbol(index)}}>
-              <span
-                class="dtEntrySymbol"
-                symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
-              </span>
-            </template>
+        <template is="dom-repeat" items="{{_cellFormatArray}}">
+          <px-datetime-entry-cell
+            id="cell{{index}}"
+            class="cell flex__item flex__item--middle"
+            order='{{index}}'
+            moment-obj="[[momentObj]]"
+            moment-format='[[item]]'
+            symbol=[[_returnSymbol(index)]]
+            is-valid$={{isValid}}
+            time-zone="[[timeZone]]">
+          </px-datetime-entry-cell>
+          <template is="dom-if" if={{_isSymbol(index)}}>
+            <span
+              class="dtEntrySymbol flex__item flex__item--middle"
+              symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
+            </span>
           </template>
-        </div>
-        <div class="flex__item--middle">
-          <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
-            <px-dropdown id="dropdown" display-value="[[_timeZoneAbbr]]" value="{{timeZone}}" class="flex__item" on-change="_dropdownChanged">
-              <px-dropdown-content
-                extend-dropdown="true"
-                extend-dropdown-by="120"
-                items="{{_getTimeZoneList()}}">
-              </px-dropdown-content>
-            </px-dropdown>
-          </template>
-          <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
-            <span class="u-ml--">{{_timeZoneAbbr}}</span>
-          </template>
-        </div>
-      </div>
-
+        </template>
+      </span>
+      <span class="flex__item flex__item--middle">
+        <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
+          <px-dropdown id="dropdown" display-value="[[_timeZoneAbbr]]" value="{{timeZone}}" on-change="_dropdownChanged">
+            <px-dropdown-content
+              extend-dropdown="true"
+              extend-dropdown-by="120"
+              items="{{_getTimeZoneList()}}">
+            </px-dropdown-content>
+          </px-dropdown>
+        </template>
+        <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
+          <span class="u-ml--">{{_timeZoneAbbr}}</span>
+        </template>
+      </span>
+    </span>
   </template>
 </dom-module>
 

@@ -27,7 +27,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       class="text-input--bare"
       on-focus="_handleFocus"
       on-blur="_handleBlur"
-      on-input="_inputValueChanged"
       on-paste="_handlePaste"
       on-copy="_handleCopy"
       value="[[dtWorkingCopy]]"
@@ -290,10 +289,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _inputValueChanged
      */
     _inputValueChanged: function(evt){
-      clearTimeout(this._validationAutoTimeout);
-      this._validationAutoTimeout = setTimeout(function(){
-        this.fire('cell-validate');
-      }.bind(this), 500);
+      var _this = this;
+      this.debounce('cell-validation', function(){
+
+        _this.fire('cell-validate');
+      }, 500);
     },
     /**
      * When ENTER is clicked
@@ -448,7 +448,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      * TODO When we deal with time zones we need to add that in here
      */
-    _placeholderText(momentFormat){
+    _placeholderText: function(momentFormat){
       var phText = {
         'Z': String.fromCharCode(177) + 'xx:xx',
         'ZZ': String.fromCharCode(177) + 'xxxx',

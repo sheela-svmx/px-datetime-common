@@ -42,6 +42,10 @@ $inuit-enable-validation-states : true;
 
 // Component
 
+:host {
+  cursor:pointer;
+}
+
 .text-input--bare {
   text-align: center;
 

@@ -822,6 +822,9 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
+:host {
+  cursor: pointer; }
+
 .text-input--bare {
   text-align: center;
   margin: 0;

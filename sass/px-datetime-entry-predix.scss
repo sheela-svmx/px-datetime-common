@@ -23,10 +23,12 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
 
 :host{
   --dropdown_bg_default: transparent;
-  --dropdown_bg_hover: transparent;
-  --dropdown_bg_opened: transparent;
+  --dropdown_bg_hover: $gray2;
+  --dropdown_bg_opened:  $gray2;
   --dropdown_border_color: 0;
 }
+
+
 
 // Component
 .dtLabel {

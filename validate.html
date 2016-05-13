@@ -57,13 +57,9 @@ var validate = {
     for (var i = 0; i < inputArr.length; i++) {
       inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
     }
-    // console.log("inputStr  "  + inputStr);
-    // console.log("momentFormat  "  + this.momentFormat);
-    // console.log(moment(inputStr, this.momentFormat, true));
 
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
-    console.log(inputStr);
 
     // if the component datetime string is a valid datetime
     if(moment(inputStr, this.momentFormat, true).isValid()) {
@@ -78,8 +74,6 @@ var validate = {
       var newMoment = this.momentObj.clone();
       // just use the relevant fields, so ok if not in utc timemoment
       var typedInMoment = moment.tz(inputStr, this.momentFormat, this.timeZone);
-      console.log(newMoment.format('MM/DD/YYYY hh:mm:ss'));
-      console.log(typedInMoment.format('MM/DD/YYYY hh:mm:ss'));
 
       // since the input box only has date or time, just reset that portion of the moment object
       if (this.dateOrTime.toLowerCase() === 'date') { // if i'm typing in a date field, set the new date
@@ -99,7 +93,6 @@ var validate = {
       if(this.neighborValid && !this.momentObj.isSame(newMoment)) {
         this.set('momentObj', newMoment);
         this.fire('moment-changed',{'momentObj':newMoment})
-        console.log(this.momentObj);
 
       }
       return true;

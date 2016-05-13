@@ -25,31 +25,29 @@
         <p>
             Also see the <a href="index.html">documentation</a> and the <a href="test/fixture.html">UI test fixture</a>.
         </p>
-<div class="flex">
-  <div class="flex__item">
-        <px-datetime-entry
 
+        <px-datetime-entry
           id="dateEntry"
           date-or-time = 'Date'
-          moment-format = "MM/DD/YYYY Z"
+          moment-format = "MM/DD/YYYY Z A"
           show-time-zone= "dropdown"
-
           time-zone="America/Montreal">
         </px-datetime-entry>
-</div>
-  <div class="flex__item">
+
         <px-datetime-entry
 
           id="timeEntry"
           date-or-time = 'Time'
-          moment-format = "HH:mm:ss.SSS  A"
+          moment-format = "HH:mm:ss.SSS A"
           time-zone="America/Montreal"
           show-time-zone="text"
           >
         </px-datetime-entry>
-      </div>
-</div>
-        <br/>
+
+
+
+
+
 
         <!-- <px-datetime-buttons>
         </px-datetime-buttons> -->
@@ -62,6 +60,8 @@
             var obj = moment();
             dateEntry.momentObj = obj;
             timeEntry.set('momentObj',obj);
+            // Polymer.dom(document).querySelector('#timeEntry2').momentObj = obj;;
+            // Polymer.dom(document).querySelector('#timeEntry3').momentObj = obj;;
           });
 
         </script>
