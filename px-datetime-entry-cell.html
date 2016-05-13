@@ -295,7 +295,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _inputValueChanged: function(evt){
       var _this = this;
       this.debounce('cell-validation', function(){
-
         _this.fire('cell-validate');
       }, 500);
     },

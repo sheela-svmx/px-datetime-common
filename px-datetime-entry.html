@@ -60,7 +60,7 @@ Range field component which displays a time or date and font awesome icon.
               extend-dropdown="true"
               extend-dropdown-by="50"
               max-content-character-width="50"
-              items="[[_timeZoneList]]">
+              items="[[_getTimeZoneList(showTimeZone)]]">
             </px-dropdown-content>
           </px-dropdown>
         </template>
@@ -142,53 +142,15 @@ Range field component which displays a time or date and font awesome icon.
        *
        * Can be set to show the timezone. Can have 2 values:
        *  'dropdown': shows the time zone as a dropdown which the user can use to
-       * select a different time zone
+       * select a different time zone. Only contains a subset of all timezones
+       *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
+       * select a different time zone. Contains all existing timezones (588)
        *  'text': shows the time zone as text, non editable
        *
        */
       showTimeZone: {
         type: String,
         value: ''
-      },
-      _timeZoneList: {
-        type: Array,
-        readonly: true,
-        value: function() {
-          return [
-            "Etc/GMT",
-            "Etc/GMT+0",
-            "Etc/GMT+1",
-            "Etc/GMT+10",
-            "Etc/GMT+11",
-            "Etc/GMT+12",
-            "Etc/GMT+2",
-            "Etc/GMT+3",
-            "Etc/GMT+4",
-            "Etc/GMT+5",
-            "Etc/GMT+6",
-            "Etc/GMT+7",
-            "Etc/GMT+8",
-            "Etc/GMT+9",
-            "Etc/GMT-0",
-            "Etc/GMT-1",
-            "Etc/GMT-10",
-            "Etc/GMT-11",
-            "Etc/GMT-12",
-            "Etc/GMT-13",
-            "Etc/GMT-14",
-            "Etc/GMT-2",
-            "Etc/GMT-3",
-            "Etc/GMT-4",
-            "Etc/GMT-5",
-            "Etc/GMT-6",
-            "Etc/GMT-7",
-            "Etc/GMT-8",
-            "Etc/GMT-9",
-            "Etc/GMT0",
-            "UCT",
-            "UTC",
-          ];
-        }
       }
     },
 
@@ -272,7 +234,47 @@ Range field component which displays a time or date and font awesome icon.
       return showTimeZone === "text";
     },
     _showTimeZoneDropdown: function(showTimeZone) {
-      return showTimeZone === "dropdown";
+      return showTimeZone === "dropdown" || showTimeZone === "extendedDropdown";
+    },
+    _getTimeZoneList: function(showTimeZone) {
+      if(showTimeZone === "extendedDropdown") {
+        return moment.tz.names();
+      } else if (showTimeZone === "dropdown"){
+        return [
+          "Etc/GMT",
+          "Etc/GMT+0",
+          "Etc/GMT+1",
+          "Etc/GMT+10",
+          "Etc/GMT+11",
+          "Etc/GMT+12",
+          "Etc/GMT+2",
+          "Etc/GMT+3",
+          "Etc/GMT+4",
+          "Etc/GMT+5",
+          "Etc/GMT+6",
+          "Etc/GMT+7",
+          "Etc/GMT+8",
+          "Etc/GMT+9",
+          "Etc/GMT-0",
+          "Etc/GMT-1",
+          "Etc/GMT-10",
+          "Etc/GMT-11",
+          "Etc/GMT-12",
+          "Etc/GMT-13",
+          "Etc/GMT-14",
+          "Etc/GMT-2",
+          "Etc/GMT-3",
+          "Etc/GMT-4",
+          "Etc/GMT-5",
+          "Etc/GMT-6",
+          "Etc/GMT-7",
+          "Etc/GMT-8",
+          "Etc/GMT-9",
+          "Etc/GMT0",
+          "UCT",
+          "UTC",
+        ];
+      }
     }
   });
 </script>
