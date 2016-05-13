@@ -35,18 +35,15 @@
         <px-datetime-entry
           id="dateEntry"
           date-or-time = 'Date'
-          moment-format = "MM/DD/YYYY Z A"
+          moment-format = "MM/DD/YYYY Z"
           show-time-zone= "dropdown"
-          time-zone="America/Montreal">
+          time-zone="UTC">
         </px-datetime-entry>
 
         <px-datetime-entry
-
           id="timeEntry"
           date-or-time = 'Time'
-          moment-format = "HH:mm:ss.SSS A"
-          time-zone="America/Montreal"
-          show-time-zone="text"
+          moment-format = "hh:mm:ss.SSS A z"
           >
         </px-datetime-entry>
 

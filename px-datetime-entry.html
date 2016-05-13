@@ -55,16 +55,17 @@ Range field component which displays a time or date and font awesome icon.
       </div>
       <div class="inline-block">
         <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
-          <px-dropdown id="dropdown" display-value="[[_timeZoneAbbr]]" value="{{timeZone}}" on-change="_dropdownChanged">
+          <px-dropdown id="dropdown" display-value="[[timeZone]]" value="{{timeZone}}">
             <px-dropdown-content
               extend-dropdown="true"
-              extend-dropdown-by="120"
-              items="{{_getTimeZoneList()}}">
+              extend-dropdown-by="50"
+              max-content-character-width="50"
+              items="[[_timeZoneList]]">
             </px-dropdown-content>
           </px-dropdown>
         </template>
         <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
-          <span class="u-ml--">{{_timeZoneAbbr}}</span>
+          <span class="u-ml--">{{timeZone}}</span>
         </template>
       </div>
     </div>
@@ -149,17 +150,45 @@ Range field component which displays a time or date and font awesome icon.
         type: String,
         value: ''
       },
-      /**
-       *
-       * abbreviated timezone string for using a specific timezone. See
-       * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
-       *
-       *
-       * @private
-       */
-      _timeZoneAbbr: {
-        type: String,
-        computed: '_getTimezoneAbbr(timeZone, momentObj)'
+      _timeZoneList: {
+        type: Array,
+        readonly: true,
+        value: function() {
+          return [
+            "Etc/GMT",
+            "Etc/GMT+0",
+            "Etc/GMT+1",
+            "Etc/GMT+10",
+            "Etc/GMT+11",
+            "Etc/GMT+12",
+            "Etc/GMT+2",
+            "Etc/GMT+3",
+            "Etc/GMT+4",
+            "Etc/GMT+5",
+            "Etc/GMT+6",
+            "Etc/GMT+7",
+            "Etc/GMT+8",
+            "Etc/GMT+9",
+            "Etc/GMT-0",
+            "Etc/GMT-1",
+            "Etc/GMT-10",
+            "Etc/GMT-11",
+            "Etc/GMT-12",
+            "Etc/GMT-13",
+            "Etc/GMT-14",
+            "Etc/GMT-2",
+            "Etc/GMT-3",
+            "Etc/GMT-4",
+            "Etc/GMT-5",
+            "Etc/GMT-6",
+            "Etc/GMT-7",
+            "Etc/GMT-8",
+            "Etc/GMT-9",
+            "Etc/GMT0",
+            "UCT",
+            "UTC",
+          ];
+        }
       }
     },
 
@@ -176,7 +205,7 @@ Range field component which displays a time or date and font awesome icon.
     },
 
     _splitFormat:function(){
-      var re = /[MDYAaHhkmsSZXx]+/g;
+      var re = /[MDYAaHhkmsSZzXx]+/g;
       var reSymbol = /\W+/g;
 
       this._cellFormatArray = this.momentFormat.match(re);
@@ -231,16 +260,6 @@ Range field component which displays a time or date and font awesome icon.
 
     _handleMoment: function(evt){
       this.set('momentObj',evt.detail.momentObj);
-    },
-    _getTimezoneAbbr: function(timeZone, momentObj) {
-      return moment.tz.zone(timeZone).abbr(momentObj);
-    },
-    _dropdownChanged: function() {
-      //we need to re-set the value because the dropdown sets display value AFTER value
-      this.$$('px-dropdown').displayValue = this._timeZoneAbbr;
-    },
-    _getTimeZoneList: function() {
-      return moment.tz.names();
     },
     _timeZoneChanged: function() {
       if(this.momentObj) {
