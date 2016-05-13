@@ -36,6 +36,8 @@ var pxDatetimeRangeBehavior = {
      *   ]
      * ```
      *
+     * Defined In: 'pxDatetimeRangeBehavior'
+     *
      * @default no presetRanges
      */
     presetRanges: Object, //may be useless
@@ -54,6 +56,8 @@ var pxDatetimeRangeBehavior = {
      * ```
      *
      * This object which will be changed when the user Submits their new selected range.
+     *
+     * Defined In: 'pxDatetimeRangeBehavior'
      *
      * @default the last 7 days
      */
@@ -76,6 +80,8 @@ var pxDatetimeRangeBehavior = {
      *
      * used in '_setRange' to set 'range'
      *
+     * Defined In: 'pxDatetimeRangeBehavior'
+     *
      * @private
      */
     fromMoment: {
@@ -90,6 +96,8 @@ var pxDatetimeRangeBehavior = {
      *
      * used in '_setRange' to set 'range'
      *
+     * Defined In: 'pxDatetimeRangeBehavior'
+     *
      * @private
      */
     toMoment: {
@@ -101,6 +109,8 @@ var pxDatetimeRangeBehavior = {
      *
      * Helper attribute passed down by px-datetime components
      *
+     * Defined In: 'pxDatetimeRangeBehavior'
+     *
      * @private
      */
     firstRangeDate: {
@@ -111,6 +121,8 @@ var pxDatetimeRangeBehavior = {
      * (px-calendar)
      *
      * Helper attribute passed down by px-datetime components
+     *
+     * Defined In: 'pxDatetimeRangeBehavior'
      *
      * @private
      */
@@ -125,6 +137,8 @@ var pxDatetimeRangeBehavior = {
    * Coverts 'toMoment' and 'fromMoment' to ISO8601 strings, then set the range with the strings.
    *
    * Triggered from a click on cancel, submit, esc, or enter
+   *
+   * Defined In: 'pxDatetimeRangeBehavior'
    */
   _setRange: function() {
     // set to and from based on inputed range

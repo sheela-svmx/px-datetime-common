@@ -50,10 +50,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     properties: {
       /**
        *
-       * Moment format string for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
+       * Moment format tokens for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
        *
        * Can only be configured statically; not data-bindable
-       *
+       *```
+       *    example: 'YYYY'
+       *```
        * @private
        */
       momentFormat: {
@@ -62,6 +64,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       /**
        *
        * Holder for a timeout object to trigger validation after x-seconds when a user types in an input.
+       *
+       * @default 500ms
        *
        * @private
        */
@@ -73,18 +77,22 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        *
        * IronA11yKeysBehavior: element to which key events are attached
        *
+       * Is this needed?
        *
        * @private
        */
-      keyEventTarget: {
-        type: Object,
-        value: function() {
-          return this.$.dtEntry;
-        }
-      },
+      // keyEventTarget: {
+      //   type: Object,
+      //   value: function() {
+      //     return this.$.dtEntry;
+      //   }
+      // },
+
       /**
        *
-       * The string displayed in the input and editited by the user
+       * The string displayed in the input field
+       *
+       * Used in _sizeInputs, _updateAndValidateWorkingCopy, _checkValue, _digit, _toggleAMPM, _setAMPM, and _deleteEntry
        *
        * @private
        */
@@ -95,17 +103,30 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       },
       /**
        *
-       * The separator character
+       * The separator character, passed down from px-datetime-entry
        *
        * @private
        */
       symbol:{
         type:String
       },
-
+      /**
+       *
+       * Is set to the number of characters that are in dtWorkingCopy. Unless dtWorkingCopy.length is 1, then it is set to 2.
+       *
+       * Used to determine how big the input-width needs to be. 
+       *
+       * @private
+       */
       cellLength:{
         type: Number
       },
+      /**
+       *
+       * Order number this cell is in px-datetime-entry, passed down from px-datetime-entry
+       *
+       * @private
+       */
       order: {
         type:Number,
         reflectToAttribute:true
@@ -122,6 +143,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
     /**
      * Key bindings for iron-a11y-keys-behavior
+     *
+     * More keyBindings are added in _addGeneralKeyBindings
+     *
      * @private
      */
     keyBindings: {
@@ -133,22 +157,16 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       'backspace del':'_deleteEntry'
     },
     /**
-     * On ready, check what type of cell this is, toggle class to make it wide enough for the input, and set up key bindings.
+     * On attached, set up key bindings.
      *
      */
     attached: function(){
       this._addGeneralKeyBindings();
-
-      // if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
-      //   // TODO add key bindings for + - :
-      // } else {
-      //   var len = (this.momentFormat.length === 1) ? 2 : this.momentFormat.length;
-      // }
-
     },
     /**
+     * Size the input fields based on the number of characters in dtWorkingCopy
      *
-     *
+     * Set the cellLength to the number of characters that are in dtWorkingCopy. Unless dtWorkingCopy.length is 1, then set cellLength to 2.
      * @method
      */
     _sizeInputs: function(){
@@ -187,7 +205,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _addSeparatorKeyBinding: function(){
       var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
-      console.log(separator);
       this.addOwnKeyBinding(separator,'_moveFocusForward');
     },
     /**
@@ -254,13 +271,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       // else if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
       //   var mo = moment.tz(this.dtWorkingCopy);
       //   if(mo.isValid()){
-      //     console.log(mo);
-      //     console.log('f ' + mo.format(this.momentFormat));
-      //
       //     this.set('dtWorkingCopy', mo.format(this.momentFormat));
-      //     console.log("z" + this.dtWorkingCopy);
       //   } else {
-      //     console.log("go away fat man");
       //   }
       // }
       else if(this.momentFormat[0] === 'S' && this.dtWorkingCopy.length < this.momentFormat.length){
@@ -347,7 +359,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _incrementNumber : function(evt){
-      console.log('Arrow');
       var key = evt.detail.combo;
       var tempMoment = this.momentObj.clone();
 
@@ -401,7 +412,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     // _returnKey: function(detail){
-    //   console.log('RETURN KEY');
     //   if (detail.key !== undefined) {
     //     return detail.key;
     //   } else if (detail.keyCode !== undefined) {
@@ -413,7 +423,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     //       '187': '43', //+
     //       '189': '45'  //-
     //     };
-    //     console.log(detail.keyCode);
     //     if(detail.keyCode === 38){
     //       return 'ArrowUp'
     //     } else if(detail.keyCode === 40){
