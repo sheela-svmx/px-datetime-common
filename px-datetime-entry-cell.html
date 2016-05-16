@@ -155,7 +155,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack',
       'tab' : '_checkValue',
-      'backspace del':'_deleteEntry'
+
     },
     /**
      * On attached, set up key bindings.
@@ -190,9 +190,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(this.momentFormat === 'A' || this.momentFormat === 'a'){
         this.addOwnKeyBinding('a p','_toggleAMPM');
         this.addOwnKeyBinding('down up', '_toggleAMPM');
+        this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
       } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
         this.addOwnKeyBinding('down up', '_incrementNumber');
+        this.addOwnKeyBinding('backspace del','_deleteEntry');
       }
     },
 
@@ -365,6 +367,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       // since this cannot be invalid, fire so it sets above and let changes trickle.
       this.fire('moment-changed',{'momentObj':tempMoment})
 
+      evt.preventDefault();
     },
     /**
      *
@@ -390,6 +393,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
           this._setAMPM('AM');
         }
       }
+
+      evt.preventDefault();
     },
     /**
      *
@@ -400,57 +405,31 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        var mo = moment('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat);
        this.set('dtWorkingCopy', mo.tz(this.timeZone).format(this.momentFormat));
      },
-
     /**
+     * Delete the last letter of the dtWorkingCopy
      *
-     *
-     * @method
-     */
-    // _returnKey: function(detail){
-    //   if (detail.key !== undefined) {
-    //     return detail.key;
-    //   } else if (detail.keyCode !== undefined) {
-    //     var _to_ascii = {
-    //       '107': '43', //+
-    //       '109': '45', //-
-    //       '173': '45', //-
-    //       '186': '58', //:
-    //       '187': '43', //+
-    //       '189': '45'  //-
-    //     };
-    //     if(detail.keyCode === 38){
-    //       return 'ArrowUp'
-    //     } else if(detail.keyCode === 40){
-    //       return 'ArrowDown'
-    //     }
-    //
-    //     var key = (_to_ascii[detail.keyCode]) ? _to_ascii[detail.keyCode] : detail.keyCode;
-    //     return String.fromCharCode(key);
-    //   } else if (detail.keyIdentifier !== undefined) {
-    //     if(detail.keyIdentifier === 'Up' || detail.keyIdentifier === 'Down'){
-    //       return 'Arrow' + detail.keyIdentifier
-    //     }
-    //     // convert unicode in the form U+FFF to 0xFFF which is valid for js.
-    //     return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
-    //   } else  {
-    //     console.error("Cant proces keyboard event");
-    //   }
-    // },
-    /**
-     *
+     * Prevent the delete button from navigating back
      *
      * @method
      */
     _deleteEntry: function(evt){
-      this.set('dtWorkingCopy', '');
-
+      this.set('dtWorkingCopy', this.dtWorkingCopy.slice(0,-1));
       evt.preventDefault();
     },
     /**
-     *
+     * Prevent the delete button from navigating back
      *
      * @method
-     * TODO When we deal with time zones we need to add that in here
+     */
+    _preventDeleteDefault: function(evt){
+      evt.preventDefault();
+    },
+    /**
+     * Create meaningful hint text for 'Z', 'ZZ', 'X', and 'x'
+     *
+     * If the momentFormat format is not 'Z', 'ZZ', 'X', or 'x' then return the momentFormat
+     *
+     * @method
      */
     _placeholderText: function(momentFormat){
       var phText = {
