@@ -65,7 +65,7 @@ Range field component which displays a time or date and font awesome icon.
           </px-dropdown>
         </template>
         <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
-          <span class="u-ml--">{{timeZone}}</span>
+          <span class="u-ml--">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
         </template>
       </div>
     </div>
@@ -79,7 +79,7 @@ Range field component which displays a time or date and font awesome icon.
 
     behaviors: [
       pxDatetimeBehavior,
-      validate,
+      validate
     ],
 
     properties: {
@@ -146,7 +146,7 @@ Range field component which displays a time or date and font awesome icon.
        *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Contains all existing timezones (588)
        *  'text': shows the time zone as text, non editable
-       *
+       *  'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
        */
       showTimeZone: {
         type: String,
@@ -158,7 +158,9 @@ Range field component which displays a time or date and font awesome icon.
       'entry-cell-move': '_entryCellMove',
       'cell-blured': '_handleBlur',
       'cell-validate': '_validateInput',
-      'moment-changed': '_handleMoment'
+      'moment-changed': '_handleMoment',
+      'px-request-datetime-entry-copy': '_handleCopy',
+      'px-request-datetime-entry-paste': '_handlePaste'
     },
 
     ready: function(){
@@ -167,7 +169,7 @@ Range field component which displays a time or date and font awesome icon.
     },
 
     _splitFormat:function(){
-      var re = /[MDYAaHhkmsSZzXx]+/g;
+      var re = /[MDYAaHhkmsSZXx]+/g;
       var reSymbol = /\W+/g;
 
       this._cellFormatArray = this.momentFormat.match(re);
@@ -231,7 +233,7 @@ Range field component which displays a time or date and font awesome icon.
       }
     },
     _showTimeZoneText: function(showTimeZone) {
-      return showTimeZone === "text";
+      return showTimeZone === "text" || showTimeZone === "abbreviatedText";
     },
     _showTimeZoneDropdown: function(showTimeZone) {
       return showTimeZone === "dropdown" || showTimeZone === "extendedDropdown";
@@ -274,6 +276,33 @@ Range field component which displays a time or date and font awesome icon.
           "UCT",
           "UTC",
         ];
+      }
+    },
+    _handleCopy: function(e) {
+      e.detail.setData('text/plain', moment.tz(this.momentObj, this.timeZone).format(this.momentFormat));
+      e.detail.setData('dateType', this.dateOrTime);
+    },
+    _handlePaste: function(e) {
+
+      //try parsing what's been pasted...
+      var newDate = moment(e.detail.getData('text/plain'), this.momentFormat);
+      if(newDate.isValid()) {
+
+        var dateOrTime = e.detail.getData('dateType');
+        //if this comes from another datetime-entry make sure it is the same type
+        //otherwise just allow. This is to avoid changing the date when parsing a time
+        if(!dateOrTime || (dateOrTime === this.dateOrTime)) {
+          this.momentObj = newDate;
+        }
+      }else {
+        console.log("tried to paste non valid date format: " + e.detail.getData('text/plain') + ". Expecting: " + this.momentFormat);
+      }
+    },
+    _getTimeZoneText(timeZone, showTimeZone, momentObj) {
+      if(showTimeZone === "abbreviatedText") {
+        return moment.tz.zone(timeZone).abbr(momentObj);
+      } else if (showTimeZone === "text"){
+        return timeZone;
       }
     }
   });

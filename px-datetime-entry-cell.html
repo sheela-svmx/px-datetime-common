@@ -29,6 +29,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-blur="_handleBlur"
       on-paste="_handlePaste"
       on-copy="_handleCopy"
+      on-click="_test"
       value="[[dtWorkingCopy]]"
       maxlength="[[maxlength]]"
       placeholder='[[_placeholderText(momentFormat)]]'>
@@ -175,6 +176,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.toggleClass('input-width', true , this.$.dtEntry);
         this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
       }
+    },
+    _test: function(evt) {
+
     },
 
     /**
@@ -468,10 +472,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _handlePaste: function(evt){
-      console.log('pasted');
-      console.log(evt);
-      data = evt.clipboardData;
-      console.log(data);
+
+      this.fire('px-request-datetime-entry-paste', evt.clipboardData);
+      evt.preventDefault();
     },
     /**
      *
@@ -479,13 +482,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _handleCopy: function(evt){
-      this.$.dtEntry.select();
 
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        console.log('Unable to copy');
-      }
+      this.fire('px-request-datetime-entry-copy', evt.clipboardData);
+      evt.preventDefault();
     },
     /**
      * Format strings and setting/modification strings are different (?!?!)
