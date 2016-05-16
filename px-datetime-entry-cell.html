@@ -28,8 +28,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-paste="_handlePaste"
+      on-beforepaste="_beforePaste"
+      on-beforecopy="_beforeCopy"
       on-copy="_handleCopy"
-      on-click="_test"
       value="[[dtWorkingCopy]]"
       maxlength="[[maxlength]]"
       placeholder='[[_placeholderText(momentFormat)]]'>
@@ -177,10 +178,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
       }
     },
-    _test: function(evt) {
-
-    },
-
     /**
      * Sets up regular key bindings
      *
@@ -400,42 +397,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        var mo = moment('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat);
        this.set('dtWorkingCopy', mo.tz(this.timeZone).format(this.momentFormat));
      },
-
-    /**
-     *
-     *
-     * @method
-     */
-    // _returnKey: function(detail){
-    //   if (detail.key !== undefined) {
-    //     return detail.key;
-    //   } else if (detail.keyCode !== undefined) {
-    //     var _to_ascii = {
-    //       '107': '43', //+
-    //       '109': '45', //-
-    //       '173': '45', //-
-    //       '186': '58', //:
-    //       '187': '43', //+
-    //       '189': '45'  //-
-    //     };
-    //     if(detail.keyCode === 38){
-    //       return 'ArrowUp'
-    //     } else if(detail.keyCode === 40){
-    //       return 'ArrowDown'
-    //     }
-    //
-    //     var key = (_to_ascii[detail.keyCode]) ? _to_ascii[detail.keyCode] : detail.keyCode;
-    //     return String.fromCharCode(key);
-    //   } else if (detail.keyIdentifier !== undefined) {
-    //     if(detail.keyIdentifier === 'Up' || detail.keyIdentifier === 'Down'){
-    //       return 'Arrow' + detail.keyIdentifier
-    //     }
-    //     // convert unicode in the form U+FFF to 0xFFF which is valid for js.
-    //     return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
-    //   } else  {
-    //     console.error("Cant proces keyboard event");
-    //   }
-    // },
     /**
      *
      *
@@ -467,23 +428,53 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       return momentFormat;
     },
     /**
+     * Handles before copy event, used for IE instead of the copy event
      *
+     * @method
+     */
+    _beforeCopy: function(evt) {
+
+      //IE stores the data in window.clipboardData
+      if(!evt.clipboardData) {
+        this.fire('px-request-datetime-entry-copy', window.clipboardData);
+      }
+    },
+    /**
+     * Handles before paste event, used for IE instead of the paste event
+     *
+     * @method
+     */
+    _beforePaste: function(evt) {
+
+      //IE stores the data in window.clipboardData
+      if(!evt.clipboardData) {
+        this.fire('px-request-datetime-entry-paste', window.clipboardData);
+      }
+    },
+    /**
+     * Handles paste event
      *
      * @method
      */
     _handlePaste: function(evt){
 
-      this.fire('px-request-datetime-entry-paste', evt.clipboardData);
+      //IE stores the data in window.clipboardData and will deal with it on _beforePaste
+      if(evt.clipboardData) {
+        this.fire('px-request-datetime-entry-paste', evt.clipboardData);
+      }
       evt.preventDefault();
     },
     /**
      *
-     *
+     *  Handles copy event
      * @method
      */
     _handleCopy: function(evt){
 
-      this.fire('px-request-datetime-entry-copy', evt.clipboardData);
+      //IE stores the data in window.clipboardData and will deal with it on _beforePaste
+      if(evt.clipboardData) {
+        this.fire('px-request-datetime-entry-copy', evt.clipboardData);
+      }
       evt.preventDefault();
     },
     /**
