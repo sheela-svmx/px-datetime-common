@@ -24,7 +24,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       id="dtEntry"
       readonly
       order='{{order}}'
-      class="text-input--bare"
+      class$="{{_getCellClass(momentFormat)}}"
       on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-paste="_handlePaste"
@@ -141,7 +141,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack',
       'tab' : '_checkValue',
-      'backspace del':'_deleteEntry'
+
     },
     /**
      * On attached, set up key bindings.
@@ -149,6 +149,19 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     attached: function(){
       this._addGeneralKeyBindings();
+    },
+    /**
+     * returns the classList everything momentFormat is changed
+     *
+     * @method _addGeneralKeyBindings
+     */
+    _getCellClass: function(momentFormat) {
+      var classList = 'text-input--bare ';
+
+      if (this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+        classList += "text-input--non-editable ";
+      }
+      return classList;
     },
     /**
      * Size the input fields based on the number of characters in dtWorkingCopy
@@ -172,9 +185,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(this.momentFormat === 'A' || this.momentFormat === 'a'){
         this.addOwnKeyBinding('a p','_toggleAMPM');
         this.addOwnKeyBinding('down up', '_toggleAMPM');
+        this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
       } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
         this.addOwnKeyBinding('down up', '_incrementNumber');
+        this.addOwnKeyBinding('backspace del','_deleteEntry');
       }
     },
 
@@ -346,6 +361,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       // since this cannot be invalid, fire so it sets above and let changes trickle.
       this.fire('moment-changed',{'momentObj':tempMoment})
 
+      evt.preventDefault();
     },
     /**
      *
@@ -371,6 +387,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
           this._setAMPM('AM');
         }
       }
+
+      evt.preventDefault();
     },
     /**
      *
@@ -382,16 +400,26 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        this.set('dtWorkingCopy', mo.tz(this.timeZone).format(this.momentFormat));
      },
     /**
+     * Delete the last letter of the dtWorkingCopy
      *
+     * Prevent the delete button from navigating back
      *
      * @method
      */
     _deleteEntry: function(evt){
-      this.set('dtWorkingCopy', '');
-
+      this.set('dtWorkingCopy', this.dtWorkingCopy.slice(0,-1));
       evt.preventDefault();
     },
     /**
+     * Prevent the delete button from navigating back
+     *
+     * @method
+     */
+    _preventDeleteDefault: function(evt){
+      evt.preventDefault();
+    },
+    /**
+     * If the momentFormat format is not 'Z', 'ZZ', 'X', or 'x' then return the momentFormat
      *
      * @method
      */

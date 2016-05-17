@@ -835,11 +835,9 @@ button.btn {
 .btn + .btn {
   margin-left: 0.6666666667rem; }
 
-:host {
-  cursor: pointer; }
-
 .text-input--bare {
   text-align: center;
+  cursor: text;
   margin: 0;
   padding: 0;
   border-radius: 3px;
@@ -848,8 +846,10 @@ button.btn {
   line-height: 1.3333333333;
   font-family: var(--px-font-family);
   line-height: 1; }
-  .text-input--bare:focus {
-    outline: 0; }
+  .text-input--bare::-moz-selection {
+    background: transparent; }
+  .text-input--bare::selection {
+    background: transparent; }
   .text-input--bare::-webkit-input-placeholder {
     padding-top: 0.2rem;
     font-size: 0.8rem; }
@@ -860,6 +860,12 @@ button.btn {
     padding-top: 0.2rem;
     font-size: 0.8rem; }
 
+.text-input--non-editable {
+  cursor: default; }
+
+/*
+Size the input-width correctly based on the number of charaters that are in the input field
+*/
 .input-width-3 {
   width: 1.7rem; }
 
@@ -1023,3 +1029,6 @@ button.btn {
 
 .text-input--bare {
   color: inherit; }
+
+.text-input--non-editable {
+  color: #9999a3; }

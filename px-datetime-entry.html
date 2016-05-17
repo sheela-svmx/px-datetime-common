@@ -108,15 +108,29 @@ Range field component which displays a time or date and font awesome icon.
       momentFormat: {
         type: String
       },
-
+      /**
+       *
+       *
+       *
+       */
       _editTimeout:{
         type:Object,
         value: function(){ return {} }
       },
+      /**
+       *
+       *
+       *
+       */
       _cellFormatArray:{
         type: Array,
         notify: true
       },
+      /**
+       *
+       *
+       *
+       */
       _symbolCharArray:{
         type: Array,
         notify: true,
@@ -162,11 +176,20 @@ Range field component which displays a time or date and font awesome icon.
       'px-request-datetime-entry-copy': '_handleCopy',
       'px-request-datetime-entry-paste': '_handlePaste'
     },
-
+    /**
+     *
+     *
+     *
+     */
     ready: function(){
 
       this._splitFormat();
     },
+    /**
+     *
+     *
+     *
+     */
     _splitFormat:function(){
       var re = /[MDYAaHhkmsSZXx]+/g;
       var reSymbol = /\W+/g;
@@ -177,21 +200,33 @@ Range field component which displays a time or date and font awesome icon.
       this.notifyPath('_cellFormatArray',this._cellFormatArray);
       this.notifyPath('_symbolCharArray',this._symbolCharArray);
     },
-
+    /**
+     *
+     *
+     *
+     */
     _isSymbol: function(i){
       if(this._symbolCharArray === null || typeof(this._symbolCharArray[i]) === 'undefined'){
         return false
       }
       return true
     },
-
+    /**
+     *
+     *
+     *
+     */
     _returnSymbol: function(i){
       if(this._symbolCharArray === null || typeof(this._symbolCharArray[i]) === 'undefined'){
         return ''
       }
       return this._symbolCharArray[i].split(' ').join('\xa0');
     },
-
+    /**
+     *
+     *
+     *
+     */
     _setIcon: function(){
       if (this.dateOrTime.toLowerCase() === 'date') {
         return 'polymer-font-awesome:fa-calendar'
@@ -199,7 +234,11 @@ Range field component which displays a time or date and font awesome icon.
         return 'polymer-font-awesome:fa-clock-o'
       }
     },
-
+    /**
+     *
+     *
+     *
+     */
     _entryCellMove: function(evt){
       var ne = Polymer.dom(evt);
       var entryCellOrder = ne.rootTarget.order;
@@ -216,14 +255,27 @@ Range field component which displays a time or date and font awesome icon.
         elem.$.dtEntry.focus();
       }
     },
-
+    /**
+     *
+     *
+     *
+     */
     _handleBlur: function(){
       this._validateInput();
     },
-
+    /**
+     *
+     *
+     *
+     */
     _handleMoment: function(evt){
       this.set('momentObj',evt.detail.momentObj);
     },
+    /**
+     *
+     *
+     *
+     */
     _timeZoneChanged: function() {
       if(this.momentObj) {
         var newMom = this.momentObj.clone().tz(this.timeZone);
@@ -231,12 +283,27 @@ Range field component which displays a time or date and font awesome icon.
         //this.notifyPath('momentObj', this.momentObj);
       }
     },
+    /**
+     *
+     *
+     *
+     */
     _showTimeZoneText: function(showTimeZone) {
       return showTimeZone === "text" || showTimeZone === "abbreviatedText";
     },
+    /**
+     *
+     *
+     *
+     */
     _showTimeZoneDropdown: function(showTimeZone) {
       return showTimeZone === "dropdown" || showTimeZone === "extendedDropdown";
     },
+    /**
+     *
+     *
+     *
+     */
     _getTimeZoneList: function(showTimeZone) {
       if(showTimeZone === "extendedDropdown") {
         return moment.tz.names();
@@ -277,9 +344,19 @@ Range field component which displays a time or date and font awesome icon.
         ];
       }
     },
+    /**
+     *
+     *
+     *
+     */
     _handleCopy: function(e) {
       e.detail.setData('Text', moment.tz(this.momentObj, this.timeZone).format(this.momentFormat));
     },
+    /**
+     *
+     *
+     *
+     */
     _handlePaste: function(e) {
 
       //try parsing what's been pasted...
@@ -297,6 +374,11 @@ Range field component which displays a time or date and font awesome icon.
         console.log("tried to paste non valid date format: " + data + ". Expecting: " + this.momentFormat);
       }
     },
+    /**
+     *
+     *
+     *
+     */
     _getTimeZoneText: function(timeZone, showTimeZone, momentObj) {
       if(showTimeZone === "abbreviatedText") {
         return moment.tz.zone(timeZone).abbr(momentObj);

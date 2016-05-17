@@ -42,12 +42,9 @@ $inuit-enable-validation-states : true;
 
 // Component
 
-:host {
-  cursor:pointer;
-}
-
 .text-input--bare {
   text-align: center;
+  cursor:text;
 
   margin: 0;
   padding: 0;
@@ -59,10 +56,10 @@ $inuit-enable-validation-states : true;
   font-family: var(--px-font-family);
   line-height: 1;
   &:focus {
-    outline: 0;
+    // outline: 0;
   }
   &::selection{
-    // background: transparent;
+    background: transparent;
   }
 
   &::-webkit-input-placeholder {
@@ -79,7 +76,13 @@ $inuit-enable-validation-states : true;
   }
 }
 
-//Size the input-width correctly based on the number of charaters that are in the input field
+.text-input--non-editable {
+  cursor:default;
+}
+
+/*
+Size the input-width correctly based on the number of charaters that are in the input field
+*/
 @for $i from 3 through 13 {
   .input-width-#{$i}{
     width: $inuit-base-spacing-unit--small * $i * 0.85
