@@ -141,6 +141,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack',
       'tab' : '_checkValue',
+      'ctrl+v cmd+v': '_test'
 
     },
     /**
@@ -443,9 +444,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _beforeCopy: function(evt) {
-
-      var data = evt.clipboardData ? evt.clipboardData : window.clipboardData;
-      this.fire('px-request-datetime-entry-copy', data);
+      //IE only
+      if(!evt.clipboardData) {
+        this.fire('px-request-datetime-entry-copy', window.clipboardData);
+      }
     },
     /**
      * Handles before paste event, used for IE instead of the paste event
@@ -453,12 +455,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _beforePaste: function(evt) {
-
       //IE stores the data in window.clipboardData
-      var data = evt.clipboardData ? evt.clipboardData : window.clipboardData;
-
-        this.fire('px-request-datetime-entry-paste', data);
-
+      if(!evt.clipboardData) {
+        this.fire('px-request-datetime-entry-paste', window.clipboardData);
+      }
     },
     /**
      * Handles paste event
@@ -466,7 +466,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _handlePaste: function(evt){
-
       //IE stores the data in window.clipboardData and will deal with it on _beforePaste
       if(evt.clipboardData) {
         this.fire('px-request-datetime-entry-paste', evt.clipboardData);
