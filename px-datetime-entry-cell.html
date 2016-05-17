@@ -24,7 +24,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       id="dtEntry"
       readonly
       order='{{order}}'
-      class="text-input--bare"
+      class$="{{_getCellClass(momentFormat)}}"
       on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-paste="_handlePaste"
@@ -165,6 +165,19 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._addGeneralKeyBindings();
     },
     /**
+     * returns the classList everything momentFormat is changed
+     *
+     * @method _addGeneralKeyBindings
+     */
+    _getCellClass: function(momentFormat) {
+      var classList = 'text-input--bare ';
+
+      if (this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+        classList += "text-input--non-editable ";
+      }
+      return classList;
+    },
+    /**
      * Size the input fields based on the number of characters in dtWorkingCopy
      *
      * Set the cellLength to the number of characters that are in dtWorkingCopy. Unless dtWorkingCopy.length is 1, then set cellLength to 2.
@@ -177,10 +190,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
       }
     },
-    _test: function(evt) {
-
-    },
-
     /**
      * Sets up regular key bindings
      *
