@@ -24,7 +24,7 @@ Range field component which displays a time or date and font awesome icon.
 <dom-module id="px-datetime-entry">
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
-    <div id='wrapper' class="wrapper" style="display:inline-flex; align-items:baseline">
+    <div id='wrapper' class="wrapper">
       <div class="inline-block">
           <label class="label--inline">
             <span class="a11y dtLabel">{{dateOrTime}}</span>
@@ -167,7 +167,6 @@ Range field component which displays a time or date and font awesome icon.
 
       this._splitFormat();
     },
-
     _splitFormat:function(){
       var re = /[MDYAaHhkmsSZXx]+/g;
       var reSymbol = /\W+/g;

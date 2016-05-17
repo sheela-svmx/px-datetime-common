@@ -77,21 +77,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       },
       /**
        *
-       * IronA11yKeysBehavior: element to which key events are attached
-       *
-       * Is this needed?
-       *
-       * @private
-       */
-      // keyEventTarget: {
-      //   type: Object,
-      //   value: function() {
-      //     return this.$.dtEntry;
-      //   }
-      // },
-
-      /**
-       *
        * The string displayed in the input field
        *
        * Used in _sizeInputs, _updateAndValidateWorkingCopy, _checkValue, _digit, _toggleAMPM, _setAMPM, and _deleteEntry
@@ -273,7 +258,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.dtWorkingCopy.length));
         this.set('dtWorkingCopy', dtNumber.toString());
       }
-
     },
     /**
      *
@@ -409,9 +393,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     },
     /**
      *
-     *
      * @method
-     * TODO When we deal with time zones we need to add that in here
      */
     _placeholderText: function(momentFormat){
       var phText = {
@@ -434,10 +416,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _beforeCopy: function(evt) {
 
-      //IE stores the data in window.clipboardData
-      if(!evt.clipboardData) {
-        this.fire('px-request-datetime-entry-copy', window.clipboardData);
-      }
+      var data = evt.clipboardData ? evt.clipboardData : window.clipboardData;
+      this.fire('px-request-datetime-entry-copy', data);
     },
     /**
      * Handles before paste event, used for IE instead of the paste event
@@ -447,9 +427,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _beforePaste: function(evt) {
 
       //IE stores the data in window.clipboardData
-      if(!evt.clipboardData) {
-        this.fire('px-request-datetime-entry-paste', window.clipboardData);
-      }
+      var data = evt.clipboardData ? evt.clipboardData : window.clipboardData;
+
+        this.fire('px-request-datetime-entry-paste', data);
+
     },
     /**
      * Handles paste event

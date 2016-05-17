@@ -68,6 +68,11 @@ $inuit-enable-validation-states : true;
   width: calculateRem(150px);
 }
 
+.wrapper {
+  display: inline-flex;
+  align-items: baseline;
+}
+
 // Trumps
 $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;
