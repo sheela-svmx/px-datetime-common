@@ -28,7 +28,9 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
   --dropdown_border_color: 0;
 }
 
-
+.validation-container__icon--failed {
+  color: $alert-red;
+}
 
 // Component
 .dtLabel {

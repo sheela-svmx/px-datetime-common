@@ -70,7 +70,16 @@ $inuit-enable-validation-states : true;
 
 .wrapper {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+}
+
+.validation-container {
+  margin-left: auto;
+}
+
+.validation-container__icon {
+  width: calculateRem(14px);
+  height: calculateRem(14px);
 }
 
 // Trumps
