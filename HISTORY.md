@@ -1,3 +1,7 @@
+v0.1.0
+==================
+* merged master with entry. Updated entry and entry-cell functionally
+
 v0.0.3
 ==================
 * added pull request test for travis and updated OSS Notice
