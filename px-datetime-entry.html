@@ -5,6 +5,7 @@
 <link rel="import" href="px-datetime-behavior.html" />
 <link rel="import" href="px-datetime-entry-cell.html" />
 <link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html" />
+<link rel="import" href="../px-dropdown/px-dropdown.html" />
 
 
 <!--
@@ -12,23 +13,27 @@ Range field component which displays a time or date and font awesome icon.
 
 ##### Usage
 
-    <px-datetime-entry moment="{{...}}" date-or-time="Date">
+    <px-datetime-entry
+      moment="{{...}}"??
+      date-or-time="Date"
+      moment-format="MM/DD/YYYY">
     </px-datetime-entry>
 
+@demo demo.html
 -->
 <dom-module id="px-datetime-entry">
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
-    <div class="range-field__field">
-      <div id='wrapper'>
-        <label class="label--inline">
-          <span class="a11y dtLabel">{{dateOrTime}}</span>
-          <iron-icon
-            id="icon"
-            class="fa fa-fw dtIcon"
-            icon="[[_setIcon(dateOrTime)]]">
-          </iron-icon>
-        </label>
+    <div id='wrapper' class="wrapper">
+      <div class="inline-block">
+          <label class="label--inline">
+              <span class="a11y dtLabel">{{dateOrTime}}</span>
+              <iron-icon
+                id="icon"
+                class="fa fa-fw dtIcon"
+                icon="[[_setIcon(dateOrTime)]]">
+              </iron-icon>
+          </label>
           <template is="dom-repeat" items="{{_cellFormatArray}}">
             <px-datetime-entry-cell
               id="cell{{index}}"
@@ -36,7 +41,9 @@ Range field component which displays a time or date and font awesome icon.
               order='{{index}}'
               moment-obj="[[momentObj]]"
               moment-format='[[item]]'
-              symbol=[[_returnSymbol(index)]]>
+              symbol=[[_returnSymbol(index)]]
+              is-valid$={{isValid}}
+              time-zone="[[timeZone]]">
             </px-datetime-entry-cell>
             <template is="dom-if" if={{_isSymbol(index)}}>
               <span
@@ -46,6 +53,36 @@ Range field component which displays a time or date and font awesome icon.
             </template>
           </template>
       </div>
+      <div class="inline-block">
+        <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
+          <px-dropdown id="dropdown" display-value="[[timeZone]]" value="{{timeZone}}">
+            <px-dropdown-content
+              extend-dropdown="true"
+              extend-dropdown-by="50"
+              max-content-character-width="50"
+              items="[[_getTimeZoneList(showTimeZone)]]">
+            </px-dropdown-content>
+          </px-dropdown>
+        </template>
+        <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
+          <span class="u-ml-- u-mr--">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
+        </template>
+      </div>
+      <template is="dom-if" if="{{!isValid}}">
+        <div class="fa fa-fw validation-container">
+          <iron-icon class$="{{_getValidationIconClass(isValid)}}"
+            icon="polymer-font-awesome:fa-warning">
+          </iron-icon>
+          <template is="dom-if" if="{{!isValid}}">
+            <px-tooltip
+              class="tooltip-font"
+              smart-orientation
+              orientation="top"
+              tooltip-message="{{validationErrorMessage}}">
+            </px-tooltip>
+          </template>
+        </div>
+      </template>
     </div>
   </template>
 </dom-module>
@@ -57,7 +94,7 @@ Range field component which displays a time or date and font awesome icon.
 
     behaviors: [
       pxDatetimeBehavior,
-      validate,
+      validate
     ],
 
     properties: {
@@ -81,58 +118,95 @@ Range field component which displays a time or date and font awesome icon.
        *
        * Can only be configured statically; not data-bindable
        *
-       * @private
+       *
        */
       momentFormat: {
         type: String
       },
-
+      /**
+       *
+       *
+       *
+       */
       _editTimeout:{
         type:Object,
         value: function(){ return {} }
       },
       /**
-       * A flag that turns on inline edit, changing the input styles
        *
-       * @property inlineEdit
-       * @type Boolean
-       * @default false
+       *
+       *
        */
-      inlineEdit: {
-        type: Boolean,
-        value: false
-      },
       _cellFormatArray:{
         type: Array,
         notify: true
       },
+      /**
+       *
+       *
+       *
+       */
       _symbolCharArray:{
         type: Array,
         notify: true,
         value: function(){
           return []
         }
+      },
+      /**
+       *
+       * Moment-timezone string for using a specific timezone. See
+       * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
+       *
+       * if not provided tries to guess the current local
+       */
+      timeZone: {
+        type: String,
+        value: function() {
+          return moment.tz.guess();
+        },
+        observer: '_timeZoneChanged'
+      },
+      /**
+       *
+       * Can be set to show the timezone. Can have 2 values:
+       *  'dropdown': shows the time zone as a dropdown which the user can use to
+       * select a different time zone. Only contains a subset of all timezones
+       *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
+       * select a different time zone. Contains all existing timezones (588)
+       *  'text': shows the time zone as text, non editable
+       *  'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
+       */
+      showTimeZone: {
+        type: String,
+        value: ''
       }
     },
 
     listeners: {
-      'entry-cell-move': '_entryCellMove',
-      'cell-focused': '_handleFocus',
-      'cell-blured': '_handleBlur',
+      'px-entry-cell-move': '_entryCellMove',
+      'px-cell-blured': '_handleBlur',
+      'px-cell-validate': '_validateInput',
+      'px-moment-changed': '_handleMoment',
+      'px-request-datetime-entry-copy': '_handleCopy',
+      'px-request-datetime-entry-paste': '_handlePaste'
     },
-
+    /**
+     *
+     *
+     *
+     */
     ready: function(){
-      // dateFormat()
+
       this._splitFormat();
     },
-
+    /**
+     *
+     *
+     *
+     */
     _splitFormat:function(){
-      // this.momentFormat.indexOf('MM');
-
-      // console.log(this.momentFormat.indexOf('MM'));
-      // var re = /\w+\s/g;
-
-      var re = /[MDYAaHhkmsSzZXx]+/g;
+      var re = /[MDYAaHhkmsSZXx]+/g;
       var reSymbol = /\W+/g;
 
       this._cellFormatArray = this.momentFormat.match(re);
@@ -141,21 +215,33 @@ Range field component which displays a time or date and font awesome icon.
       this.notifyPath('_cellFormatArray',this._cellFormatArray);
       this.notifyPath('_symbolCharArray',this._symbolCharArray);
     },
-
+    /**
+     *
+     *
+     *
+     */
     _isSymbol: function(i){
       if(this._symbolCharArray === null || typeof(this._symbolCharArray[i]) === 'undefined'){
         return false
       }
       return true
     },
-
+    /**
+     *
+     *
+     *
+     */
     _returnSymbol: function(i){
       if(this._symbolCharArray === null || typeof(this._symbolCharArray[i]) === 'undefined'){
         return ''
       }
       return this._symbolCharArray[i].split(' ').join('\xa0');
     },
-
+    /**
+     *
+     *
+     *
+     */
     _setIcon: function(){
       if (this.dateOrTime.toLowerCase() === 'date') {
         return 'polymer-font-awesome:fa-calendar'
@@ -163,36 +249,177 @@ Range field component which displays a time or date and font awesome icon.
         return 'polymer-font-awesome:fa-clock-o'
       }
     },
-
+    /**
+     *
+     *
+     *
+     */
     _entryCellMove: function(evt){
       var ne = Polymer.dom(evt);
       var entryCellOrder = ne.rootTarget.order;
 
-      if(this.dateOrTime.toLowerCase() === 'date' && entryCellOrder === 3){
-        // fire something up to advance to next entry
+      if(entryCellOrder === this._cellFormatArray.length - 1 && evt.detail.dir === 1){
 
-        // TODO what if dev set does not have AM PM aka 24 hour clock has three boxes, not 4
-      } else if(this.dateOrTime.toLowerCase() === 'time' && entryCellOrder === 4){
-        // fire something up to advance to next entry
-      }else{
-        entryCellOrder = parseInt(entryCellOrder) + 1;
+        this.fire('px-next-field');
+      } else if(entryCellOrder === 0 && evt.detail.dir === -1){
+
+        this.fire('px-previous-field');
+      } else {
+        entryCellOrder = parseInt(entryCellOrder) + evt.detail.dir;
         var elem = this.$$("#cell" + entryCellOrder);
         elem.$.dtEntry.focus();
       }
     },
-
-    _handleFocus: function(){
-      if(this.inlineEdit){
-        this.toggleClass('text-input', true, this.$.wrapper);
+    /**
+     *
+     *
+     *
+     */
+    _handleBlur: function(){
+      this._validateInput();
+    },
+    /**
+     *
+     *
+     *
+     */
+    _handleMoment: function(evt){
+      this.set('momentObj',evt.detail.momentObj);
+    },
+    /**
+     *
+     *
+     *
+     */
+    _timeZoneChanged: function() {
+      if(this.momentObj) {
+        var newMom = this.momentObj.clone().tz(this.timeZone);
+        this.set('momentObj', newMom);
+        //this.notifyPath('momentObj', this.momentObj);
       }
     },
-    _handleBlur: function(){
-      console.log('entry blur');
-      this._validateInput();
-
-      if(this.inlineEdit){
-        this.toggleClass('text-input', false, this.$.wrapper);
+    /**
+     *
+     *
+     *
+     */
+    _showTimeZoneText: function(showTimeZone) {
+      return showTimeZone === "text" || showTimeZone === "abbreviatedText";
+    },
+    /**
+     *
+     *
+     *
+     */
+    _showTimeZoneDropdown: function(showTimeZone) {
+      return showTimeZone === "dropdown" || showTimeZone === "extendedDropdown";
+    },
+    /**
+     *
+     *
+     *
+     */
+    _getTimeZoneList: function(showTimeZone) {
+      if(showTimeZone === "extendedDropdown") {
+        return moment.tz.names();
+      } else if (showTimeZone === "dropdown"){
+        return [
+          "Etc/GMT",
+          "Etc/GMT+0",
+          "Etc/GMT+1",
+          "Etc/GMT+10",
+          "Etc/GMT+11",
+          "Etc/GMT+12",
+          "Etc/GMT+2",
+          "Etc/GMT+3",
+          "Etc/GMT+4",
+          "Etc/GMT+5",
+          "Etc/GMT+6",
+          "Etc/GMT+7",
+          "Etc/GMT+8",
+          "Etc/GMT+9",
+          "Etc/GMT-0",
+          "Etc/GMT-1",
+          "Etc/GMT-10",
+          "Etc/GMT-11",
+          "Etc/GMT-12",
+          "Etc/GMT-13",
+          "Etc/GMT-14",
+          "Etc/GMT-2",
+          "Etc/GMT-3",
+          "Etc/GMT-4",
+          "Etc/GMT-5",
+          "Etc/GMT-6",
+          "Etc/GMT-7",
+          "Etc/GMT-8",
+          "Etc/GMT-9",
+          "Etc/GMT0",
+          "UCT",
+          "UTC",
+        ];
       }
-    }
+    },
+    /**
+     *
+     *
+     *
+     */
+    _handleCopy: function(e) {
+      e.detail.setData('Text', moment.tz(this.momentObj, this.timeZone).format(this.momentFormat));
+      e.stopPropagation();
+    },
+    /**
+     *
+     *
+     *
+     */
+    _handlePaste: function(e) {
+      //try parsing what's been pasted...
+      var data = e.detail.getData('Text'),
+          newDate = moment(data, this.momentFormat);
+      if(newDate.isValid()) {
+
+        //if this comes from another datetime-entry make sure it is the same type
+        //otherwise just allow. This is to avoid changing the date when parsing a time
+        /*if(!dateOrTime || (dateOrTime === this.dateOrTime)) {
+
+        }*/
+        this.momentObj = newDate;
+      }else {
+        console.log("tried to paste non valid date format: " + data + ". Expecting: " + this.momentFormat);
+      }
+
+      e.stopPropagation();
+    },
+    /**
+     *
+     *
+     *
+     */
+    _getTimeZoneText: function(timeZone, showTimeZone, momentObj) {
+      if(showTimeZone === "abbreviatedText") {
+        return moment.tz.zone(timeZone).abbr(momentObj);
+      } else if (showTimeZone === "text"){
+        return timeZone;
+      }
+    },
+    /**
+     *
+     *
+     *
+     */
+    _getValidationIconClass: function(isValid){
+        var classList= ['validation-container__icon'];
+
+        if(!isValid) {
+          classList.push('validation-container__icon--failed');
+        }
+        else {
+
+            classList.push('visuallyhidden');
+
+        }
+        return classList.join(' ');
+      },
   });
 </script>

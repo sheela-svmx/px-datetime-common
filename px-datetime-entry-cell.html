@@ -24,15 +24,16 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       id="dtEntry"
       readonly
       order='{{order}}'
-      class="text-input--bare"
+      class$="{{_getCellClass(momentFormat)}}"
       on-focus="_handleFocus"
       on-blur="_handleBlur"
-      on-input="_inputValueChanged"
       on-paste="_handlePaste"
+      on-beforepaste="_beforePaste"
+      on-beforecopy="_beforeCopy"
       on-copy="_handleCopy"
       value="[[dtWorkingCopy]]"
       maxlength="[[maxlength]]"
-      placeholder='[[momentFormat]]'>
+      placeholder='[[_placeholderText(momentFormat)]]'>
     </input>
   </template>
 </dom-module>
@@ -51,10 +52,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     properties: {
       /**
        *
-       * Moment format string for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
+       * Moment format tokens for the format to display/validate this field against (see http://momentjs.com/docs/#/parsing/string-format/)
        *
        * Can only be configured statically; not data-bindable
-       *
+       *```
+       *    example: 'YYYY'
+       *```
        * @private
        */
       momentFormat: {
@@ -64,6 +67,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        *
        * Holder for a timeout object to trigger validation after x-seconds when a user types in an input.
        *
+       * @default 500ms
+       *
        * @private
        */
       _validationAutoTimeout:{
@@ -72,20 +77,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       },
       /**
        *
-       * IronA11yKeysBehavior: element to which key events are attached
+       * The string displayed in the input field
        *
-       *
-       * @private
-       */
-      keyEventTarget: {
-        type: Object,
-        value: function() {
-          return this.$.dtEntry;
-        }
-      },
-      /**
-       *
-       * The string displayed in the input and editited by the user
+       * Used in _sizeInputs, _updateAndValidateWorkingCopy, _checkValue, _digit, _toggleAMPM, _setAMPM, and _deleteEntry
        *
        * @private
        */
@@ -96,16 +90,37 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       },
       /**
        *
-       * The separator character
+       * The separator character, passed down from px-datetime-entry
        *
        * @private
        */
       symbol:{
         type:String
       },
-
+      /**
+       *
+       * Is set to the number of characters that are in dtWorkingCopy. Unless dtWorkingCopy.length is 1, then it is set to 2.
+       *
+       * Used to determine how big the input-width needs to be.
+       *
+       * @private
+       */
       cellLength:{
         type: Number
+      },
+      /**
+       *
+       * Order number this cell is in px-datetime-entry, passed down from px-datetime-entry
+       *
+       * @private
+       */
+      order: {
+        type:Number,
+        reflectToAttribute:true
+      },
+      timeZone:{
+        type:String,
+        value: ''
       }
     },
 
@@ -115,32 +130,42 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
     /**
      * Key bindings for iron-a11y-keys-behavior
+     *
+     * More keyBindings are added in _addGeneralKeyBindings
+     *
      * @private
      */
     keyBindings: {
       'enter' : '_onEnter',
       'esc' : '_onEsc',
-      'left right' : '_moveFocus',
-      'tab' : '_checkValue',
-      'backspace del':'_deleteEntry',
+      'right' : '_moveFocusForward',
+      'left' : '_moveFocusBack',
+      'tab' : '_checkValue'
     },
     /**
-     * On ready, check what type of cell this is, toggle class to make it wide enough for the input, and set up key bindings.
+     * On attached, set up key bindings.
      *
      */
     attached: function(){
       this._addGeneralKeyBindings();
-
-      // if(this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
-      //   // TODO add key bindings for + - :
-      // } else {
-      //   var len = (this.momentFormat.length === 1) ? 2 : this.momentFormat.length;
-      // }
-
     },
     /**
+     * returns the classList everything momentFormat is changed
      *
+     * @method _addGeneralKeyBindings
+     */
+    _getCellClass: function(momentFormat) {
+      var classList = 'text-input--bare ';
+
+      if (this.momentFormat === 'Z' || this.momentFormat === 'ZZ'){
+        classList += "text-input--non-editable ";
+      }
+      return classList;
+    },
+    /**
+     * Size the input fields based on the number of characters in dtWorkingCopy
      *
+     * Set the cellLength to the number of characters that are in dtWorkingCopy. Unless dtWorkingCopy.length is 1, then set cellLength to 2.
      * @method
      */
     _sizeInputs: function(){
@@ -150,7 +175,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
       }
     },
-
     /**
      * Sets up regular key bindings
      *
@@ -158,11 +182,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _addGeneralKeyBindings: function(){
       if(this.momentFormat === 'A' || this.momentFormat === 'a'){
-        this.addOwnKeyBinding('a p','_alpha');
+        this.addOwnKeyBinding('a p','_toggleAMPM');
         this.addOwnKeyBinding('down up', '_toggleAMPM');
-      } else {
+        this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
+      } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
         this.addOwnKeyBinding('down up', '_incrementNumber');
+        this.addOwnKeyBinding('backspace del','_deleteEntry');
       }
     },
 
@@ -173,7 +199,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _addSeparatorKeyBinding: function(){
       var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
-      this.addOwnKeyBinding(separator,'_moveFocus');
+      this.addOwnKeyBinding(separator,'_moveFocusForward');
     },
     /**
      *
@@ -181,7 +207,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _updateAndValidateWorkingCopy
      */
     _updateAndValidateWorkingCopy: function() {
-      this.set('dtWorkingCopy', this.momentObj.format(this.momentFormat));
+
+      this.set('dtWorkingCopy', this.momentObj.tz(this.timeZone).format(this.momentFormat));
       this.toggleClass('validation-error', false, this.$$('input'));
     },
     /**
@@ -191,34 +218,59 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _handleFocus: function(evt) {
       var ne = Polymer.dom(evt);
-      this.toggleClass("is-selected", true, ne.rootTarget);
-
-      this.removeOwnKeyBindings();
-      this._addGeneralKeyBindings();
+      if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
+        this.toggleClass("is-selected", true, ne.rootTarget);
+        this.removeOwnKeyBindings();
+        this._addGeneralKeyBindings();
+      }
+      else {
+        this.removeOwnKeyBindings();
+      }
 
       // propagate the focus event up to entry to apply inline edit styles if applicable
-      this.fire('cell-focused');
+      this.fire('px-cell-focused');
     },
     /**
      *
      *
-     * @method _moveFocus
+     * @method _moveFocusForward
      */
-    _moveFocus : function(){
+    _moveFocusBack : function(){
       setTimeout(function(){
-        this.fire('entry-cell-move');
+        this.fire('px-entry-cell-move', { 'dir' : -1 });
       }.bind(this),10);
     },
     /**
      *
      *
+     * @method _moveFocusForward
+     */
+    _moveFocusForward : function(){
+      setTimeout(function(){
+        this.fire('px-entry-cell-move', { 'dir' : 1 });
+      }.bind(this),10);
+    },
+    /**
+     * Checks that the value has the correct number of digits for our format
+     * Autocomplete function
+     *
      * @method
      */
     _checkValue: function(){
-      // console.log('_checkValue');
+      //if our format requires two digits and we only have one, add a 0 in front
       if(this.dtWorkingCopy.length === 1 &&
-      ['MM','DD','hh','mm','ss'].indexOf(this.momentFormat) >= 0){
+      ['MM','DD','HH','hh','kk','mm','ss'].indexOf(this.momentFormat) >= 0){
         this.set('dtWorkingCopy', '0' + this.dtWorkingCopy);
+      }
+      //if the format is YYYY or Y and the input is 2 characters then covert the input to a 4 characters year representation
+      else if(this.dtWorkingCopy.length === 2 && this.momentFormat === 'YYYY'){
+        var mo = moment(this.dtWorkingCopy, 'YY');
+        this.set('dtWorkingCopy',mo.format(this.momentFormat));
+      }
+      else if(this.momentFormat[0] === 'S' && this.dtWorkingCopy.length < this.momentFormat.length){
+        var dtNumber = parseInt(this.dtWorkingCopy);
+        dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.dtWorkingCopy.length));
+        this.set('dtWorkingCopy', dtNumber.toString());
       }
     },
     /**
@@ -228,12 +280,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _handleBlur: function(evt) {
       var ne = Polymer.dom(evt);
-      console.log('blur');
 
       this._checkValue();
 
       this.toggleClass("is-selected", false, ne.rootTarget);
-      this.fire('cell-blured');
+      this.fire('px-cell-blured');
     },
     /**
      * Listner attached to the input and sets up a timeout to trigger validation.
@@ -241,10 +292,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _inputValueChanged
      */
     _inputValueChanged: function(evt){
-      clearTimeout(this._validationAutoTimeout);
-      this._validationAutoTimeout = setTimeout(function(){
-        this._validateInput();
-      }.bind(this), 500);
+      var _this = this;
+      this.debounce('cell-validation', function(){
+        _this.fire('px-cell-validate');
+      }, 500);
     },
     /**
      * When ENTER is clicked
@@ -252,11 +303,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _onEnter
      */
     _onEnter:function(){
-      console.log("Enter");
-      this._validateInput();
+      this.fire('px-cell-validate');
       setTimeout(function(){
         if(this.isSubmitButtonValid){
-          this.fire('datetime-button-clicked',{ action:true });
+          this.fire('px-datetime-sumbit',{ action:true });
         }
       }.bind(this),10);
     },
@@ -266,7 +316,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _onEsc
      */
     _onEsc:function(){
-      this.fire('datetime-button-clicked',{ action:false });
+      this.fire('px-datetime-sumbit',{ action:false });
     },
     /**
      * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)
@@ -275,10 +325,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _digit: function(evt){
       var ne = Polymer.dom(evt);
-      var digit;
 
       //set the key that was clicked to digit
-      digit = this._returnKey(evt.detail.keyboardEvent);
+      var digit = evt.detail.combo;
 
       // if already at full length, we just entered the input, so delete it
       if(this.dtWorkingCopy.length === this.cellLength){
@@ -291,8 +340,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
       // if it is full, we're done with this cell, go to the next
       if(this.dtWorkingCopy.length === this.cellLength){
-        console.log('jump');
-        this._moveFocus();
+        this._moveFocusForward();
       }
     },
     /**
@@ -300,40 +348,18 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *
      * @method
      */
-    _incrementNumber : function(){
-      console.log('up down')
-    },
-    /**
-     *
-     *
-     * @method
-     */
-    _alpha : function(){
+    _incrementNumber : function(evt){
+      var key = evt.detail.combo;
+      var tempMoment = this.momentObj.clone();
 
-    },
-    /**
-     *
-     *
-     * @method
-     */
-    _returnKey: function(detail){
-      if (detail.key !== undefined) {
-        return detail.key;
-      } else if (detail.keyCode !== undefined) {
-        return String.fromCharCode(detail.keyCode);
-      } else if (detail.keyIdentifier !== undefined) {
-        return String.fromCodePoint('0x'+detail.keyIdentifier.slice(2));
-      } else  {
-        console.error("Cant proces keyboard event");
+      if(key === 'up'){
+        tempMoment.add(1, this._convertMomentFormat());
+      } else { //down
+        tempMoment.subtract(1, this._convertMomentFormat());
       }
-    },
-    /**
-     *
-     *
-     * @method
-     */
-    _deleteEntry: function(evt){
-      this.set('dtWorkingCopy', '');
+      // since this cannot be invalid, fire so it sets above and let changes trickle.
+      this.fire('px-moment-changed',{'momentObj':tempMoment})
+
       evt.preventDefault();
     },
     /**
@@ -341,25 +367,144 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *
      * @method
      */
-    _handlePaste: function(evt){
-      console.log('pasted');
-      console.log(evt);
-      data = evt.clipboardData;
-      console.log(data);
+    _toggleAMPM : function(evt){
+      var ne = Polymer.dom(evt),
+          key = evt.detail.combo;
+
+      if(key === 'A' || key === 'a'){
+        this._setAMPM('AM');
+        this._moveFocusForward();
+
+      } else if(key === 'P' || key === 'p'){
+        this._setAMPM('PM');
+        this._moveFocusForward();
+
+      } else if(key === 'up' || key === 'down'){
+        if(this.dtWorkingCopy === 'AM' || this.dtWorkingCopy === 'am'){
+          this._setAMPM('PM');
+        } else {
+          this._setAMPM('AM');
+        }
+      }
+
+      evt.preventDefault();
     },
     /**
      *
      *
      * @method
      */
-    _handleCopy: function(evt){
-      this.$.dtEntry.select();
+     _setAMPM:function(ampm){
+       var mo = moment('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat);
+       this.set('dtWorkingCopy', mo.tz(this.timeZone).format(this.momentFormat));
+     },
+    /**
+     * Delete the last letter of the dtWorkingCopy
+     *
+     * Prevent the delete button from navigating back
+     *
+     * @method
+     */
+    _deleteEntry: function(evt){
+      this.set('dtWorkingCopy', this.dtWorkingCopy.slice(0,-1));
+      evt.preventDefault();
+    },
+    /**
+     * Prevent the delete button from navigating back
+     *
+     * @method
+     */
+    _preventDeleteDefault: function(evt){
+      evt.preventDefault();
+    },
+    /**
+     * If the momentFormat format is not 'Z', 'ZZ', 'X', or 'x' then return the momentFormat
+     *
+     * @method
+     */
+    _placeholderText: function(momentFormat){
+      var phText = {
+        'Z': String.fromCharCode(177) + 'xx:xx',
+        'ZZ': String.fromCharCode(177) + 'xxxx',
+        'X': 'epoch time (s)',
+        'x': 'epoch time (ms)'
+      };
 
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        console.log('Unable to copy');
+      if(phText[momentFormat]){
+        return phText[momentFormat];
       }
+
+      return momentFormat;
+    },
+    /**
+     * Handles before copy event, used for IE instead of the copy event
+     *
+     * @method
+     */
+    _beforeCopy: function(evt) {
+      //IE only
+      if(!evt.clipboardData) {
+        this.fire('px-request-datetime-entry-copy', window.clipboardData);
+      }
+    },
+    /**
+     * Handles before paste event, used for IE instead of the paste event
+     *
+     * @method
+     */
+    _beforePaste: function(evt) {
+      //IE stores the data in window.clipboardData
+      if(!evt.clipboardData) {
+        this.fire('px-request-datetime-entry-paste', window.clipboardData);
+      }
+    },
+    /**
+     * Handles paste event
+     *
+     * @method
+     */
+    _handlePaste: function(evt){
+      //IE stores the data in window.clipboardData and will deal with it on _beforePaste
+      if(evt.clipboardData) {
+        this.fire('px-request-datetime-entry-paste', evt.clipboardData);
+      }
+      evt.preventDefault();
+    },
+    /**
+     *
+     *  Handles copy event
+     * @method
+     */
+    _handleCopy: function(evt){
+
+      //IE stores the data in window.clipboardData and will deal with it on _beforePaste
+      if(evt.clipboardData) {
+        this.fire('px-request-datetime-entry-copy', evt.clipboardData);
+      }
+      evt.preventDefault();
+    },
+    /**
+     * Format strings and setting/modification strings are different (?!?!)
+     * This method converts one to the other
+     *
+     * @method
+     */
+    _convertMomentFormat: function(){
+      var momentTypeConversion = {
+        'Y' : 'y',  //years
+        'M' : 'M',  //months
+        'D' : 'd',  // days
+        'H' : 'h',  //hours
+        'h' : 'h',  //hours
+        'k' : 'h',  //hours
+        'm' : 'm',  //minutes
+        's' : 's',  //seconds
+        'X' : 's',  //seconds
+        'S' : 'ms', //milliseconds
+        'x' : 'ms'  //milliseconds
+      };
+      // take the first char of the moment format and convert it to the other format
+      return momentTypeConversion[this.momentFormat[0]]
     }
   });
 </script>

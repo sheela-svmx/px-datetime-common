@@ -1,8 +1,7 @@
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="px-datetime-behavior.html"/>
 <link rel="import" href="validate.html"/>
-
-<script src="../moment/moment.js"></script>
+<link rel="import" href="px-datetime-imports.html" />
 
 
 <!--
@@ -68,11 +67,11 @@ Date time button component.
     ],
     _fireCancelEvent:function(){
       console.log("cancel clicked");
-      this.fire('datetime-button-clicked',{ action:false });
+      this.fire('px-datetime-button-clicked',{ action:false });
     },
     _fireSubmitEvent:function(){
       console.log("submit clicked");
-      this.fire('datetime-button-clicked',{ action:true });
+      this.fire('px-datetime-button-clicked',{ action:true });
     },
     submitBtnClasses: function(base, submitButtonValid) {
       return (submitButtonValid) ? base : base + ' btn--disabled';

@@ -95,3 +95,5 @@ GE Coding Style Guide
 
 
 ### Known Issues
+
+copy and pasting not working in Microsoft Edge and Safari

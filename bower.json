@@ -20,7 +20,8 @@
     "px-theme": "~0.7.0",
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
     "px-calendar": "https://github.com/PredixDev/px-calendar.git",
-    "polymer-font-awesome": "~0.1.0"
+    "polymer-font-awesome": "~0.1.0",
+    "px-dropdown": "~0.9.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#~v1.1.0",

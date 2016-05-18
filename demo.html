@@ -1,58 +1,132 @@
 <!doctype html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>px-datetime-common Demo</title>
-        <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
-        <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
-        <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
-        <link rel="import" href="px-datetime-buttons.html"/>
-        <link rel="import" href="px-datetime-entry.html"/>
-        <link rel="import" href="../px-theme/px-theme.html"/>
-        <link rel="import" href="px-datetime-imports.html" />
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>px-datetime-common Demo</title>
+    <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+    <link rel="import" href="px-datetime-buttons.html"/>
+    <link rel="import" href="px-datetime-entry.html"/>
+    <link rel="import" href="../px-theme/px-theme.html"/>
 
-    </head>
 
-    <body>
+  </head>
 
-        <h3>Demo</h3>
-        <p>
-            Although related, examples are /not/ the same as the test fixtures.
-            Tests are tests, examples are examples.
-        </p>
-        <p>
-            Also see the <a href="index.html">documentation</a> and the <a href="test/fixture.html">UI test fixture</a>.
-        </p>
+  <body>
 
-        <px-datetime-entry
-          id="dateEntry"
-          date-or-time = 'Date'
-          moment-format = "YY/MM/DD Z">
-        </px-datetime-entry>
+    <h3>Demo</h3>
 
-        <px-datetime-entry
-          id="timeEntry"
-          date-or-time = 'Time'
-          moment-format = "hh:mm:ss A ZZ">
-        </px-datetime-entry>
+    <p>
+        Also see the <a href="index.html">documentation</a> and the <a href="test/fixture.html">UI test fixture</a>.
+    </p>
+    <h2> DATE </h2>
+    <div>
+      <div>UTC timezone, basic timezone dropdown. Format: YYYY/MM/DD Z</div>
+      <px-datetime-entry
+        id="dateEntry"
+        date-or-time = 'Date'
+        moment-format = "YYYY/MM/DD Z"
+        show-time-zone= "dropdown"
+        time-zone="UTC"
+        >
+      </px-datetime-entry>
+    </div>
+    <br>
+    <div>
+      <div>Default to local timezone, extended timezone dropdown. Format: MM/DD/YY Z</div>
+      <px-datetime-entry
+        id="dateEntry2"
+        date-or-time = 'Date'
+        moment-format = "MM/DD/YY Z"
+        show-time-zone= "extendedDropdown"
+        >
+      </px-datetime-entry>
+    </div>
+    <br>
+    <div>
+      <div>local & non editable timezone, don't show utc offset. Format: DD/MM/YYYY</div>
+      <px-datetime-entry
+        id="dateEntry3"
+        date-or-time = 'Date'
+        moment-format = "DD/MM/YYYY"
+        show-time-zone= "text"
+        >
+      </px-datetime-entry>
+    </div>
+    <br>
+    <div>
+      <div>local & non editable  abbreviated timezone. Format: MM/DD/YYYY ZZ</div>
+      <px-datetime-entry
+        id="dateEntry4"
+        date-or-time = 'Date'
+        moment-format = "MM/DD/YYYY ZZ"
+        show-time-zone= "abbreviatedText"
+        >
+      </px-datetime-entry>
+    </div>
 
-        <br/>
+    <h2> Copy paste between similar date format </h2>
+    <div>
+      <div>Today. Format: MM/DD/YY Z</div>
+      <px-datetime-entry
+        id="dateEntry5"
+        date-or-time = 'Date'
+        moment-format = "MM/DD/YY Z"
+        show-time-zone= "text"
+        >
+      </px-datetime-entry>
+    </div>
+    <br>
+    <div>
+      <div>1 year later. Format: MM/DD/YY Z</div>
+      <px-datetime-entry
+        id="dateEntry6"
+        date-or-time = 'Date'
+        moment-format = "MM/DD/YY Z"
+        show-time-zone= "text"
+        >
+      </px-datetime-entry>
+    </div>
+    <h2> TIME </h2>
+    <div>
+      <px-datetime-entry
+        id="timeEntry"
+        date-or-time = 'Time'
+        moment-format = "hh:mm:ss.SSS A"
+        show-time-zone= "text"
+        >
+      </px-datetime-entry>
+    </div>
+    <div>
+      <px-datetime-entry
+        id="timeEntry2"
+        date-or-time = 'Time'
+        moment-format = "hh:mm:ss.SSS A"
+        show-time-zone= "text"
+        >
+      </px-datetime-entry>
+    </div>
 
-        <px-datetime-buttons>
-        </px-datetime-buttons>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
+      document.addEventListener('WebComponentsReady', function() {
+        var dateEntry = Polymer.dom(document).querySelector('#dateEntry');
+        var timeEntry = Polymer.dom(document).querySelector('#timeEntry');
 
-          document.addEventListener('WebComponentsReady', function() {
-            var dateEntry = Polymer.dom(document).querySelector('#dateEntry');
-            var timeEntry = Polymer.dom(document).querySelector('#timeEntry');
-            var obj = moment("2016-04-05T08:00:00Z");
-            dateEntry.set('momentObj',obj);
-            timeEntry.set('momentObj',obj);
-          });
+        var obj = moment();
+        dateEntry.momentObj = obj;
+        timeEntry.set('momentObj',obj);
+        Polymer.dom(document).querySelector('#dateEntry2').momentObj = obj;
+        Polymer.dom(document).querySelector('#dateEntry3').momentObj = obj;
+        Polymer.dom(document).querySelector('#dateEntry4').momentObj = obj;
+        Polymer.dom(document).querySelector('#dateEntry5').momentObj = obj;
+        Polymer.dom(document).querySelector('#dateEntry6').momentObj = obj.clone().add(1, 'years');
+        Polymer.dom(document).querySelector('#timeEntry2').momentObj = obj.clone().subtract(1, 'hours');
+      });
 
-        </script>
-    </body>
+    </script>
+  </body>
 </html>

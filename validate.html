@@ -36,8 +36,15 @@ var validate = {
     neighborValid:{
       type:Boolean,
       value:true
+    },
+    /**
+     * String used to describe the current invalid state
+     *
+    */
+    validationErrorMessage:{
+      type: String,
+      value: 'invalid'
     }
-
   },
   /**
    * Validation function for 'px-datetime-entry' and 'px-time-input'
@@ -45,7 +52,6 @@ var validate = {
    * @return {Boolean} passed validation
    */
   _validateInput: function() {
-    console.log('validate');
     Polymer.dom(this).parentNode.classList.remove('is-focused');
 
 
@@ -56,17 +62,13 @@ var validate = {
     for (var i = 0; i < inputArr.length; i++) {
       inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
     }
-    console.log("inputStr  "  + inputStr);
-    console.log("momentFormat  "  + this.momentFormat);
-    console.log(moment(inputStr, this.momentFormat, true));
 
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
+    var inputMoment = moment(inputStr, this.momentFormat, true);
 
     // if the component datetime string is a valid datetime
-    if(moment(inputStr, this.momentFormat, true).isValid()) {
-      // alert('Date is valid');
-      console.log("passed");
+    if(inputMoment.isValid()) {
       // turn off input box error outline
       this.toggleClass('validation-error', false, this.$.wrapper);
       /*
@@ -77,7 +79,7 @@ var validate = {
       */
       var newMoment = this.momentObj.clone();
       // just use the relevant fields, so ok if not in utc timemoment
-      var typedInMoment = moment(inputStr, this.momentFormat);
+      var typedInMoment = moment.tz(inputStr, this.momentFormat, this.timeZone);
 
       // since the input box only has date or time, just reset that portion of the moment object
       if (this.dateOrTime.toLowerCase() === 'date') { // if i'm typing in a date field, set the new date
@@ -89,19 +91,51 @@ var validate = {
         newMoment.hour(typedInMoment.hour());
         newMoment.minute(typedInMoment.minute());
         newMoment.second(typedInMoment.second());
+        newMoment.millisecond(typedInMoment.millisecond());
       }
 
       this.set('isValid', true);
       // if the neighbor is also valid, then we can set our moment object
-      if(this.neighborValid && !this.momentObj.isSame(newMoment,'second')) {
-        this.set('moment', newMoment);
-        this.fire('moment-changed',{'moment':newMoment})
+      if(this.neighborValid && !this.momentObj.isSame(newMoment)) {
+        this.set('momentObj', newMoment);
+        this.fire('px-moment-changed',{'momentObj':newMoment})
       }
       return true;
 
     } else { //the input box string is not a valid date/time
-      console.log("failed");
       // turn on the error outline
+    //  this.set('validationErrorMessage', 'this date is not valid for format ' + this.momentFormat);
+
+      var invalidAt = inputMoment.invalidAt();
+
+      if(invalidAt !== -1) {
+        switch(invalidAt) {
+          case 0:
+            this.set('validationErrorMessage', 'Year ' + inputMoment._a[invalidAt] + ' is not valid');
+            break;
+          case 1:
+            this.set('validationErrorMessage', 'Month ' + (inputMoment._a[invalidAt] + 1) + ' is not valid');
+            break;
+          case 2:
+            this.set('validationErrorMessage', 'Day ' + inputMoment._a[invalidAt] + ' is not valid');
+            break;
+          case 3:
+            this.set('validationErrorMessage', 'Hour ' + inputMoment._a[invalidAt] + ' is not valid');
+            break;
+          case 4:
+            this.set('validationErrorMessage', 'Minute ' + inputMoment._a[invalidAt]  + ' is not valid');
+            break;
+          case 5:
+            this.set('validationErrorMessage', 'Second ' + inputMoment._a[invalidAt] + ' is not valid');
+            break;
+          case 6:
+            this.set('validationErrorMessage', 'Millisecond ' + inputMoment._a[invalidAt] + ' is not valid');
+            break;
+        }
+      } else if(inputMoment.parsingFlags().bigHour === true) {
+        this.set('validationErrorMessage', 'This hour is not within a 12 hour clock');
+      }
+
       this.toggleClass('validation-error', true, this.$.wrapper);
       this.set('isValid', false);
       this._submitButtonState(false);

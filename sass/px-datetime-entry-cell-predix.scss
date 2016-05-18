@@ -26,6 +26,7 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
   background-color: #b2d7ff;
 }
 
+//Why is this here?
 .is-focused {
   border-color: $inuit-forms-border--outer--focused;
   box-shadow: $inuit-forms-border--inner--focused;
@@ -33,4 +34,8 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
 
 .text-input--bare{
   color: inherit;
+}
+
+.text-input--non-editable {
+  color: $gray5;
 }

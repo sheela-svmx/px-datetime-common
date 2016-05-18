@@ -1,4 +1,4 @@
-<script src="../moment/moment.js"></script>
+<link rel="import" href="px-datetime-imports.html" />
 
 <script>
 
@@ -21,6 +21,8 @@ var pxDatetimeBehavior = {
      * Set this attribute when you do want to allow future dates in the 'px-date-panel' component.
      * This only affects the visual calendar date picker, users can always type in dates/times or choose times that are in the future.
      *
+     * Defined In: 'pxDatetimeBehavior'
+     *
      * @default false (future dates will be disabled and unclickable)
      */
     allowFutureDates: {
@@ -40,6 +42,7 @@ var pxDatetimeBehavior = {
      *   }
      * ```
      *
+     * Defined In: 'pxDatetimeBehavior'
      */
     displayOptions: {
       type: Object,
@@ -67,6 +70,8 @@ var pxDatetimeBehavior = {
      *   ]
      * ```
      *
+     * Defined In: 'pxDatetimeBehavior'
+     *
      * @default no presets
      */
     presets: Object,
@@ -76,6 +81,8 @@ var pxDatetimeBehavior = {
      * If validation fails then 'isSubmitButtonValid' is false; the user can not submit the entry.
      *
      * @private
+     *
+     * Defined In: 'pxDatetimeBehavior'
      */
     isSubmitButtonValid: {
       type: Boolean,
@@ -88,6 +95,8 @@ var pxDatetimeBehavior = {
      *
      * By default, px-datetime components will display the time in your browser's timezone.  If you add
      * the is-utc attribute it will display the time as a UTC (GMT timezone) time.
+     *
+     * Defined In: 'pxDatetimeBehavior'
      *
      * @default false
      */
@@ -103,8 +112,8 @@ var pxDatetimeBehavior = {
      *
      * Can only be configured statically; not data-bindable
      *
-     * @property dateFormat
-     * @type String
+     * Defined In: 'pxDatetimeBehavior'
+     *
      * @default 'MM/DD/YYYY'
      */
     dateFormat: {
@@ -120,8 +129,8 @@ var pxDatetimeBehavior = {
      *
      * Can only be configured statically; not data-bindable
      *
-     * @property timeFormat
-     * @type String
+     * Defined In: 'pxDatetimeBehavior'
+     *
      * @default 'hh:mm:ss A' for time
      */
     timeFormat: {
@@ -132,6 +141,8 @@ var pxDatetimeBehavior = {
 
     /**
      * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
+     *
+     * Defined In: 'pxDatetimeBehavior'
      *
      * @private
      */
@@ -144,6 +155,8 @@ var pxDatetimeBehavior = {
 
   /**
    * Takes an ISO 8601 String and returns a moment object
+   *
+   * Defined In: 'pxDatetimeBehavior'
    *
    * @param {String} timeString
    */
