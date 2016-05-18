@@ -856,16 +856,16 @@ button.btn {
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center; }
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline; }
 
 .validation-container {
   margin-left: auto; }
 
 .validation-container__icon {
-  width: 0.9333333333rem;
-  height: 0.9333333333rem; }
+  width: 0.8666666667rem;
+  height: 0.8666666667rem; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
