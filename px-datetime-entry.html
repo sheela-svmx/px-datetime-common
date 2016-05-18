@@ -184,10 +184,10 @@ Range field component which displays a time or date and font awesome icon.
     },
 
     listeners: {
-      'entry-cell-move': '_entryCellMove',
-      'cell-blured': '_handleBlur',
-      'cell-validate': '_validateInput',
-      'moment-changed': '_handleMoment',
+      'px-entry-cell-move': '_entryCellMove',
+      'px-cell-blured': '_handleBlur',
+      'px-cell-validate': '_validateInput',
+      'px-moment-changed': '_handleMoment',
       'px-request-datetime-entry-copy': '_handleCopy',
       'px-request-datetime-entry-paste': '_handlePaste'
     },
@@ -260,10 +260,10 @@ Range field component which displays a time or date and font awesome icon.
 
       if(entryCellOrder === this._cellFormatArray.length - 1 && evt.detail.dir === 1){
 
-        this.fire('next-field');
+        this.fire('px-next-field');
       } else if(entryCellOrder === 0 && evt.detail.dir === -1){
 
-        this.fire('previous-field');
+        this.fire('px-previous-field');
       } else {
         entryCellOrder = parseInt(entryCellOrder) + evt.detail.dir;
         var elem = this.$$("#cell" + entryCellOrder);

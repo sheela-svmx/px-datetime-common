@@ -101,7 +101,7 @@ var validate = {
       // if the neighbor is also valid, then we can set our moment object
       if(this.neighborValid && !this.momentObj.isSame(newMoment)) {
         this.set('momentObj', newMoment);
-        this.fire('moment-changed',{'momentObj':newMoment})
+        this.fire('px-moment-changed',{'momentObj':newMoment})
       }
       return true;
 
