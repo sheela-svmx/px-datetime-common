@@ -25,7 +25,7 @@ Range field component which displays a time or date and font awesome icon.
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
     <div id='wrapper' class="wrapper">
-      <div class="inline-block">
+      <div class$="{{_getWrapperClass(showTimeZone)}}">
           <label class="label--inline">
               <span class="a11y dtLabel">{{dateOrTime}}</span>
               <iron-icon
@@ -43,7 +43,8 @@ Range field component which displays a time or date and font awesome icon.
               moment-format='[[item]]'
               symbol=[[_returnSymbol(index)]]
               is-valid$={{isValid}}
-              time-zone="[[timeZone]]">
+              time-zone="[[timeZone]]"
+              is-selected={{isSelected}}>
             </px-datetime-entry-cell>
             <template is="dom-if" if={{_isSymbol(index)}}>
               <span
@@ -180,6 +181,14 @@ Range field component which displays a time or date and font awesome icon.
       showTimeZone: {
         type: String,
         value: ''
+      },
+      /**
+       *  True if any cell is currently selected.
+       *
+       */
+      isSelected: {
+        type: Boolean,
+        notify: true
       }
     },
 
@@ -421,5 +430,14 @@ Range field component which displays a time or date and font awesome icon.
         }
         return classList.join(' ');
       },
+      _getWrapperClass: function(showTimeZone) {
+        var classList = "inline-block ";
+
+        if(!showTimeZone) {
+          classList += "u-mr-- ";
+        }
+
+        return classList;
+      }
   });
 </script>

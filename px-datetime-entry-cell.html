@@ -121,6 +121,15 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       timeZone:{
         type:String,
         value: ''
+      },
+      /**
+       *  Whether the cell is currently selected. readonly
+       */
+      isSelected: {
+        type: Boolean,
+        readOnly: true,
+        notify: true,
+        value: false
       }
     },
 
@@ -219,9 +228,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _handleFocus: function(evt) {
       var ne = Polymer.dom(evt);
       if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
+
         this.toggleClass("is-selected", true, ne.rootTarget);
         this.removeOwnKeyBindings();
         this._addGeneralKeyBindings();
+        //special setter cause readonly
+        this._setIsSelected(true);
       }
       else {
         this.removeOwnKeyBindings();
@@ -285,6 +297,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
       this.toggleClass("is-selected", false, ne.rootTarget);
       this.fire('cell-blured');
+      //special setter cause readonly
+      this._setIsSelected(false);
     },
     /**
      * Listner attached to the input and sets up a timeout to trigger validation.
