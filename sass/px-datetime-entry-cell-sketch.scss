@@ -41,7 +41,6 @@ $inuit-enable-validation-states : true;
 @import "px-buttons-design/_objects.buttons.scss";
 
 // Component
-
 .text-input--bare {
   text-align: center;
   cursor:text;
@@ -55,25 +54,6 @@ $inuit-enable-validation-states : true;
   @include inuit-font-size(15px);
   font-family: var(--px-font-family);
   line-height: 1;
-  &:focus {
-    // outline: 0;
-  }
-  &::selection{
-    background: transparent;
-  }
-
-  &::-webkit-input-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem;
-  }
-  &::-moz-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem;
-  }
-  &:-ms-input-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem;
-  }
 }
 
 .text-input--non-editable {
@@ -88,7 +68,6 @@ Size the input-width correctly based on the number of charaters that are in the 
     width: $inuit-base-spacing-unit--small * $i * 0.85
   }
 }
-
 .input-width-1,
 .input-width-2 {
   width:$inuit-base-spacing-unit--small * 2.1;

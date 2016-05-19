@@ -846,19 +846,6 @@ button.btn {
   line-height: 1.3333333333;
   font-family: var(--px-font-family);
   line-height: 1; }
-  .text-input--bare::-moz-selection {
-    background: transparent; }
-  .text-input--bare::selection {
-    background: transparent; }
-  .text-input--bare::-webkit-input-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem; }
-  .text-input--bare::-moz-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem; }
-  .text-input--bare:-ms-input-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem; }
 
 .text-input--non-editable {
   cursor: default; }
@@ -1022,10 +1009,6 @@ Size the input-width correctly based on the number of charaters that are in the 
 
 .is-selected {
   background-color: #b2d7ff; }
-
-.is-focused {
-  border-color: #0a9ec1;
-  box-shadow: inset 0 0 0 1px #d1d0d8; }
 
 .text-input--bare {
   color: inherit; }

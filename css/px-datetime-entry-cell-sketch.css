@@ -833,19 +833,6 @@ button.btn {
   line-height: 1.3333333333;
   font-family: var(--px-font-family);
   line-height: 1; }
-  .text-input--bare::-moz-selection {
-    background: transparent; }
-  .text-input--bare::selection {
-    background: transparent; }
-  .text-input--bare::-webkit-input-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem; }
-  .text-input--bare::-moz-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem; }
-  .text-input--bare:-ms-input-placeholder {
-    padding-top: 0.2rem;
-    font-size: 0.8rem; }
 
 .text-input--non-editable {
   cursor: default; }

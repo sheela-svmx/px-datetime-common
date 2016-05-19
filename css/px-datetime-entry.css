@@ -834,6 +834,9 @@ button.btn {
   .range-field__field label {
     margin: 0; }
 
+.text-input--non-editable {
+  cursor: default; }
+
 .dtIcon {
   -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
           transform: scale(0.7, 0.7) translate(0, -3px); }
@@ -986,8 +989,8 @@ button.btn {
 
 :host {
   --dropdown_bg_default: transparent;
-  --dropdown_bg_hover: #efeff4;
-  --dropdown_bg_opened: #efeff4;
+  --dropdown_bg_hover: #e4e4ea;
+  --dropdown_bg_opened: #9999a3;
   --dropdown_border_color: 0; }
 
 .validation-container__icon--failed {
@@ -1000,3 +1003,6 @@ button.btn {
 .dtIcon,
 .dtIcon label {
   color: #7c7c84; }
+
+.text-input--non-editable {
+  color: #b1b1bc; }
