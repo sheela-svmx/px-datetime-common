@@ -65,17 +65,33 @@ Date time button component.
     observers: [
       '_submitButtonState(isSubmitButtonValid)'
     ],
+    /**
+     *
+     *
+     */
     _fireCancelEvent:function(){
       console.log("cancel clicked");
       this.fire('px-datetime-button-clicked',{ action:false });
     },
+    /**
+     *
+     *
+     */
     _fireSubmitEvent:function(){
       console.log("submit clicked");
       this.fire('px-datetime-button-clicked',{ action:true });
     },
+    /**
+     *
+     *
+     */
     submitBtnClasses: function(base, submitButtonValid) {
       return (submitButtonValid) ? base : base + ' btn--disabled';
     },
+    /**
+     *
+     *
+     */
     _isEqual: function(source, target) {
       console.log(source);
       console.log(target);
