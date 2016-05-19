@@ -821,23 +821,24 @@ button.btn {
   .range-field__field label {
     margin: 0; }
 
+/*
+when the text is non editable the cursor is the default black arrow
+*/
 .text-input--non-editable {
   cursor: default; }
 
+/*
+adjusts size and position of the Calendar and Clock icon
+*/
 .dtIcon {
-  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
-          transform: scale(0.7, 0.7) translate(0, -3px); }
+  -webkit-transform: scale(0.7, 0.7) translate(0, -2px);
+          transform: scale(0.7, 0.7) translate(0, -2px); }
 
+/*
+descrease the spacing of the symbols to make entry feel like one text field
+*/
 .dtEntrySymbol {
   margin: -5px; }
-
-.flex__item--max-grow {
-  -webkit-flex: 12;
-      -ms-flex: 12;
-          flex: 12; }
-
-.inline-block {
-  display: inline-block; }
 
 .timezone__dropdown {
   width: 10rem; }
@@ -855,7 +856,8 @@ button.btn {
 
 .validation-container__icon {
   width: 0.8666666667rem;
-  height: 0.8666666667rem; }
+  height: 0.8666666667rem;
+  vertical-align: text-top; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
