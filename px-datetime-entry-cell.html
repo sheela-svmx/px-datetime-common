@@ -240,7 +240,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
 
       // propagate the focus event up to entry to apply inline edit styles if applicable
-      this.fire('cell-focused');
+      this.fire('px-cell-focused');
     },
     /**
      *
@@ -249,7 +249,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _moveFocusBack : function(){
       setTimeout(function(){
-        this.fire('entry-cell-move', { 'dir' : -1 });
+        this.fire('px-entry-cell-move', { 'dir' : -1 });
       }.bind(this),10);
     },
     /**
@@ -259,7 +259,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _moveFocusForward : function(){
       setTimeout(function(){
-        this.fire('entry-cell-move', { 'dir' : 1 });
+        this.fire('px-entry-cell-move', { 'dir' : 1 });
       }.bind(this),10);
     },
     /**
@@ -296,7 +296,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._checkValue();
 
       this.toggleClass("is-selected", false, ne.rootTarget);
-      this.fire('cell-blured');
+      this.fire('px-cell-blured');
       //special setter cause readonly
       this._setIsSelected(false);
     },
@@ -308,7 +308,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _inputValueChanged: function(evt){
       var _this = this;
       this.debounce('cell-validation', function(){
-        _this.fire('cell-validate');
+        _this.fire('px-cell-validate');
       }, 500);
     },
     /**
@@ -317,7 +317,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _onEnter
      */
     _onEnter:function(){
-      this.fire('cell-validate');
+      this.fire('px-cell-validate');
       setTimeout(function(){
         if(this.isSubmitButtonValid){
           this.fire('px-datetime-sumbit',{ action:true });
@@ -372,7 +372,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         tempMoment.subtract(1, this._convertMomentFormat());
       }
       // since this cannot be invalid, fire so it sets above and let changes trickle.
-      this.fire('moment-changed',{'momentObj':tempMoment})
+      this.fire('px-moment-changed',{'momentObj':tempMoment})
 
       evt.preventDefault();
     },

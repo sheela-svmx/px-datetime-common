@@ -62,9 +62,6 @@ var validate = {
     for (var i = 0; i < inputArr.length; i++) {
       inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
     }
-    // console.log("inputStr  "  + inputStr);
-    // console.log("momentFormat  "  + this.momentFormat);
-    // console.log(moment(inputStr, this.momentFormat, true));
 
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
@@ -101,7 +98,7 @@ var validate = {
       // if the neighbor is also valid, then we can set our moment object
       if(this.neighborValid && !this.momentObj.isSame(newMoment)) {
         this.set('momentObj', newMoment);
-        this.fire('moment-changed',{'momentObj':newMoment})
+        this.fire('px-moment-changed',{'momentObj':newMoment})
       }
       return true;
 
