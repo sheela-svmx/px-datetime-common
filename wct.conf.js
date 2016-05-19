@@ -28,6 +28,6 @@ module.exports = {
     }
   },
   suites: [
-    'test/px-datetime-common-test-fixture.html'
+    'test/px-datetime-entry-test-fixture.html'
   ]
 };
