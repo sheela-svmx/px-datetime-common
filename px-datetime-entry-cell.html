@@ -86,7 +86,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       dtWorkingCopy:{
         type:String,
         notify: true,
-        observer: '_sizeInputs'
+        observer: '_dataChanged'
       },
       /**
        *
@@ -170,6 +170,17 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         classList += "text-input--non-editable ";
       }
       return classList;
+    },
+    /**
+     *  Caleld every time the data of the cell changed
+     */
+    _dataChanged: function() {
+      this._sizeInputs();
+
+      //only try to validate if the cell is full
+      if(this.cellLength === this.$.dtEntry.value.length) {
+        this._inputValueChanged();
+      }
     },
     /**
      * Size the input fields based on the number of characters in dtWorkingCopy
@@ -306,10 +317,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _inputValueChanged
      */
     _inputValueChanged: function(evt){
+
       var _this = this;
       this.debounce('cell-validation', function(){
         _this.fire('px-cell-validate');
-      }, 500);
+      }, 50);
     },
     /**
      * When ENTER is clicked

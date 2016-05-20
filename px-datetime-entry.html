@@ -54,7 +54,7 @@ Range field component which displays a time or date and font awesome icon.
             </template>
           </template>
       </div>
-      <div class="inline-block">
+      <div >  <!-- class="inline-block" -->
         <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
           <px-dropdown id="dropdown" display-value="[[timeZone]]" value="{{timeZone}}">
             <px-dropdown-content
@@ -170,13 +170,14 @@ Range field component which displays a time or date and font awesome icon.
       },
       /**
        *
-       * Can be set to show the timezone. Can have 2 values:
-       *  'dropdown': shows the time zone as a dropdown which the user can use to
+       * Can be set to show the timezone.
+       * - 'dropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Only contains a subset of all timezones
-       *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
+       * - 'extendedDropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Contains all existing timezones (588)
-       *  'text': shows the time zone as text, non editable
-       *  'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
+       *
+       * - 'text': shows the time zone as text, non editable
+       * - 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
        */
       showTimeZone: {
         type: String,
@@ -431,7 +432,7 @@ Range field component which displays a time or date and font awesome icon.
         return classList.join(' ');
       },
       _getWrapperClass: function(showTimeZone) {
-        var classList = "inline-block ";
+        var classList ;
 
         if(!showTimeZone) {
           classList += "u-mr-- ";
