@@ -844,8 +844,9 @@ when the text is non editable the cursor is the default black arrow
 adjusts size and position of the Calendar and Clock icon
 */
 .dtIcon {
-  -webkit-transform: scale(0.7, 0.7) translate(0, -2px);
-          transform: scale(0.7, 0.7) translate(0, -2px); }
+  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
+          transform: scale(0.7, 0.7) translate(0, -3px);
+  margin: -3px 0px; }
 
 /*
 descrease the spacing of the symbols to make entry feel like one text field
@@ -865,6 +866,7 @@ descrease the spacing of the symbols to make entry feel like one text field
           align-items: center; }
 
 .validation-container {
+  cursor: pointer;
   margin-left: auto; }
 
 .validation-container__icon {
