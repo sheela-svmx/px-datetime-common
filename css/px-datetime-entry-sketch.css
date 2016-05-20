@@ -831,11 +831,6 @@ button.btn {
 .dtEntrySymbol {
   margin: -5px; }
 
-.flex__item--max-grow {
-  -webkit-flex: 12;
-      -ms-flex: 12;
-          flex: 12; }
-
 .inline-block {
   display: inline-block; }
 

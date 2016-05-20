@@ -226,10 +226,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _handleFocus
      */
     _handleFocus: function(evt) {
-      var ne = Polymer.dom(evt);
+
       if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
 
-        this.toggleClass("is-selected", true, ne.rootTarget);
+        this.toggleClass("is-selected", true, this.$.dtEntry);
         this.removeOwnKeyBindings();
         this._addGeneralKeyBindings();
         //special setter cause readonly
@@ -317,6 +317,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _onEnter
      */
     _onEnter:function(){
+      this._checkValue();
       this.fire('px-cell-validate');
       setTimeout(function(){
         if(this.isSubmitButtonValid){
