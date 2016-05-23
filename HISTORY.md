@@ -1,3 +1,7 @@
+v0.2.0
+==================
+* Updated px-datetime-behavior. Added tests. Various fixes/improvements
+
 v0.1.0
 ==================
 * merged master with entry. Updated entry and entry-cell functionally
