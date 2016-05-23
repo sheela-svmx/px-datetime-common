@@ -65,10 +65,12 @@ var validate = {
 
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
-    var inputMoment = moment(inputStr, this.momentFormat, true);
+    var inputMoment = moment.tz(inputStr, this.momentFormat, true, this.timeZone),
+        notAllowedInFuture = !this.allowFutureDates && inputMoment.isAfter(moment.tz(moment(), this.timezone), 'day');
 
     // if the component datetime string is a valid datetime
-    if(inputMoment.isValid()) {
+    if(inputMoment.isValid() &&
+       !notAllowedInFuture) {
       // turn off input box error outline
       this.toggleClass('validation-error', false, this.$.wrapper);
       /*
@@ -102,39 +104,42 @@ var validate = {
       }
       return true;
 
-    } else { //the input box string is not a valid date/time
-      // turn on the error outline
-    //  this.set('validationErrorMessage', 'this date is not valid for format ' + this.momentFormat);
+    } else {
+      //the input box string is not a valid date/time
+      if(notAllowedInFuture) {
+        this.set('validationErrorMessage', 'Future dates are not allowed');
+      }else {
+        var invalidAt = inputMoment.invalidAt();
 
-      var invalidAt = inputMoment.invalidAt();
-
-      if(invalidAt !== -1) {
-        switch(invalidAt) {
-          case 0:
-            this.set('validationErrorMessage', 'Year ' + inputMoment._a[invalidAt] + ' is not valid');
-            break;
-          case 1:
-            this.set('validationErrorMessage', 'Month ' + (inputMoment._a[invalidAt] + 1) + ' is not valid');
-            break;
-          case 2:
-            this.set('validationErrorMessage', 'Day ' + inputMoment._a[invalidAt] + ' is not valid');
-            break;
-          case 3:
-            this.set('validationErrorMessage', 'Hour ' + inputMoment._a[invalidAt] + ' is not valid');
-            break;
-          case 4:
-            this.set('validationErrorMessage', 'Minute ' + inputMoment._a[invalidAt]  + ' is not valid');
-            break;
-          case 5:
-            this.set('validationErrorMessage', 'Second ' + inputMoment._a[invalidAt] + ' is not valid');
-            break;
-          case 6:
-            this.set('validationErrorMessage', 'Millisecond ' + inputMoment._a[invalidAt] + ' is not valid');
-            break;
+        if(invalidAt !== -1) {
+          switch(invalidAt) {
+            case 0:
+              this.set('validationErrorMessage', 'Year ' + inputMoment._a[invalidAt] + ' is not valid');
+              break;
+            case 1:
+              this.set('validationErrorMessage', 'Month ' + (inputMoment._a[invalidAt] + 1) + ' is not valid');
+              break;
+            case 2:
+              this.set('validationErrorMessage', 'Day ' + inputMoment._a[invalidAt] + ' is not valid');
+              break;
+            case 3:
+              this.set('validationErrorMessage', 'Hour ' + inputMoment._a[invalidAt] + ' is not valid');
+              break;
+            case 4:
+              this.set('validationErrorMessage', 'Minute ' + inputMoment._a[invalidAt]  + ' is not valid');
+              break;
+            case 5:
+              this.set('validationErrorMessage', 'Second ' + inputMoment._a[invalidAt] + ' is not valid');
+              break;
+            case 6:
+              this.set('validationErrorMessage', 'Millisecond ' + inputMoment._a[invalidAt] + ' is not valid');
+              break;
+          }
+        } else if(inputMoment.parsingFlags().bigHour === true) {
+          this.set('validationErrorMessage', 'This hour is not within a 12 hour clock');
         }
-      } else if(inputMoment.parsingFlags().bigHour === true) {
-        this.set('validationErrorMessage', 'This hour is not within a 12 hour clock');
       }
+
 
       this.toggleClass('validation-error', true, this.$.wrapper);
       this.set('isValid', false);

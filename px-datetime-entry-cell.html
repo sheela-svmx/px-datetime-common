@@ -118,10 +118,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         type:Number,
         reflectToAttribute:true
       },
-      timeZone:{
-        type:String,
-        value: ''
-      },
       /**
        *  Whether the cell is currently selected. readonly
        */
@@ -134,7 +130,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     },
 
     observers:[
-      '_updateAndValidateWorkingCopy(momentObj)'
+      '_updateAndValidateWorkingCopy(momentObj, timeZone)'
     ],
 
     /**
@@ -317,11 +313,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _inputValueChanged
      */
     _inputValueChanged: function(evt){
-
       var _this = this;
       this.debounce('cell-validation', function(){
         _this.fire('px-cell-validate');
-      }, 50);
+      }, 100);
     },
     /**
      * When ENTER is clicked

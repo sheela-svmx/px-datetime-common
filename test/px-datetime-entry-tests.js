@@ -144,6 +144,21 @@ function runCustomTests() {
       cells[0].addEventListener('px-entry-cell-move', listener);
       fireKeyboardEvent(cells[0], 'ArrowLeft');
     });
+
+    test('click on icon fires event', function(done) {
+      var iconLabel = Polymer.dom(date1.root).querySelector('#wrapper > div > label');
+
+      var listener = function(evt) {
+        done();
+      };
+
+      //pressing right arrow should move to the next cell.
+      //Unfortunately our code relies on focus() which doesn't seem to
+      //work in the testing environment. Instead listen to the event that will result
+      //in the cell to be changed
+      date1.addEventListener('px-datetime-entry-icon-clicked', listener);
+      iconLabel.click();
+    });
   });
 
   suite('Validation', function() {
@@ -152,6 +167,7 @@ function runCustomTests() {
       var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
 
       //simulate focus on second cell....
+      cells[1]._handleBlur();
       cells[1]._handleFocus();
 
       //change value to 99
@@ -193,6 +209,16 @@ function runCustomTests() {
         fireKeyboardEvent(cells[1], '1');
         fireKeyboardEvent(cells[1], 'Enter');
 
+        done();
+      }, 200);
+    });
+
+    test('dont allow future dates if not explicitely asked', function(done) {
+      date2.momentObj = date2.momentObj.clone().add(1, 'month');
+
+      //wait for validation to kick in
+      setTimeout(function() {
+        assert.isFalse(date2.isValid);
         done();
       }, 200);
     });
