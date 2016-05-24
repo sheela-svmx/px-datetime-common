@@ -1,3 +1,7 @@
+v0.2.1
+==================
+* Changed allowFutureDates to blockFutureDates
+
 v0.2.0
 ==================
 * Updated px-datetime-behavior. Added tests. Various fixes/improvements
