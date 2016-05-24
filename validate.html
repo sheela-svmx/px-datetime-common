@@ -66,7 +66,7 @@ var validate = {
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
     var inputMoment = moment.tz(inputStr, this.momentFormat, true, this.timeZone),
-        notAllowedInFuture = !this.allowFutureDates && inputMoment.isAfter(moment.tz(moment(), this.timezone), 'day');
+        notAllowedInFuture = this.blockFutureDates && inputMoment.isAfter(moment.tz(moment(), this.timezone), 'day');
 
     // if the component datetime string is a valid datetime
     if(inputMoment.isValid() &&
