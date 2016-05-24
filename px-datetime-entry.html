@@ -68,7 +68,7 @@ Range field component which displays a time or date and font awesome icon.
           </px-dropdown>
         </template>
         <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
-          <span class="text-input--non-editable u-ml-- u-mr--">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
+          <span class="text-input--non-editable">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
         </template>
       </div>
       <template is="dom-if" if="{{!isValid}}">

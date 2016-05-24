@@ -444,6 +444,11 @@ a {
   display: -ms-flexbox;
   display: flex; }
 
+.inline--flex {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex; }
+
 .flex--row {
   -webkit-flex-direction: row;
       -ms-flex-direction: row;
@@ -995,7 +1000,8 @@ descrease the spacing of the symbols to make entry feel like one text field
   --dropdown_bg_default: transparent;
   --dropdown_bg_hover: #e4e4ea;
   --dropdown_bg_opened: #9999a3;
-  --dropdown_border_color: 0; }
+  --dropdown_border_color: 0;
+  --dropdown_text_padding: 0; }
 
 .validation-container__icon--failed {
   color: #e53838; }
