@@ -28,11 +28,13 @@ Range field component which displays a time or date and font awesome icon.
       <div class$="{{_getWrapperClass(showTimeZone)}}">
           <label class="label--inline" on-tap="_iconClicked">
               <span class="a11y dtLabel">{{dateOrTime}}</span>
-              <iron-icon
-                id="icon"
-                class="fa fa-fw dtIcon"
-                icon="[[_setIcon(dateOrTime)]]">
-              </iron-icon>
+              <template is="dom-if" if={{!hideIcon}}>
+                <iron-icon
+                  id="icon"
+                  class="fa fa-fw dtIcon"
+                  icon="[[_setIcon(dateOrTime)]]">
+                </iron-icon>
+              </template>
           </label>
           <template is="dom-repeat" items="{{_cellFormatArray}}">
             <px-datetime-entry-cell
@@ -123,6 +125,14 @@ Range field component which displays a time or date and font awesome icon.
        */
       momentFormat: {
         type: String
+      },
+      /**
+       * Whether to hide the calendar or clock icon
+       *
+       */
+      hideIcon: {
+        type: Boolean,
+        value: false
       },
       /**
        *
@@ -406,7 +416,7 @@ Range field component which displays a time or date and font awesome icon.
     },
     _iconClicked: function(evt) {
 
-      this.fire('px-datetime-entry-icon-clicked');
+      this.fire('px-datetime-entry-icon-clicked', {dateOrTime: this.dateOrTime});
     }
   });
 </script>
