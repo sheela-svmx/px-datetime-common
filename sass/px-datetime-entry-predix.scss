@@ -23,10 +23,13 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
 
 :host{
   --dropdown_bg_default: transparent;
-  --dropdown_bg_hover: $gray3;
-  --dropdown_bg_opened:  $gray6;
+  --dropdown_bg_hover: transparent;
+  --dropdown_bg_opened:  transparent;
   --dropdown_border_color: 0;
   --dropdown_text_padding: 0;
+  --dropdown_text_color--hover: $select-blue-default;
+  --dropdown_text_color--pressed: $select-blue-pressed;
+  --dropdown_text--opened: $select-blue-default;
 }
 
 .validation-container__icon--failed {
@@ -47,4 +50,8 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
 
 .text-input--non-editable {
   color: $gray5;
+}
+
+._hack-text-align {
+  margin-bottom: -1px;
 }

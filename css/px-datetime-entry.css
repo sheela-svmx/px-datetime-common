@@ -998,10 +998,13 @@ descrease the spacing of the symbols to make entry feel like one text field
 
 :host {
   --dropdown_bg_default: transparent;
-  --dropdown_bg_hover: #e4e4ea;
-  --dropdown_bg_opened: #9999a3;
+  --dropdown_bg_hover: transparent;
+  --dropdown_bg_opened: transparent;
   --dropdown_border_color: 0;
-  --dropdown_text_padding: 0; }
+  --dropdown_text_padding: 0;
+  --dropdown_text_color--hover: #0a9ec1;
+  --dropdown_text_color--pressed: #086e87;
+  --dropdown_text--opened: #0a9ec1; }
 
 .validation-container__icon--failed {
   color: #e53838; }
@@ -1016,3 +1019,6 @@ descrease the spacing of the symbols to make entry feel like one text field
 
 .text-input--non-editable {
   color: #b1b1bc; }
+
+._hack-text-align {
+  margin-bottom: -1px; }

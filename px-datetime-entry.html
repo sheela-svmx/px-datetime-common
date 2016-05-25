@@ -54,7 +54,7 @@ Range field component which displays a time or date and font awesome icon.
             </template>
           </template>
       </div>
-      <div >  <!-- class="inline-block" -->
+      <div class$="{{_getTimeZoneTextClass(showTimeZone)}}">  <!-- class="inline-block" -->
         <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
           <px-dropdown id="dropdown" display-value="[[timeZone]]" value="{{timeZone}}">
             <px-dropdown-content
@@ -377,6 +377,15 @@ Range field component which displays a time or date and font awesome icon.
         return timeZone;
       }
     },
+    _getTimeZoneTextClass: function (showTimeZone) {
+      var classList = "";
+
+      if(showTimeZone === "text" || showTimeZone === "abbreviatedText") {
+        classList += "_hack-text-align ";
+      }
+
+      return classList;
+    },
     /**
      *
      *
@@ -396,7 +405,7 @@ Range field component which displays a time or date and font awesome icon.
       return classList.join(' ');
     },
     _getWrapperClass: function(showTimeZone) {
-      var classList = "";
+      var classList = "_hack-text-align ";
 
       if(!showTimeZone) {
         classList += "u-mr-- ";
