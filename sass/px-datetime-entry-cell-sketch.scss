@@ -60,20 +60,6 @@ $inuit-enable-validation-states : true;
   cursor:default;
 }
 
-/*
-Size the input-width correctly based on the number of charaters that are in the input field
-*/
-@for $i from 3 through 13 {
-  .input-width-#{$i}{
-    width: $inuit-base-spacing-unit--small * $i * 0.85
-  }
-}
-.input-width-1,
-.input-width-2 {
-  width:$inuit-base-spacing-unit--small * 2.1;
-}
-
-
 // Trumps
 $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;

@@ -855,46 +855,6 @@ button.btn {
 .text-input--non-editable {
   cursor: default; }
 
-/*
-Size the input-width correctly based on the number of charaters that are in the input field
-*/
-.input-width-3 {
-  width: 1.7rem; }
-
-.input-width-4 {
-  width: 2.2666666667rem; }
-
-.input-width-5 {
-  width: 2.8333333333rem; }
-
-.input-width-6 {
-  width: 3.4rem; }
-
-.input-width-7 {
-  width: 3.9666666667rem; }
-
-.input-width-8 {
-  width: 4.5333333333rem; }
-
-.input-width-9 {
-  width: 5.1rem; }
-
-.input-width-10 {
-  width: 5.6666666667rem; }
-
-.input-width-11 {
-  width: 6.2333333333rem; }
-
-.input-width-12 {
-  width: 6.8rem; }
-
-.input-width-13 {
-  width: 7.3666666667rem; }
-
-.input-width-1,
-.input-width-2 {
-  width: 1.4rem; }
-
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
  * level.
@@ -1016,7 +976,8 @@ Size the input-width correctly based on the number of charaters that are in the 
   background-color: #b2d7ff; }
 
 .text-input--bare {
-  color: inherit; }
+  color: inherit;
+  font-size: var(--px-datetime-entry-font-size, inherit); }
 
 .text-input--non-editable {
   color: #b1b1bc; }

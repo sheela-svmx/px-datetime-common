@@ -60,14 +60,7 @@ adjusts size and position of the Calendar and Clock icon
 */
 .dtIcon{
   transform: scale(0.7, 0.7) translate(0, -3px);
-  margin: -3px 0px; 
-}
-
-/*
-descrease the spacing of the symbols to make entry feel like one text field
-*/
-.dtEntrySymbol{
-  margin:-5px;
+  margin: -3px 0px;
 }
 
 .timezone__dropdown {
@@ -88,6 +81,14 @@ descrease the spacing of the symbols to make entry feel like one text field
   width: calculateRem(13px);
   height: calculateRem(13px);
   vertical-align: text-top;
+}
+
+.cell {
+  display: inline-block;
+}
+
+.dtEntrySymbol {
+  display: inline-block;
 }
 
 // Trumps

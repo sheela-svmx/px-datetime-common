@@ -840,12 +840,6 @@ adjusts size and position of the Calendar and Clock icon
           transform: scale(0.7, 0.7) translate(0, -3px);
   margin: -3px 0px; }
 
-/*
-descrease the spacing of the symbols to make entry feel like one text field
-*/
-.dtEntrySymbol {
-  margin: -5px; }
-
 .timezone__dropdown {
   width: 10rem; }
 
@@ -865,6 +859,12 @@ descrease the spacing of the symbols to make entry feel like one text field
   width: 0.8666666667rem;
   height: 0.8666666667rem;
   vertical-align: text-top; }
+
+.cell {
+  display: inline-block; }
+
+.dtEntrySymbol {
+  display: inline-block; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro

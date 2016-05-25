@@ -22,18 +22,13 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
 @import 'px-datetime-entry-cell-sketch.scss';
 
 // Component
-.is-selected{
+.is-selected {
   background-color: #b2d7ff;
 }
 
-//Why is this here?
-// .is-focused {
-//   border-color: $inuit-forms-border--outer--focused;
-//   box-shadow: $inuit-forms-border--inner--focused;
-// }
-
-.text-input--bare{
+.text-input--bare {
   color: inherit;
+  font-size: var(--px-datetime-entry-font-size, inherit);
 }
 
 .text-input--non-editable {
