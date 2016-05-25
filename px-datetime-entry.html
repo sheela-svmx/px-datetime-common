@@ -25,14 +25,16 @@ Range field component which displays a time or date and font awesome icon.
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
     <div id='wrapper' class="wrapper">
-      <div class$="{{_getWrapperClass(showTimeZone)}}">
+      <div class="u-mr-- inline--flex">
           <label class="label--inline" on-tap="_iconClicked">
               <span class="a11y dtLabel">{{dateOrTime}}</span>
-              <iron-icon
-                id="icon"
-                class="fa fa-fw dtIcon"
-                icon="[[_setIcon(dateOrTime)]]">
-              </iron-icon>
+              <template is="dom-if" if={{!hideIcon}}>
+                <iron-icon
+                  id="icon"
+                  class="fa fa-fw dtIcon"
+                  icon="[[_setIcon(dateOrTime)]]">
+                </iron-icon>
+              </template>
           </label>
           <template is="dom-repeat" items="{{_cellFormatArray}}">
             <px-datetime-entry-cell
@@ -47,10 +49,10 @@ Range field component which displays a time or date and font awesome icon.
               is-selected={{isSelected}}>
             </px-datetime-entry-cell>
             <template is="dom-if" if={{_isSymbol(index)}}>
-              <span
+              <div
                 class="dtEntrySymbol"
                 symbol='{{_returnSymbol(index)}}'>{{_returnSymbol(index)}}
-              </span>
+              </div>
             </template>
           </template>
       </div>
@@ -125,6 +127,14 @@ Range field component which displays a time or date and font awesome icon.
         type: String
       },
       /**
+       * Whether to hide the calendar or clock icon
+       *
+       */
+      hideIcon: {
+        type: Boolean,
+        value: false
+      },
+      /**
        *
        *
        *
@@ -195,6 +205,25 @@ Range field component which displays a time or date and font awesome icon.
     ready: function(){
 
       this._splitFormat();
+      this._sizeSymbols();
+    },
+    _sizeSymbols: function() {
+      //create a dummy canvas to measure string and make size the input correctly
+      var style = window.getComputedStyle(this, null),
+          fontSize = style.getPropertyValue('font-size'),
+          fontFamily = style.getPropertyValue('font-family'),
+          c = document.createElement('canvas'),
+          ctx=c.getContext('2d'),
+          symbols = Polymer.dom(this.root).querySelectorAll('.dtEntrySymbol'),
+          length;
+
+      ctx.font = fontSize + " " + fontFamily;
+
+      symbols.forEach(function(symbol, index) {
+
+        length = ctx.measureText(symbol.innerHTML.trim()).width;
+        symbol.style['width'] = length + 'px';
+      });
     },
     /**
      *
@@ -415,7 +444,7 @@ Range field component which displays a time or date and font awesome icon.
     },
     _iconClicked: function(evt) {
 
-      this.fire('px-datetime-entry-icon-clicked');
+      this.fire('px-datetime-entry-icon-clicked', {dateOrTime: this.dateOrTime});
     }
   });
 </script>

@@ -90,6 +90,14 @@ descrease the spacing of the symbols to make entry feel like one text field
   vertical-align: text-top;
 }
 
+.cell {
+  display: inline-block;
+}
+
+// .dtEntrySymbol {
+//   display: inline-block;
+// }
+
 // Trumps
 $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;

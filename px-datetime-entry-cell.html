@@ -153,6 +153,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     attached: function(){
       this._addGeneralKeyBindings();
+      this._sizeInputs();
+      this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
     },
     /**
      * returns the classList everything momentFormat is changed
@@ -171,7 +173,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *  Caleld every time the data of the cell changed
      */
     _dataChanged: function() {
-      this._sizeInputs();
 
       //only try to validate if the cell is full
       if(this.cellLength === this.$.dtEntry.value.length) {
@@ -185,11 +186,20 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method
      */
     _sizeInputs: function(){
-      if(!this.$.dtEntry.classList.contains('input-width')){
-        this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
-        this.toggleClass('input-width', true , this.$.dtEntry);
-        this.toggleClass('input-width-' + this.cellLength, true , this.$.dtEntry);
-      }
+
+      //create a dummy canvas to measure string and make size the input correctly
+      var style = window.getComputedStyle(this.$.dtEntry, null),
+          fontSize = style.getPropertyValue('font-size'),
+          fontFamily = style.getPropertyValue('font-family'),
+          c = document.createElement('canvas'),
+          ctx=c.getContext('2d'),
+          length;
+
+      ctx.font = fontSize + " " + fontFamily;
+      length = ctx.measureText(this.dtWorkingCopy).width;
+      length = Math.ceil(length);
+
+      this.$.dtEntry.style['width'] = length + 'px';
     },
     /**
      * Sets up regular key bindings

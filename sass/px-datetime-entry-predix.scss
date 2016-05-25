@@ -30,6 +30,7 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
   --dropdown_text_color--hover: $select-blue-default;
   --dropdown_text_color--pressed: $select-blue-pressed;
   --dropdown_text--opened: $select-blue-default;
+  font-size: var(--px-datetime-entry-font-size, inherit);
 }
 
 .validation-container__icon--failed {
