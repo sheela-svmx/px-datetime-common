@@ -19,14 +19,13 @@ Date time button component.
     <template is="dom-if" if="{{ !hideCancel }}">
       <button class="btn u-mr--" on-click="_fireCancelEvent">Cancel</button>
     </template>
-
     <template is="dom-if" if="{{ !hideSubmit }}">
       <button class$="{{submitBtnClasses('btn btn--primary', isSubmitButtonValid)}}"
               type=submit
-              on-click="_fireSubmitEvent"
+              on-tap="_fireSubmitEvent"
               id="submitButton"
               disabled="{{!isSubmitButtonValid}}">
-      <i class$="{{displayOptions.submitButtonIcon}}"></i>{{displayOptions.submitButtonText}}</button>
+      <i class$="{{submitIcon}}"></i>{{submitText}}</button>
     </template>
   </template>
 </dom-module>
@@ -36,31 +35,52 @@ Date time button component.
     is: 'px-datetime-buttons',
 
     behaviors: [
-      pxDatetimeBehavior,
       validate
     ],
 
     properties: {
+      /**
+       * Whether the submit button should be valid
+       */
+      isSubmitButtonValid: {
+        type: Boolean,
+        value: true
+      },
       /**
        *
        * Hides the Submit button when true
        *
        * @default false
        */
-       hideSubmit:{
+      hideSubmit:{
         type:Boolean,
         value:false
-       },
+      },
        /**
         *
         * Hides the Cancel button when 'hide'
         *
         * @default 'show'
         */
-       hideCancel:{
+      hideCancel:{
         type:Boolean,
         value:false
-       }
+      },
+      /**
+       * Icon to be used for the submit button
+       *
+       */
+      submitIcon: {
+        type: String
+      },
+      /**
+       *  Text to be used for the submit button
+       *
+       */
+      submitText: {
+        type: String
+      }
+
     },
     observers: [
       '_submitButtonState(isSubmitButtonValid)'

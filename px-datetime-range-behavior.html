@@ -17,6 +17,18 @@ var pxDatetimeRangeBehavior = {
   properties: {
 
     /**
+     *
+     * Set this attribute when you do want to allow future dates in the 'px-date-panel' component.
+     *
+     * Defined In: 'pxDatetimeBehavior'
+     *
+     * @default false (future dates will be disabled and unclickable)
+     */
+    blockFutureDates: {
+      type: Boolean,
+      value: false
+    },
+    /**
      * (optional:  'px-{datetime}-range-panel')
      *
      * The preset date/time ranges to be displayed.
@@ -64,21 +76,17 @@ var pxDatetimeRangeBehavior = {
     range: {
       type: Object,
       notify: true,
-      reflectToAttribute: true, // need both notify & reflectToAttribute for bind-polymer to work
       value: function() {
         return {
           from: moment().subtract(7, 'day').toISOString(),
           to: moment().toISOString()
         };
-      }
+      },
+      observer: '_notifyRangeChanged'
     },
 
     /**
      * Moment object start date & time
-     *
-     * This is the working copy moment object for 'px-rangepicker', 'px-datetime-range-field' and 'px-datetime-entry'
-     *
-     * used in '_setRange' to set 'range'
      *
      * Defined In: 'pxDatetimeRangeBehavior'
      *
@@ -92,10 +100,6 @@ var pxDatetimeRangeBehavior = {
     /**
      * Moment object end date & time
      *
-     * This is the working copy moment object for 'px-rangepicker', 'px-datetime-range-field' and 'px-datetime-entry'
-     *
-     * used in '_setRange' to set 'range'
-     *
      * Defined In: 'pxDatetimeRangeBehavior'
      *
      * @private
@@ -105,33 +109,24 @@ var pxDatetimeRangeBehavior = {
       notify: true
     },
     /**
-     * (px-calendar)
      *
-     * Helper attribute passed down by px-datetime components
+     * Moment-timezone string for using a specific timezone. See
+     * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
      *
-     * Defined In: 'pxDatetimeRangeBehavior'
-     *
-     * @private
+     * if not provided tries to guess the current local
      */
-    firstRangeDate: {
-      type: Object,
-      notify: true
-    },
-    /**
-     * (px-calendar)
-     *
-     * Helper attribute passed down by px-datetime components
-     *
-     * Defined In: 'pxDatetimeRangeBehavior'
-     *
-     * @private
-     */
-    secondRangeDate: {
-      type: Object,
-      notify: true
-    },
-
-  }, //properties close bracket
+    timeZone: {
+      type: String,
+      notify: true,
+      value: function() {
+        return moment.tz.guess();
+      },
+      observer: '_timeZoneChanged'
+    }
+  },
+  listeners: [
+    '_notifyRangeChanged(range.*)'
+  ],
   /**
    * for legacy purposes
    */
@@ -162,6 +157,76 @@ var pxDatetimeRangeBehavior = {
     };
     this.set('range', newRange);
   },
+  /**
+   * makes sure the moment objects reflexts the timezone
+   */
+  _timeZoneChanged: function() {
+    if(this.momentObj) {
+      if(this.fromMoment) {
+        var newMom = this.fromMoment.clone().tz(this.timeZone);
+        this.set('fromMoment', newMom);
+      }
+      if(this.toMoment) {
+        newMom = this.toMoment.clone().tz(this.timeZone);
+        this.set('toMoment', newMom);
+      }
+    }
+  },
+  /**
+   * Validation for the range. Makes sure the ranges are in chronological order
+   *
+   * @return {Boolean} true if chronological order, false otherwise
+   */
+  _validateRangeOrder: function() {
+    // if the from date is before the to date, everything is ok
+    if(this.fromMoment && this.toMoment) {
+      return this.fromMoment.isBefore(this.toMoment);
+    }else {
+      return false;
+    }
+  },
+  /**
+   * px-datetime-submitted event. This event is fired differently depending on config:
+   *  -If the px-datetim component has an apply button then it is fired when the
+   *   user clicks the apply button (or press enter) AND the date/time is valid
+   *  -If the px-datetim component does not have an apply button then it is fired
+   *   every time a change is made to the date/time AND the date/time is valid
+   *
+   * @event px-datetime-range-submitted
+   * @type {object}
+   * @property {object} range - {from, to} the ISO 8601 Strings representing the date/time chosen by the user
+   * @property {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
+   */
+  _notifyRangeChanged: function(evt) {
+    this.fire('px-datetime-range-submitted', {range: this.range, momentObjs: {from: this.fromMoment, to: this.toMoment}});
+  },
+  /**
+  * Takes an ISO 8601 String and returns a moment object
+  *
+  *
+  * @param {String} timeString
+  */
+  _convertISOtoMoment: function(timeString) {
+    if(this.isUtc) {
+      return moment.utc(timeString, moment.ISO_8601);
+    }
+    else {
+      return moment(timeString, moment.ISO_8601);
+    }
+  },
+  /**
+   * Copies the time in toPreserve to dest and returns dest.
+   *
+   */
+  _preserveTime: function(toPreserve, dest) {
+    if(toPreserve && dest) {
+      dest.hours(toPreserve.hours());
+      dest.minutes(toPreserve.minutes());
+      dest.seconds(toPreserve.seconds());
+      dest.milliseconds(toPreserve.milliseconds());
+    }
+    return dest;
+  }
 }; //pxRangeCommon close bracket
 
 
