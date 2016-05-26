@@ -104,13 +104,18 @@ descrease the spacing of the symbols to make entry feel like one text field
 // }
 
 .dt-label-icon{
-  margin: -3px 5px -3px 0px;
+  margin: -3px 3px -3px 0px;
 }
+
+.align-dropdown{
+  margin: -1px 0px;
+}
+
+
 
 // Trumps
 $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;
-$inuit-enable-margins           : true;
 $inuit-enable-margins--none     : true;
 $inuit-enable-margins--large    : true;
 
