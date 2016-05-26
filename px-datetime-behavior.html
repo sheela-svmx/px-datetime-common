@@ -55,8 +55,25 @@ var pxDatetimeBehavior = {
         return moment.tz.guess();
       },
       observer: '_timeZoneChanged'
+    },
+    /**
+     *
+     * This is the string you use to interact with px-datetime components. it holds
+     * a date and time representing the value in the related component
+     *
+     * Format ISO8601 strings
+     * ```
+     * "2013-01-07T22:44:30.652Z"
+     * ```
+     *
+     * This will be changed when the user Submits their new date/time.
+     *
+     */
+    dateTime: {
+      type: String,
+      value: '',
+      observer: '_notifyDateTimeChanged'
     }
-
   }, //properties close bracket
 
   /**
@@ -88,17 +105,29 @@ var pxDatetimeBehavior = {
    *
    */
   _preserveTime: function(toPreserve, dest) {
-      if(toPreserve && dest) {
-        dest.hours(toPreserve.hours());
-        dest.minutes(toPreserve.minutes());
-        dest.seconds(toPreserve.seconds());
-        dest.milliseconds(toPreserve.milliseconds());
-      }
-      return dest;
-    },
-
+    if(toPreserve && dest) {
+      dest.hours(toPreserve.hours());
+      dest.minutes(toPreserve.minutes());
+      dest.seconds(toPreserve.seconds());
+      dest.milliseconds(toPreserve.milliseconds());
+    }
+    return dest;
+  },
+  /**
+   * px-datetime-submitted event. This event is fired differently depending on config:
+   *  -If the px-datetim component has an apply button then it is fired when the
+   *   user clicks the apply button (or press enter) AND the date/time is valid
+   *  -If the px-datetim component does not have an apply button then it is fired
+   *   every time a change is made to the date/time AND the date/time is valid
+   *
+   * @event px-datetime-submitted
+   * @type {object}
+   * @property {string} dateTime - the ISO 8601 String representing the date/time chosen by the user
+   * @property {object} momentObj - the moment.js object representing the date/time chosen by the user
+   */
+  _notifyDateTimeChanged: function(dateTime) {
+    this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
+  }
 }; //pxDatetimeBehavior close bracket
-
-
 
 </script>
