@@ -998,11 +998,17 @@ adjusts size and position of the Calendar and Clock icon
 
 :host {
   --dropdown_bg_default: transparent;
-  --dropdown_bg_hover: #e4e4ea;
-  --dropdown_bg_opened: #9999a3;
+  --dropdown_bg_hover: transparent;
+  --dropdown_bg_opened: transparent;
   --dropdown_border_color: 0;
   --dropdown_text_padding: 0;
+<<<<<<< HEAD
+  --dropdown_text_color--hover: #0a9ec1;
+  --dropdown_text_color--pressed: #086e87;
+  --dropdown_text--opened: #0a9ec1; }
+=======
   font-size: var(--px-datetime-entry-font-size, inherit); }
+>>>>>>> d965aec6fb90147bf87c02ceecd8c23b4ee6ae1e
 
 .validation-container__icon--failed {
   color: #e53838; }
@@ -1017,3 +1023,6 @@ adjusts size and position of the Calendar and Clock icon
 
 .text-input--non-editable {
   color: #b1b1bc; }
+
+._hack-text-align {
+  margin-bottom: -1px; }

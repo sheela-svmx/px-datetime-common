@@ -63,6 +63,13 @@ adjusts size and position of the Calendar and Clock icon
   margin: -3px 0px;
 }
 
+/*
+descrease the spacing of the symbols to make entry feel like one text field
+*/
+.dtEntrySymbol{
+  margin:-5px;
+}
+
 .timezone__dropdown {
   width: calculateRem(150px);
 }
@@ -87,9 +94,9 @@ adjusts size and position of the Calendar and Clock icon
   display: inline-block;
 }
 
-.dtEntrySymbol {
-  display: inline-block;
-}
+// .dtEntrySymbol {
+//   display: inline-block;
+// }
 
 // Trumps
 $inuit-enable-margins--tiny     : true;
