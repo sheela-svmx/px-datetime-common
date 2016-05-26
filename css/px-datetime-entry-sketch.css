@@ -836,10 +836,13 @@ when the text is non editable the cursor is the default black arrow
 adjusts size and position of the Calendar and Clock icon
 */
 .dtIcon {
-  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
-          transform: scale(0.7, 0.7) translate(0, -3px);
-  margin: -3px 0px; }
+  -webkit-transform: scale(0.7, 0.7) translate(0, 0);
+          transform: scale(0.7, 0.7) translate(0, 0);
+  margin: -1px 0px; }
 
+/*
+descrease the spacing of the symbols to make entry feel like one text field
+*/
 .timezone__dropdown {
   width: 10rem; }
 
@@ -861,10 +864,14 @@ adjusts size and position of the Calendar and Clock icon
   vertical-align: text-top; }
 
 .cell {
-  display: inline-block; }
+  display: inline-block;
+  margin-bottom: -1px; }
 
-.dtEntrySymbol {
-  display: inline-block; }
+.-text-align-adjustment {
+  margin-top: 0px; }
+
+.dt-label-icon {
+  margin: -3px 5px -3px 0px; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
@@ -872,6 +879,34 @@ adjusts size and position of the Calendar and Clock icon
  *
  * `.u-(m|p)(t|r|b|l|h|v)(-|+|0) {}` = utility - margin/padding top/right/bottom/left/horizontal/vertical less/more/none
  */
+/**
+     * Margin helper classes.
+     *
+     * Add margins.
+     */
+.u-m {
+  margin: 1rem !important; }
+
+.u-mt {
+  margin-top: 1rem !important; }
+
+.u-mr {
+  margin-right: 1rem !important; }
+
+.u-mb {
+  margin-bottom: 1rem !important; }
+
+.u-ml {
+  margin-left: 1rem !important; }
+
+.u-mh {
+  margin-right: 1rem !important;
+  margin-left: 1rem !important; }
+
+.u-mv {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important; }
+
 /**
      * Add tiny margins.
      */
