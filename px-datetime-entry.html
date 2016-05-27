@@ -25,7 +25,7 @@ Range field component which displays a time or date and font awesome icon.
   <link rel="import" type="css" href="css/px-datetime-entry.css"/>
   <template>
     <div id='wrapper' class="inline--flex">
-      <div class=" inline--flex">
+      <div class="inline--flex">
           <label class="label--inline dt-label-icon" on-tap="_iconClicked">
               <span class="a11y dtLabel">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
@@ -404,14 +404,15 @@ Range field component which displays a time or date and font awesome icon.
       }
     },
     _getTimeZoneTextClass: function (showTimeZone, isValid) {
-      var classList = "u-ml-- ";
-
+      var classList = "";
+      if (showTimeZone) {
+        classList += "u-ml-- ";
+      }
       if(showTimeZone === "dropdown" || showTimeZone === "extendedDropdown") {
         classList += "align-dropdown ";
       }
       if (!isValid) {
         classList += "u-mr-- ";
-        console.log('invalid');
       }
 
       return classList;
