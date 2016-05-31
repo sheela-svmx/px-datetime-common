@@ -15,6 +15,24 @@
 var pxDatetimeBehavior = {
 
   properties: {
+     /**
+     * Moment format string for the DATE format to display/validate this field against
+     * (see http://momentjs.com/docs/#/parsing/string-format/)
+     *
+     */
+    dateFormat: {
+        type: String,
+        value: 'YYYY/MM/DD'
+    },
+    /**
+    * Moment format string for the TIME format to display/validate this field against
+    * (see http://momentjs.com/docs/#/parsing/string-format/)
+    *
+    */
+    timeFormat: {
+        type: String,
+        value: 'HH:mm A'
+    },
     /**
      *
      * Set this attribute when you do want to allow future dates in the 'px-date-panel' component.

@@ -836,9 +836,9 @@ when the text is non editable the cursor is the default black arrow
 adjusts size and position of the Calendar and Clock icon
 */
 .dtIcon {
-  -webkit-transform: scale(0.7, 0.7) translate(0, -3px);
-          transform: scale(0.7, 0.7) translate(0, -3px);
-  margin: -3px 0px; }
+  -webkit-transform: scale(0.7, 0.7) translate(0, 0);
+          transform: scale(0.7, 0.7) translate(0, 0);
+  margin: -1px 0px; }
 
 .timezone__dropdown {
   width: 10rem; }
@@ -862,7 +862,17 @@ adjusts size and position of the Calendar and Clock icon
 
 .cell {
   display: inline-block;
-  font-size: var(--px-datetime-entry-font-size, inherit); }
+  font-size: var(--px-datetime-entry-font-size, inherit);
+  margin-bottom: -1px; }
+
+.-text-align-adjustment {
+  margin-top: 0px; }
+
+.dt-label-icon {
+  margin: -3px 3px -3px 0px; }
+
+.align-dropdown {
+  margin: -1px 0px; }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
