@@ -161,16 +161,15 @@ var pxDatetimeRangeBehavior = {
    * makes sure the moment objects reflexts the timezone
    */
   _timeZoneChanged: function() {
-    if(this.momentObj) {
-      if(this.fromMoment) {
-        var newMom = this.fromMoment.clone().tz(this.timeZone);
-        this.set('fromMoment', newMom);
-      }
-      if(this.toMoment) {
-        newMom = this.toMoment.clone().tz(this.timeZone);
-        this.set('toMoment', newMom);
-      }
+    if(this.fromMoment) {
+      var newMom = this.fromMoment.clone().tz(this.timeZone);
+      this.set('fromMoment', newMom);
     }
+    if(this.toMoment) {
+      newMom = this.toMoment.clone().tz(this.timeZone);
+      this.set('toMoment', newMom);
+    }
+
   },
   /**
    * Validation for the range. Makes sure the ranges are in chronological order

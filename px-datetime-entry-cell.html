@@ -234,8 +234,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _updateAndValidateWorkingCopy: function() {
 
-      this.set('dtWorkingCopy', this.momentObj.tz(this.timeZone).format(this.momentFormat));
-      this.toggleClass('validation-error', false, this.$$('input'));
+      if(this.momentObj) {
+        this.set('dtWorkingCopy', this.momentObj.tz(this.timeZone).format(this.momentFormat));
+        this.toggleClass('validation-error', false, this.$$('input'));
+      }
     },
     /**
      *

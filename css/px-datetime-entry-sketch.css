@@ -861,10 +861,8 @@ adjusts size and position of the Calendar and Clock icon
   vertical-align: text-top; }
 
 .cell {
-  display: inline-block; }
-
-.dtEntrySymbol {
-  display: inline-block; }
+  display: inline-block;
+  font-size: var(--px-datetime-entry-font-size, inherit); }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro

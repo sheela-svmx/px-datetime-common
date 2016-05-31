@@ -874,10 +874,8 @@ adjusts size and position of the Calendar and Clock icon
   vertical-align: text-top; }
 
 .cell {
-  display: inline-block; }
-
-.dtEntrySymbol {
-  display: inline-block; }
+  display: inline-block;
+  font-size: var(--px-datetime-entry-font-size, inherit); }
 
 /**
  * Margin and padding helper classes. Use these to tweak layout on a micro
@@ -1002,13 +1000,10 @@ adjusts size and position of the Calendar and Clock icon
   --dropdown_bg_opened: transparent;
   --dropdown_border_color: 0;
   --dropdown_text_padding: 0;
-<<<<<<< HEAD
   --dropdown_text_color--hover: #0a9ec1;
   --dropdown_text_color--pressed: #086e87;
-  --dropdown_text--opened: #0a9ec1; }
-=======
+  --dropdown_text--opened: #0a9ec1;
   font-size: var(--px-datetime-entry-font-size, inherit); }
->>>>>>> d965aec6fb90147bf87c02ceecd8c23b4ee6ae1e
 
 .validation-container__icon--failed {
   color: #e53838; }
