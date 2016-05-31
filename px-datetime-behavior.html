@@ -1,4 +1,5 @@
 <link rel="import" href="px-datetime-imports.html" />
+<link rel="import" href="px-datetime-shared-behavior.html" />
 
 <script>
 
@@ -12,39 +13,9 @@
   @polymerBehavior pxDatetimeBehavior
 */
 
-var pxDatetimeBehavior = {
+var pxDatetimeBehavior = [{
 
   properties: {
-     /**
-     * Moment format string for the DATE format to display/validate this field against
-     * (see http://momentjs.com/docs/#/parsing/string-format/)
-     *
-     */
-    dateFormat: {
-        type: String,
-        value: 'YYYY/MM/DD'
-    },
-    /**
-    * Moment format string for the TIME format to display/validate this field against
-    * (see http://momentjs.com/docs/#/parsing/string-format/)
-    *
-    */
-    timeFormat: {
-        type: String,
-        value: 'HH:mm A'
-    },
-    /**
-     *
-     * Set this attribute when you do want to allow future dates in the 'px-date-panel' component.
-     *
-     * Defined In: 'pxDatetimeBehavior'
-     *
-     * @default false (future dates will be disabled and unclickable)
-     */
-    blockFutureDates: {
-      type: Boolean,
-      value: false
-    },
     /**
      * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
      * Default to now.
@@ -58,21 +29,6 @@ var pxDatetimeBehavior = {
       value: function() {
                 return moment();
               }
-    },
-    /**
-     *
-     * Moment-timezone string for using a specific timezone. See
-     * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
-     *
-     * if not provided tries to guess the current local
-     */
-    timeZone: {
-      type: String,
-      notify: true,
-      value: function() {
-        return moment.tz.guess();
-      },
-      observer: '_timeZoneChanged'
     },
     /**
      *
@@ -95,21 +51,6 @@ var pxDatetimeBehavior = {
   }, //properties close bracket
 
   /**
-   * Takes an ISO 8601 String and returns a moment object
-   *
-   * Defined In: 'pxDatetimeBehavior'
-   *
-   * @param {String} timeString
-   */
-  _convertISOtoMoment: function(timeString) {
-    if(this.isUtc) {
-      return moment.utc(timeString, moment.ISO_8601);
-    }
-    else {
-      return moment(timeString, moment.ISO_8601);
-    }
-  },
-  /**
    * makes sure the moment object reflexts the timezone
    */
   _timeZoneChanged: function() {
@@ -117,19 +58,6 @@ var pxDatetimeBehavior = {
       var newMom = this.momentObj.clone().tz(this.timeZone);
       this.set('momentObj', newMom);
     }
-  },
-  /**
-   * Copies the time in toPreserve to dest and returns dest.
-   *
-   */
-  _preserveTime: function(toPreserve, dest) {
-    if(toPreserve && dest) {
-      dest.hours(toPreserve.hours());
-      dest.minutes(toPreserve.minutes());
-      dest.seconds(toPreserve.seconds());
-      dest.milliseconds(toPreserve.milliseconds());
-    }
-    return dest;
   },
   /**
    * px-datetime-submitted event. This event is fired differently depending on config:
@@ -146,6 +74,6 @@ var pxDatetimeBehavior = {
   _notifyDateTimeChanged: function(dateTime) {
     this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
   }
-}; //pxDatetimeBehavior close bracket
+}, pxDatetimeSharedBehavior]; 
 
 </script>
