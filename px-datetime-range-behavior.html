@@ -161,15 +161,14 @@ var pxDatetimeRangeBehavior = [{
   },
   /**
    * px-datetime-submitted event. This event is fired differently depending on config:
-   *  -If the px-datetim component has an apply button then it is fired when the
+   *  - If the px-datetim component has an apply button then it is fired when the
    *   user clicks the apply button (or press enter) AND the date/time is valid
-   *  -If the px-datetim component does not have an apply button then it is fired
+   *  - If the px-datetim component does not have an apply button then it is fired
    *   every time a change is made to the date/time AND the date/time is valid
    *
    * @event px-datetime-range-submitted
-   * @type {object}
-   * @property {object} range - {from, to} the ISO 8601 Strings representing the date/time chosen by the user
-   * @property {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
+   * @param {object} range - {from, to} the ISO 8601 Strings representing the date/time chosen by the user
+   * @param {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
    */
   _notifyRangeChanged: function(evt) {
     this.fire('px-datetime-range-submitted', {range: this.range, momentObjs: {from: this.fromMoment, to: this.toMoment}});

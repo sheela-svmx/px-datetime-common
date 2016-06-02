@@ -155,24 +155,6 @@ var validate = {
    */
   _submitButtonState: function(state) {
       this.set('isSubmitButtonValid', state);
-  },
-  /**
-   * Validation for the range. Makes sure the ranges are in chronological order
-   *
-   * @return {Boolean} passed range validation
-   */
-  _validateRangeAndBroadcastChanges: function() {
-    // if the from date is before the to date, everything is ok
-    if(this.fromMoment.isBefore(this.toMoment)) {
-      this._toggleErrorClasses(false);
-      this._submitButtonState(this.allFieldsValid);
-      return true;
-    } else {
-      // toggle validation errors
-      this._toggleErrorClasses(true);
-      this._submitButtonState(false);
-      return false;
-    }
   }
 };
 
