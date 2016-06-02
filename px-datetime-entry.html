@@ -433,6 +433,13 @@ Range field component which displays a time or date and font awesome icon.
       }
       return classList.join(' ');
     },
+    /**
+     * px-datetime-entry-icon-clicked event. This event is fired when the calendar
+     * or clock icon has been clicked
+     *
+     * @event px-datetime-entry-icon-clicked
+     * @param {string} dateOrTime - Whetehr the date or time icon has been clicked. Values can be "Date" or "Time"
+     */
     _iconClicked: function(evt) {
 
       this.fire('px-datetime-entry-icon-clicked', {dateOrTime: this.dateOrTime});
