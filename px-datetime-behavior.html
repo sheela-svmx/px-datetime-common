@@ -61,19 +61,19 @@ var pxDatetimeBehavior = [{
   },
   /**
    * px-datetime-submitted event. This event is fired differently depending on config:
-   *  -If the px-datetim component has an apply button then it is fired when the
-   *   user clicks the apply button (or press enter) AND the date/time is valid
-   *  -If the px-datetim component does not have an apply button then it is fired
-   *   every time a change is made to the date/time AND the date/time is valid
+   *  - If the px-datetim component has an apply button then it is fired when the
+   *    user clicks the apply button (or press enter) AND the date/time is valid
+   *  - If the px-datetim component does not have an apply button then it is fired
+   *    every time a change is made to the date/time AND the date/time is valid
    *
    * @event px-datetime-submitted
-   * @type {object}
-   * @property {string} dateTime - the ISO 8601 String representing the date/time chosen by the user
-   * @property {object} momentObj - the moment.js object representing the date/time chosen by the user
+   *
+   * @param {string} dateTime - the ISO 8601 String representing the date/time chosen by the user
+   * @param {object} momentObj - the moment.js object representing the date/time chosen by the user
    */
   _notifyDateTimeChanged: function(dateTime) {
     this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
   }
-}, pxDatetimeSharedBehavior]; 
+}, pxDatetimeSharedBehavior];
 
 </script>
