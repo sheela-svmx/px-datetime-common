@@ -345,9 +345,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._checkValue();
       this.fire('px-cell-validate');
       setTimeout(function(){
-        if(this.isSubmitButtonValid){
-          this.fire('px-datetime-sumbit',{ action:true });
-        }
+        console.log("enter");
+        this.fire('px-datetime-button-clicked',{ action:true });
       }.bind(this),10);
     },
     /**
@@ -356,7 +355,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _onEsc
      */
     _onEsc:function(){
-      this.fire('px-datetime-sumbit',{ action:false });
+      console.log("esc");
+      this.fire('px-datetime-button-clicked',{ action:false });
     },
     /**
      * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)

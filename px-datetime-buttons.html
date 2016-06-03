@@ -87,12 +87,21 @@ Date time button component.
       '_submitButtonState(isSubmitButtonValid)'
     ],
     /**
+     * Sets up listeners for a variety of events fired from or passing through this component
+     *
+     */
+    ready: function() {
+      // listens for a button click, enter key, or esp key
+      // document.addEventListener('px-datetime-submit', '_dateTimeButtons');
+    },
+    /**
      *
      *
      */
     _fireCancelEvent:function(){
       console.log("cancel clicked");
       this.fire('px-datetime-button-clicked',{ action:false });
+      // this._processButtons(false);
     },
     /**
      *
@@ -101,6 +110,7 @@ Date time button component.
     _fireSubmitEvent:function(){
       console.log("submit clicked");
       this.fire('px-datetime-button-clicked',{ action:true });
+      // this._processButtons(true);
     },
     /**
      *
@@ -117,7 +127,6 @@ Date time button component.
       console.log(source);
       console.log(target);
       return source === target;
-    },
-
+    }
   });
 </script>
