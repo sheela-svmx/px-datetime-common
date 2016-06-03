@@ -169,8 +169,16 @@ var pxDatetimeRangeBehavior = [{
    * @param {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
    */
   _notifyRangeChanged: function(evt) {
-    this.fromMoment = this._convertISOtoMoment(this.range.from);
-    this.toMoment = this._convertISOtoMoment(this.range.to);
+
+    //make sure we keep the moment synchronized in case range has been changed externally
+    if(!this.fromMoment || this.fromMoment.toISOString() !== this.range.from) {
+      this.set('fromMoment', this._convertISOtoMoment(this.range.from));
+    }
+    if(!this.toMoment || this.toMoment.toISOString() !== this.range.to) {
+      this.set('toMoment', this._convertISOtoMoment(this.range.to));
+    }
+
+    //notify the range has changed
     this.fire('px-datetime-range-submitted', {range: this.range, momentObjs: {from: this.fromMoment, to: this.toMoment}});
   }
 }, pxDatetimeSharedBehavior];
