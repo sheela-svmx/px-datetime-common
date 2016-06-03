@@ -61,7 +61,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        * @private
        */
       momentFormat: {
-        type: String
+        type: String,
+        observer: '_formatChanged'
       },
       /**
        *
@@ -178,6 +179,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(this.cellLength === this.$.dtEntry.value.length) {
         this._inputValueChanged();
       }
+    },
+    _formatChanged: function() {
+      this._updateAndValidateWorkingCopy();
+      this._sizeInputs();
+      this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
     },
     /**
      * Size the input fields based on the number of characters in dtWorkingCopy
