@@ -1,4 +1,5 @@
 <link rel="import" href="px-datetime-imports.html" />
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 
 <script>
 
@@ -12,6 +13,7 @@
 
 var pxDatetimeButtonBehavior = {
 
+  behavior: [Polymer.IronA11yKeysBehavior],
   properties: {
     /**
      * Whether to show apply and cancel buttons in the range fields
@@ -22,12 +24,31 @@ var pxDatetimeButtonBehavior = {
     }
   },
   /**
+     * Key bindings for iron-a11y-keys-behavior
+     */
+    keyBindings: {
+      'esc' : '_onEsc',
+      'enter': '_onEnter'
+    },
+  /**
    * Sets up listeners for a variety of events fired from or passing through this component
    *
    */
   ready: function() {
     // listens for a button click, enter key, or esp key
-    this.listen(this, 'px-datetime-button-clicked', '_dateTimeButtons');
+  //  this.listen(this, 'px-datetime-button-clicked', '_dateTimeButtons');
+  },
+  _onEsc: function(evt) {
+    if(this.showButtons) {
+      this.fire('px-datetime-button-clicked', {action: true});
+    }
+    evt.stopPropagation();
+  },
+  _onEnter: function(evt) {
+    if(this.showButtons) {
+      this.fire('px-datetime-button-clicked', {action: false});
+    }
+    evt.stopPropagation();
   },
   /**
    * Event handler.
@@ -43,7 +64,6 @@ var pxDatetimeButtonBehavior = {
      var normalizedEvent = Polymer.dom(e);
 
      this._processButtons(normalizedEvent.event.detail.action);
-     e.stopPropagation();
    },
   _processButtons: function(doApply) {
     //check to see if this dateTime component has a range or not

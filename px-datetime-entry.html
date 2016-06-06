@@ -287,15 +287,20 @@ Range field component which displays a time or date and font awesome icon.
 
       if(entryCellOrder === this._cellFormatArray.length - 1 && evt.detail.dir === 1){
 
-        this.fire('px-next-field');
+        this.fire('px-next-field', {dateOrTime: this.dateOrTime});
       } else if(entryCellOrder === 0 && evt.detail.dir === -1){
 
-        this.fire('px-previous-field');
+        this.fire('px-previous-field', {dateOrTime: this.dateOrTime});
       } else {
-        entryCellOrder = parseInt(entryCellOrder) + evt.detail.dir;
-        var elem = this.$$("#cell" + entryCellOrder);
-        elem.$.dtEntry.focus();
+        this._focusCell(parseInt(entryCellOrder) + evt.detail.dir);
       }
+    },
+    _focusCell: function(cellNumber) {
+      var elem = this.$$("#cell" + cellNumber);
+      elem.$.dtEntry.focus();
+    },
+    _focusLastCell: function() {
+      this._focusCell(this._cellFormatArray.length - 1);
     },
     /**
      *
