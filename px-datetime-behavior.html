@@ -45,7 +45,10 @@ var pxDatetimeBehavior = [{
      */
     dateTime: {
       type: String,
-      value: '',
+      notify: true,
+      value: function() {
+        return moment().toISOString();
+      },
       observer: '_notifyDateTimeChanged'
     }
   }, //properties close bracket
@@ -72,6 +75,9 @@ var pxDatetimeBehavior = [{
    * @param {object} momentObj - the moment.js object representing the date/time chosen by the user
    */
   _notifyDateTimeChanged: function(dateTime) {
+    if(!this.momentObj || this.momentObj.toISOString() !== this.dateTime){
+      this.set('momentObj', this._convertISOtoMoment(this.dateTime));
+    }
     this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
   }
 }, pxDatetimeSharedBehavior];
