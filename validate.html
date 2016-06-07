@@ -52,8 +52,6 @@ var validate = {
    * @return {Boolean} passed validation
    */
   _validateInput: function() {
-    Polymer.dom(this).parentNode.classList.remove('is-focused');
-
 
     var inputStr = '',
         inputArr = Polymer.dom(this.root).querySelectorAll('.cell');

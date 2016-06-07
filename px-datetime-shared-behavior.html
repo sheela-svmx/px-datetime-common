@@ -1,4 +1,5 @@
 <link rel="import" href="px-datetime-imports.html" />
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 
 <script>
 
@@ -12,7 +13,7 @@
   @polymerBehavior pxDatetimeSharedBehavior
 */
 
-var pxDatetimeSharedBehavior = {
+var pxDatetimeSharedBehavior = [{
 
   properties: {
 
@@ -70,8 +71,21 @@ var pxDatetimeSharedBehavior = {
       dest.milliseconds(toPreserve.milliseconds());
     }
     return dest;
+  },
+  /**
+   * Applies the current moment values to the external facing strings or rollback
+   * the current moment values to the external facing strings
+   *
+   */
+  _applyCurrentValues: function(doApply) {
+
+    if(doApply){
+      this._applyMomentToString();
+    } else {
+      this._rollbackMomentFromString();
+    }
   }
-};
+},Polymer.IronA11yKeysBehavior];
 
 
 

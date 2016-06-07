@@ -45,7 +45,9 @@ var pxDatetimeBehavior = [{
      */
     dateTime: {
       type: String,
-      value: '',
+      value: function() {
+                return moment().toISOString();
+              },
       observer: '_notifyDateTimeChanged'
     }
   }, //properties close bracket
@@ -72,7 +74,30 @@ var pxDatetimeBehavior = [{
    * @param {object} momentObj - the moment.js object representing the date/time chosen by the user
    */
   _notifyDateTimeChanged: function(dateTime) {
+
+    //make sure we keep the moment synchronized in case range has been changed externally
+    if(!this.momentObj || this.momentObj.toISOString() !== this.dateTime) {
+      this.set('momentObj', this._convertISOtoMoment(this.dateTime));
+    }
+
     this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
+  },
+  /**
+   * Applies the current moment object to the external facing datetime string
+   **/
+  _applyMomentToString: function() {
+    if(this.dateTime !== this.momentObj.toISOString()) {
+      this.set('dateTime', this.momentObj.toISOString());
+    }
+  },
+  /**
+   * Rollbacks the current moment object to the external facing datetime string
+   **/
+  _rollbackMomentFromString: function() {
+    //only rollback if actually necessary
+    if(this.momentObj.toISOString() !== this.dateTime) {
+      this.set('momentObj', this._convertISOtoMoment(this.dateTime));
+    }
   }
 }, pxDatetimeSharedBehavior];
 

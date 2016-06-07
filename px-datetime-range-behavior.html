@@ -116,8 +116,12 @@ var pxDatetimeRangeBehavior = [{
    */
   _setMomentFromRange: function() {
     // set to and from based on inputed range
-    this.set('fromMoment', this._convertISOtoMoment(this.range.from));
-    this.set('toMoment', this._convertISOtoMoment(this.range.to));
+    if(this.fromMoment.toISOString() !== this.range.from) {
+      this.set('fromMoment', this._convertISOtoMoment(this.range.from));
+    }
+    if(this.toMoment.toISOString() !== this.range.to) {
+      this.set('toMoment', this._convertISOtoMoment(this.range.to));
+    }
   },
   /**
    * Converts 'toMoment' and 'fromMoment' to ISO8601 strings, then set the range with the strings.
@@ -125,11 +129,26 @@ var pxDatetimeRangeBehavior = [{
    * Triggered from a click on cancel, submit, esc, or enter
    */
   _setRangeFromMoment: function() {
-    var newRange = {
-      from: this.fromMoment.toISOString(),
-      to: this.toMoment.toISOString()
-    };
-    this.set('range', newRange);
+    if(!this.range || (this.fromMoment.toISOString() !== this.range.from ||
+       this.toMoment.toISOString() !== this.range.to)) {
+      var newRange = {
+        from: this.fromMoment.toISOString(),
+        to: this.toMoment.toISOString()
+      };
+      this.set('range', newRange);
+    }
+  },
+  /**
+   * Applies the current 'from' and 'to' moment objects to the external facing 'range' strings
+   **/
+  _applyMomentToString: function() {
+    this._setRangeFromMoment();
+  },
+  /**
+   * Rollbacks the current 'from' and 'to' moment objects to the external facing 'range' strings
+   **/
+  _rollbackMomentFromString: function() {
+    this._setMomentFromRange();
   },
   /**
    * makes sure the moment objects reflexts the timezone

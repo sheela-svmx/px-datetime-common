@@ -22,62 +22,7 @@ var pxDatetimeButtonBehavior = {
       type: Boolean,
       value: false
     }
-  },
-  /**
-     * Key bindings for iron-a11y-keys-behavior
-     */
-    keyBindings: {
-      'esc' : '_onEsc',
-      'enter': '_onEnter'
-    },
-  /**
-   * Sets up listeners for a variety of events fired from or passing through this component
-   *
-   */
-  ready: function() {
-    // listens for a button click, enter key, or esp key
-  //  this.listen(this, 'px-datetime-button-clicked', '_dateTimeButtons');
-  },
-  _onEsc: function(evt) {
-    if(this.showButtons) {
-      this.fire('px-datetime-button-clicked', {action: true});
-    }
-    evt.stopPropagation();
-  },
-  _onEnter: function(evt) {
-    if(this.showButtons) {
-      this.fire('px-datetime-button-clicked', {action: false});
-    }
-    evt.stopPropagation();
-  },
-  /**
-   * Event handler.
-   * Trigged when cancel, submit, esc, or enter are clicked
-   *
-   * If action is true, set 'range' to 'toMoment' and 'fromMoment'.
-   *
-   * If action is false, reset the fields to last submitted dates.
-   *
-   * @param {Event} e event object
-   */
-   _dateTimeButtons:function(e){
-     var normalizedEvent = Polymer.dom(e);
-
-     this._processButtons(normalizedEvent.event.detail.action);
-   },
-  _processButtons: function(doApply) {
-    //check to see if this dateTime component has a range or not
-    if(this.range){
-      if(doApply){
-        this.set('range', {
-          from: this.fromMoment.toISOString(),
-          to: this.toMoment.toISOString()
-        });
-      } else {
-        this._setRange();
-      }
-    }
-  }
+  }  
 };
 
 </script>

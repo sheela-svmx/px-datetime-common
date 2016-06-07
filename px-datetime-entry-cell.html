@@ -142,8 +142,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @private
      */
     keyBindings: {
-      'enter' : '_onEnter',
-      'esc' : '_onEsc',
+    /*  'enter' : '_onEnter',
+      'esc' : '_onEsc',*/
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack',
       'tab' : '_checkValue'
@@ -345,23 +345,23 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *
      * @method _onEnter
      */
-    _onEnter:function(){
+  /*  _onEnter:function(){
       this._checkValue();
       this.fire('px-cell-validate');
       setTimeout(function(){
         console.log("enter");
         this.fire('px-datetime-button-clicked',{ action:true });
       }.bind(this),10);
-    },
+    },*/
     /**
      * When ESC is clicked
      *
      * @method _onEsc
      */
-    _onEsc:function(){
+  /*  _onEsc:function(){
       console.log("esc");
       this.fire('px-datetime-button-clicked',{ action:false });
-    },
+    },*/
     /**
      * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)
      *

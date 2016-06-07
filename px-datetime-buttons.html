@@ -17,7 +17,7 @@ Date time button component.
   <link rel="import" type="css" href="css/px-datetime-buttons.css"/>
   <template>
     <template is="dom-if" if="{{ !hideCancel }}">
-      <button class="btn u-mr--" on-click="_fireCancelEvent">Cancel</button>
+      <button class="btn u-mr--" on-tap="_fireCancelEvent">Cancel</button>
     </template>
     <template is="dom-if" if="{{ !hideSubmit }}">
       <button class$="{{submitBtnClasses('btn btn--primary', isSubmitButtonValid)}}"
@@ -99,7 +99,6 @@ Date time button component.
      *
      */
     _fireCancelEvent:function(){
-      console.log("cancel clicked");
       this.fire('px-datetime-button-clicked',{ action:false });
       // this._processButtons(false);
     },
@@ -108,7 +107,6 @@ Date time button component.
      *
      */
     _fireSubmitEvent:function(){
-      console.log("submit clicked");
       this.fire('px-datetime-button-clicked',{ action:true });
       // this._processButtons(true);
     },
