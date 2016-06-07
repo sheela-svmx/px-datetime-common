@@ -45,9 +45,10 @@ var pxDatetimeBehavior = [{
      */
     dateTime: {
       type: String,
+      notify: true,
       value: function() {
-                return moment().toISOString();
-              },
+        return moment().toISOString();
+      },
       observer: '_notifyDateTimeChanged'
     }
   }, //properties close bracket
@@ -75,7 +76,7 @@ var pxDatetimeBehavior = [{
    */
   _notifyDateTimeChanged: function(dateTime) {
 
-    //make sure we keep the moment synchronized in case range has been changed externally
+    //make sure we keep the moment synchronized in case moment has been changed externally
     if(!this.momentObj || this.momentObj.toISOString() !== this.dateTime) {
       this.set('momentObj', this._convertISOtoMoment(this.dateTime));
     }
