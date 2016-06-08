@@ -50,18 +50,23 @@ var validate = {
    * @return {Boolean} passed validation
    */
   _validateInput: function() {
+    console.log('validate _input');
 
     var inputStr = '',
         inputArr = Polymer.dom(this.root).querySelectorAll('.cell');
 
     //Create a string from all of the fields put together
     for (var i = 0; i < inputArr.length; i++) {
-      inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
+      if(inputArr[i].momentFormat !== "Z"){
+        inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
+      }
     }
+
+    inputStr = inputStr.trim();
 
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
-    var inputMoment = moment.tz(inputStr, this.momentFormat, true, this.timeZone),
+    var inputMoment = moment.tz(inputStr, this.momentFormat, this.timeZone),
         notAllowedInFuture = this.blockFutureDates && inputMoment.isAfter(moment.tz(moment(), this.timezone), 'day');
 
     // if the component datetime string is a valid datetime
@@ -143,6 +148,7 @@ var validate = {
 
       return false;
     }
+
   },
   /**
    * Sets the button state based on if validation has been passed or not. This in turn enables or disables the Submit button.
