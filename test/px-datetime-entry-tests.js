@@ -4,20 +4,13 @@ function runCustomTests() {
 
   var date1 = document.getElementById('dateEntry'),
       date2 = document.getElementById('dateEntry2'),
-      date3 = document.getElementById('dateEntry3'),
-      date4 = document.getElementById('dateEntry4'),
-      date5 = document.getElementById('dateEntry5'),
       time1 = document.getElementById('timeEntry'),
-      time2 = document.getElementById('timeEntry2'),
       now = moment();
 
       date1.momentObj = now;
       date2.momentObj = now.clone();
-      date3.momentObj = now.clone();
-      date4.momentObj = now.clone();
-      date5.momentObj = now.clone();
       time1.momentObj = now.clone();
-      time2.momentObj = now.clone();
+
 
   // This is the placeholder suite to place custom tests in
   // Use testCase(options) for a more convenient setup of the test cases
@@ -124,6 +117,87 @@ function runCustomTests() {
       fireKeyboardEvent(cells[0], 'ArrowRight');
     });
 
+    test('previous field when pressing left on first cell', function(done) {
+      var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
+
+      //simulate focus on first cell....
+      cells[0]._handleFocus();
+
+      var listener = function(evt) {
+
+        date1.removeEventListener('px-previous-field', listener)
+        done();
+      };
+
+      //pressing left arrow on first cell should fire previous field event
+      date1.addEventListener('px-previous-field', listener);
+      fireKeyboardEvent(cells[0], 'ArrowLeft');
+    });
+
+    test('NOT previous field when pressing left on last cell', function(done) {
+      var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
+
+      //simulate focus on first cell....
+      cells[cells.length-1]._handleFocus();
+
+      var listener = function(evt) {
+
+        date1.removeEventListener('px-previous-field', listener);
+        assert.isTrue(false);
+        done();
+      };
+
+      //pressing left arrow on first cell should fire previous field event
+      date1.addEventListener('px-previous-field', listener);
+      fireKeyboardEvent(cells[cells.length-1], 'ArrowLeft');
+
+      setTimeout(function() {
+        date1.removeEventListener('px-previous-field', listener)
+        done();
+      }, 200);
+    });
+
+
+    test('next field when pressing right on last cell', function(done) {
+      var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
+
+      //simulate focus on first cell....
+      cells[cells.length - 1]._handleFocus();
+
+      var listener = function(evt) {
+
+        date1.removeEventListener('px-next-field', listener)
+        done();
+      };
+
+      //pressing right arrow on last cell should fire next field event
+      date1.addEventListener('px-next-field', listener);
+      fireKeyboardEvent(cells[cells.length - 1], 'ArrowRight');
+    });
+
+    test('NOT next field when pressing right on first cell', function(done) {
+      var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
+
+      //simulate focus on first cell....
+      cells[0]._handleFocus();
+
+      var listener = function(evt) {
+
+        assert.isTrue(false);
+        date1.removeEventListener('px-next-field', listener)
+        done();
+      };
+
+      //pressing right arrow on first cell should not fire next field event
+      date1.addEventListener('px-next-field', listener);
+      fireKeyboardEvent(cells[0], 'ArrowRight');
+
+      setTimeout(function() {
+        date1.removeEventListener('px-next-field', listener)
+        done();
+      }, 200);
+    });
+
     test('move cells with left arrow', function(done) {
       var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
 
@@ -145,10 +219,11 @@ function runCustomTests() {
       fireKeyboardEvent(cells[0], 'ArrowLeft');
     });
 
-    test('click on icon fires event', function(done) {
+    test('click on date icon fires event', function(done) {
       var iconLabel = Polymer.dom(date1.root).querySelector('#wrapper > div > label');
 
       var listener = function(evt) {
+        assert.equal(evt.detail.dateOrTime, 'Date');
         done();
       };
 
@@ -158,6 +233,40 @@ function runCustomTests() {
       //in the cell to be changed
       date1.addEventListener('px-datetime-entry-icon-clicked', listener);
       iconLabel.click();
+    });
+
+    test('click on time icon fires event', function(done) {
+      var iconLabel = Polymer.dom(time1.root).querySelector('#wrapper > div > label');
+
+      var listener = function(evt) {
+        assert.equal(evt.detail.dateOrTime, 'Time');
+        done();
+      };
+
+      //pressing right arrow should move to the next cell.
+      //Unfortunately our code relies on focus() which doesn't seem to
+      //work in the testing environment. Instead listen to the event that will result
+      //in the cell to be changed
+      time1.addEventListener('px-datetime-entry-icon-clicked', listener);
+      iconLabel.click();
+    });
+
+    test('AM/PM', function() {
+      var cells = Polymer.dom(time1.root).querySelectorAll('px-datetime-entry-cell');
+
+      //focus last cell
+      cells[cells.length - 1]._handleFocus();
+
+      fireKeyboardEvent(cells[cells.length - 1], 'a');
+      assert.equal(cells[cells.length - 1].dtWorkingCopy, 'AM');
+      fireKeyboardEvent(cells[cells.length - 1], 'p');
+      assert.equal(cells[cells.length - 1].dtWorkingCopy, 'PM');
+      fireKeyboardEvent(cells[cells.length - 1], 'a');
+      assert.equal(cells[cells.length - 1].dtWorkingCopy, 'AM');
+      fireKeyboardEvent(cells[cells.length - 1], 'up');
+      assert.equal(cells[cells.length - 1].dtWorkingCopy, 'PM');
+      fireKeyboardEvent(cells[cells.length - 1], 'down');
+      assert.equal(cells[cells.length - 1].dtWorkingCopy, 'AM');
     });
   });
 
@@ -188,7 +297,7 @@ function runCustomTests() {
       //simulate focus on second cell....
       cells[1]._handleFocus();
 
-      //change value to 99
+      //change value to 02
       fireKeyboardEvent(cells[1], '0');
       fireKeyboardEvent(cells[1], '2');
 
@@ -203,13 +312,18 @@ function runCustomTests() {
         fireKeyboardEvent(cells[1], '0');
         fireKeyboardEvent(cells[1], 'Enter');
         assert.equal(cells[1].dtWorkingCopy, 00);
-        assert.isFalse(date1.isValid);
 
-        //reset it to somwhting valid
-        fireKeyboardEvent(cells[1], '1');
-        fireKeyboardEvent(cells[1], 'Enter');
+        //wait for validation to kick in
+        setTimeout(function() {
 
-        done();
+          assert.isFalse(date1.isValid);
+
+          //reset it to somwhting valid
+          fireKeyboardEvent(cells[1], '1');
+          fireKeyboardEvent(cells[1], 'Enter');
+
+          done();
+        }, 200);
       }, 200);
     });
 
