@@ -1,3 +1,7 @@
+v0.3.0
+==================
+* rework, new features, bug fixing
+
 v0.2.1
 ==================
 * Changed allowFutureDates to blockFutureDates
