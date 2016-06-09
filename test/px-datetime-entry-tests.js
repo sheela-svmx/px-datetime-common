@@ -5,11 +5,41 @@ function runCustomTests() {
   var date1 = document.getElementById('dateEntry'),
       date2 = document.getElementById('dateEntry2'),
       time1 = document.getElementById('timeEntry'),
+      buttons = document.getElementById('buttons'),
+      presets = document.getElementById('presets'),
       now = moment();
 
       date1.momentObj = now;
       date2.momentObj = now.clone();
       time1.momentObj = now.clone();
+
+      presets.presetRanges = [
+            {
+              "displayText": "Today",
+              "startDateTime": now,
+              "endDateTime": now
+            },
+            {
+              "displayText": "Yesterday",
+              "startDateTime": now.clone().subtract(1, 'day'),
+              "endDateTime": now.clone().subtract(1, 'day')
+            },
+            {
+              "displayText": "Last 7 Days",
+              "startDateTime": now.clone().subtract(7, 'days'),
+              "endDateTime": now
+            },
+            {
+              "displayText": "This Month",
+              "startDateTime": now.clone().startOf('month'),
+              "endDateTime": now.clone().endOf('month')
+            },
+            {
+              "displayText": "Last Month",
+              "startDateTime": now.clone().subtract(1, 'months').startOf('month'),
+              "endDateTime": now.clone().subtract(1, 'months').endOf('month')
+            }
+          ];
 
 
   // This is the placeholder suite to place custom tests in
@@ -19,13 +49,12 @@ function runCustomTests() {
     test('cell selection', function() {
       var cells = Polymer.dom(date1.root).querySelectorAll('px-datetime-entry-cell');
 
-      //simulate focus on first cell..............................................
+      //simulate focus on first cell.........
       cells[0]._handleFocus();
 
       assert.isTrue(date1.isSelected);
       assert.isTrue(cells[0].isSelected);
       assert.isFalse(cells[1].isSelected);
-
     });
 
     test('cell keyboard up and down', function() {
@@ -335,6 +364,124 @@ function runCustomTests() {
         assert.isFalse(date2.isValid);
         done();
       }, 200);
+    });
+  });
+
+  suite('Utility functions/behavior', function() {
+
+    test('_convertISOtoMoment', function() {
+      var moment = date1._convertISOtoMoment("2009-06-07T00:00:00Z");
+      assert.isTrue(moment.isValid());
+    });
+
+    test('_preserveTime', function() {
+      var moment = date1._convertISOtoMoment("2016-04-03T00:00:00Z"),
+          moment2 =  date1._convertISOtoMoment("2009-06-07T10:32:06Z");
+      moment2.milliseconds('500');
+
+      var result = date1._preserveTime(moment2, moment);
+
+      //both result and moment should have the time to preserve
+      assert.equal(result.hour(), moment2.hours());
+      assert.equal(result.minute(), moment2.minute());
+      assert.equal(result.second(), moment2.second());
+      assert.equal(result.milliseconds(), moment2.milliseconds());
+      assert.equal(moment.hour(), moment2.hours());
+      assert.equal(moment.minute(), moment2.minute());
+      assert.equal(moment.second(), moment2.second());
+      assert.equal(moment.milliseconds(), moment2.milliseconds());
+    });
+
+    test('changing time zone changes moment timezone', function() {
+
+      assert.equal(date1.momentObj.tz(), date1.timeZone);
+
+      date1.timeZone = 'Pacific/Noumea';
+      assert.equal(date1.momentObj.tz(), 'Pacific/Noumea');
+    });
+
+  });
+
+  suite('buttons', function() {
+
+    test('show/hide cancel', function(done) {
+      var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+      //both shown
+      assert.notEqual(internalButtons[0].style.display, 'none');
+      assert.notEqual(internalButtons[1].style.display, 'none');
+
+      buttons.hideSubmit = true;
+      flush(function() {
+
+        assert.notEqual(internalButtons[0].style.display, 'none');
+        assert.equal(internalButtons[1].style.display, 'none');
+
+        buttons.hideSubmit = false;
+        buttons.hideCancel = true;
+        flush(function(){
+          assert.equal(internalButtons[0].style.display, 'none');
+          assert.notEqual(internalButtons[1].style.display, 'none');
+
+          buttons.hideCancel = false;
+          done();
+        })
+      });
+    });
+
+    test('click apply fire event', function(done) {
+      var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+      var listener = function(evt){
+        buttons.removeEventListener('px-datetime-button-clicked', listener);
+        assert.isTrue(evt.detail.action);
+        done();
+      };
+
+      buttons.addEventListener('px-datetime-button-clicked', listener);
+
+      internalButtons[1].click();
+    });
+
+    test('click cancel fire event', function(done) {
+      var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+      var listener = function(evt){
+        buttons.removeEventListener('px-datetime-button-clicked', listener);
+        assert.isFalse(evt.detail.action);
+        done();
+      };
+
+      buttons.addEventListener('px-datetime-button-clicked', listener);
+
+      internalButtons[0].click();
+    });
+
+    test('disable submit button', function() {
+      var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+      buttons.isSubmitButtonValid = false;
+      assert.isTrue(internalButtons[1].disabled);
+    });
+  });
+
+  suite('presets', function(done) {
+
+    test('click presets fire event', function(done) {
+      var presetLinks = Polymer.dom(presets.root).querySelectorAll('span');
+
+      presets.addEventListener('px-preset-selected', function(evt){
+
+        assert.equal(evt.detail.displayText, 'Last Month');
+        assert.isTrue(evt.detail.endDateTime.isValid());
+        assert.isTrue(evt.detail.startDateTime.isValid());
+        assert.isTrue(presetLinks[presetLinks.length-1].classList.contains('btn--preset__selected'));
+
+        done();
+      });
+
+      assert.isFalse(presetLinks[presetLinks.length-1].classList.contains('btn--preset__selected'));
+      presetLinks[presetLinks.length-1].click();
     });
   });
 };

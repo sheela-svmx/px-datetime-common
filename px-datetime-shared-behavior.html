@@ -52,12 +52,7 @@ var pxDatetimeSharedBehavior = [{
   * @param {String} timeString
   */
   _convertISOtoMoment: function(timeString) {
-    if(this.isUtc) {
-      return moment.utc(timeString, moment.ISO_8601);
-    }
-    else {
-      return moment(timeString, moment.ISO_8601);
-    }
+    return moment(timeString, moment.ISO_8601);
   },
   /**
    * Copies the time in toPreserve to dest and returns dest.
