@@ -299,6 +299,61 @@ function runCustomTests() {
     });
   });
 
+  suite('Timezone dropdown', function() {
+    test('dropdown mode uses a px-dropdown', function(done) {
+      date2.showTimeZone = 'dropdown';
+
+      flush(function() {
+        var dropdown = Polymer.dom(date2.root).querySelector('px-dropdown'),
+            text = Polymer.dom(date2.root).querySelector('#timeZoneText');
+
+        assert.isNotNull(dropdown);
+        assert.isNull(text);
+        assert.notEqual(dropdown.style.display, 'none');
+        done();
+      });
+    });
+
+    test('extended dropdown mode uses a px-dropdown', function(done) {
+      date2.showTimeZone = 'extendedDropdown';
+
+      flush(function() {
+        var text = Polymer.dom(date2.root).querySelector('#timeZoneText'),
+        dropdown = Polymer.dom(date2.root).querySelector('px-dropdown');
+        assert.isNotNull(dropdown);
+        assert.isNull(text);
+        assert.notEqual(dropdown.style.display, 'none');
+        done();
+      });
+    });
+
+    test('text mode uses a span', function(done) {
+      date2.showTimeZone = 'text';
+
+      flush(function() {
+        var text = Polymer.dom(date2.root).querySelector('#timeZoneText'),
+            dropdown = Polymer.dom(date2.root).querySelector('px-dropdown');
+        assert.isNotNull(text);
+        assert.equal(dropdown.style.display, 'none');
+        assert.notEqual(text.style.display, 'none');
+        done();
+      });
+    });
+
+    test('abbreviated text mode uses a span', function(done) {
+      date2.showTimeZone = 'abbreviatedText';
+
+      flush(function() {
+        var text = Polymer.dom(date2.root).querySelector('#timeZoneText'),
+            dropdown = Polymer.dom(date2.root).querySelector('px-dropdown');
+        assert.isNotNull(text);
+        assert.equal(dropdown.style.display, 'none');
+        assert.notEqual(text.style.display, 'none');
+        done();
+      });
+    });
+  });
+
   suite('Validation', function() {
 
     test('auto validation', function(done) {
@@ -356,7 +411,7 @@ function runCustomTests() {
       }, 200);
     });
 
-    test('dont allow future dates if not explicitely asked', function(done) {
+    test('block future dates', function(done) {
       date2.momentObj = date2.momentObj.clone().add(1, 'month');
 
       //wait for validation to kick in
