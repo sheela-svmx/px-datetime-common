@@ -1,6 +1,10 @@
+v0.3.1
+==================
+* Upgrade moment
+
 v0.3.0
 ==================
-* rework, new features, bug fixing
+* rework with lot of changes toward first release
 
 v0.2.1
 ==================
