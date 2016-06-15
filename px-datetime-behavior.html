@@ -19,7 +19,6 @@ var pxDatetimeBehavior = [{
     /**
      * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
      * Default to now.
-     * Defined In: 'pxDatetimeBehavior'
      *
      * @private
      */
@@ -27,7 +26,7 @@ var pxDatetimeBehavior = [{
       type: Object,
       notify: true,
       value: function() {
-                return moment();
+                return moment().milliseconds(0);
               }
     },
     /**
@@ -47,7 +46,7 @@ var pxDatetimeBehavior = [{
       type: String,
       notify: true,
       value: function() {
-        return moment().toISOString();
+        return moment().milliseconds(0).toISOString();
       },
       observer: '_notifyDateTimeChanged'
     }
