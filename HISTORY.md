@@ -1,3 +1,7 @@
+v0.4.0
+==================
+* Upgrade to Polymer 1.5.0
+
 v0.3.2
 ==================
 * Improve demo and provide default values for px-datetime-entry momentFormat and dateOrTime
