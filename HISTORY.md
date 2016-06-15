@@ -1,3 +1,7 @@
+v0.3.2
+==================
+* Improve demo and provide default values for px-datetime-entry momentFormat and dateOrTime
+
 v0.3.1
 ==================
 * Upgrade moment

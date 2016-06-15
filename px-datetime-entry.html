@@ -111,7 +111,8 @@ Range field component which displays a time or date and font awesome icon.
        * @default none
        */
       dateOrTime: {
-        type: String
+        type: String,
+        value: 'Date'
       },
       /**
        *
@@ -120,6 +121,7 @@ Range field component which displays a time or date and font awesome icon.
        */
       momentFormat: {
         type: String,
+        value: 'YYYY/MM/DD',
         observer: '_formatChanged'
       },
       /**
