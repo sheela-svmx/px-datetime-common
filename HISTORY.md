@@ -2,6 +2,10 @@ v0.4.3
 ==================
 * Keep local copy of moment.js
 
+v0.4.2
+==================
+* added polymer behavior declaration
+
 v0.4.1
 ==================
 * add auto generation of gh pages
