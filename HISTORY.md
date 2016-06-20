@@ -1,3 +1,7 @@
+v0.4.2
+==================
+* Keep local copy of moment.js
+
 v0.4.1
 ==================
 * add auto generation of gh pages

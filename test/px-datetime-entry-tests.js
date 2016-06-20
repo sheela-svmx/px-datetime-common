@@ -7,7 +7,7 @@ function runCustomTests() {
       time1 = document.getElementById('timeEntry'),
       buttons = document.getElementById('buttons'),
       presets = document.getElementById('presets'),
-      now = moment();
+      now = Px.moment();
 
       date1.momentObj = now;
       date2.momentObj = now.clone();
