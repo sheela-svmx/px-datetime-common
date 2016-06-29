@@ -72,7 +72,7 @@ Range field component which displays a time or date and font awesome icon.
         </template>
       </div>
       <template is="dom-if" if="{{!isValid}}">
-        <div class="fa fa-fw validation-container">
+        <div class="fa fa-fw validation-container flex flex--middle">
           <iron-icon class$="{{_getValidationIconClass(isValid)}}"
             icon="polymer-font-awesome:fa-warning">
           </iron-icon>
