@@ -1,3 +1,7 @@
+v0.4.4
+==================
+* Fixed css bug with error icon
+
 v0.4.3
 ==================
 * Keep local copy of moment.js
