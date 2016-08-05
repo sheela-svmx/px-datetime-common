@@ -1,6 +1,14 @@
-v0.5.1
+v0.5.3
 ==================
 * Make sure that we don't override moment if loaded already
+
+v0.5.2
+==================
+* Removed bower resolution
+
+v0.5.1
+==================
+* Fixed blockFutureDates blockPastDates validation bug
 
 v0.5.0
 ==================
