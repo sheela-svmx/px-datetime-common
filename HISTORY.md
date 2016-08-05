@@ -1,3 +1,7 @@
+v0.5.1
+==================
+* Make sure that we don't override moment if loaded already
+
 v0.5.0
 ==================
 * Added block past dates
