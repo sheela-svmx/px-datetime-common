@@ -1,3 +1,7 @@
+v0.5.5
+==================
+* Fixed issue in validating future/past dates after UTC changed date
+
 v0.5.4
 ==================
 * Fixed shared behavior to use Px.moment instead of moment
