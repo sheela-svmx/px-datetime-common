@@ -68,10 +68,10 @@ var validate = {
     var inputMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone),
         notAllowedInFuture = this.dateOrTime.toLowerCase() === 'date' && 
                               this.blockFutureDates && 
-                              inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timezone), 'day'),
+                              inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone), 'day'),
         notAllowedInPast = this.dateOrTime.toLowerCase() === 'date' && 
                               this.blockPastDates && 
-                              inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timezone), 'day');
+                              inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone), 'day');
 
     // if the component datetime string is a valid datetime
     if((inputMoment.isValid() && !notAllowedInFuture && !notAllowedInPast)) {

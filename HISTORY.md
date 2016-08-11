@@ -1,3 +1,7 @@
+v0.5.6
+==================
+* Fix timezone typo
+
 v0.5.5
 ==================
 * Fixed issue in validating future/past dates after UTC changed date
