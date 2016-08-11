@@ -1,3 +1,6 @@
+v0.5.7
+==================
+* Prevent range being changed when already being processed internally
 v0.5.6
 ==================
 * Fix timezone typo

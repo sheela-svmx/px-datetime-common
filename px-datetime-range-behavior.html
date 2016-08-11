@@ -109,7 +109,9 @@ var pxDatetimeRangeBehavior = [{
    * for legacy purposes
    */
   _setRange: function() {
-    this._setMomentFromRange();
+    if(!this._preventRangeUpdate) {
+      this._setMomentFromRange();
+    }
   },
   /**
    * Converts range into from and to moments
