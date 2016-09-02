@@ -17,9 +17,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
   </px-datetime-entry-cell>
 
 -->
+
+<link rel="import" href="css/px-datetime-entry-styles.html">
+
 <dom-module id="px-datetime-entry-cell">
-  <link rel="import" type="css" href="css/px-datetime-entry-cell.css"/>
   <template>
+    <style include="px-datetime-entry-styles"></style>
+    <style include="px-theme-styles"></style>
+
     <input
       id="dtEntry"
       readonly
