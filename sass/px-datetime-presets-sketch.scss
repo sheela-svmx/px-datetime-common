@@ -18,6 +18,8 @@
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
 Predix branding rules go in px-rangepicker-predix.scss, not in this file.
 */
+// Tools
+@import "px-mixins-design/_tools.mixins.scss";
 
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
@@ -29,58 +31,11 @@ Predix branding rules go in px-rangepicker-predix.scss, not in this file.
 @import "px-viewport-design/_base.viewport.scss";
 
 // Object
-// $inuit-enable-btn--primary        : true;
-// $inuit-enable-btn--disabled        : true;
-$inuit-enable-btn--bare           : true;
 
-@import "px-buttons-design/_objects.buttons.scss";
+$actionable--select     : true;
+
+@import "px-actionable-text-icons-design/_objects.actionable.scss";
 @import "px-list-bare-design/_objects.list-bare.scss";
-
-// // Component
-// :host {
-//   text-align: left;
-// }
-//
-// :host[hidden] {
-//   visibility: hidden;
-// }
-
-.btn--bare{
-  &:hover, &:focus {
-    outline: none;
-  }
-}
-
-// .rangepicker__box {
-//   position: fixed;
-//   top: calculateRem(60px);
-//   left: calculateRem(55px);
-//   display: inline-block;
-//   z-index: 1;
-//   border: 1px solid;
-//   border-radius: 3px;
-//   @include media-query(lap-and-up) {
-//     position: absolute;
-//     top: calculateRem(40px);
-//     left: 0;
-//   }
-// }
-//
-// .border--top {
-//   border-top: 1px solid;
-// }
-//
-// .border--left {
-//   border-left: 1px solid;
-// }
-//
-// .overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-// }
 
 // Trumps
 $inuit-enable-margins--small      : true;
