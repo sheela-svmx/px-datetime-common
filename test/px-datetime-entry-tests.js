@@ -530,12 +530,12 @@ function runCustomTests() {
         assert.equal(evt.detail.displayText, 'Last Month');
         assert.isTrue(evt.detail.endDateTime.isValid());
         assert.isTrue(evt.detail.startDateTime.isValid());
-        assert.isTrue(presetLinks[presetLinks.length-1].classList.contains('btn--preset__selected'));
+        assert.isTrue(presetLinks[presetLinks.length-1].classList.contains('actionable--select'));
 
         done();
       });
 
-      assert.isFalse(presetLinks[presetLinks.length-1].classList.contains('btn--preset__selected'));
+      assert.isFalse(presetLinks[presetLinks.length-1].classList.contains('actionable--select'));
       presetLinks[presetLinks.length-1].click();
     });
   });
