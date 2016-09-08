@@ -62,9 +62,9 @@ function runCustomTests() {
           currentYear = parseInt(cells[0].dtWorkingCopy);
 
       fireKeyboardEvent(cells[0], 'ArrowUp');
-      assert.equal(currentYear + 1, parseInt(cells[0].dtWorkingCopy))
+      assert.equal(currentYear + 1, parseInt(cells[0].dtWorkingCopy));
       fireKeyboardEvent(cells[0], 'ArrowDown');
-      assert.equal(currentYear , parseInt(cells[0].dtWorkingCopy))
+      assert.equal(currentYear , parseInt(cells[0].dtWorkingCopy));
     });
 
     test('cell keyboard autocomplete onleaving', function(done) {
@@ -85,7 +85,7 @@ function runCustomTests() {
         assert.equal(firstInput.value, 2022);
         cells[0].removeEventListener('px-entry-cell-move', listener);
         done();
-      }
+      };
       //entering 2 characters + arrow right should autocomplete + move to the next cell.
       //Unfortunately our code relies on focus() which doesn't seem to
       //work in the testing environment. Instead listen to the event that will result
@@ -113,7 +113,7 @@ function runCustomTests() {
         //make sure autocomplete happened
         assert.equal(cells[0].dtWorkingCopy, 2222);
         assert.equal(firstInput.value, 2222);
-        cells[0].removeEventListener('px-entry-cell-move', listener)
+        cells[0].removeEventListener('px-entry-cell-move', listener);
         done();
       };
 
@@ -134,7 +134,7 @@ function runCustomTests() {
       var listener = function(evt) {
 
         assert.equal(evt.detail.dir, 1);
-        cells[0].removeEventListener('px-entry-cell-move', listener)
+        cells[0].removeEventListener('px-entry-cell-move', listener);
         done();
       };
 
@@ -154,7 +154,7 @@ function runCustomTests() {
 
       var listener = function(evt) {
 
-        date1.removeEventListener('px-previous-field', listener)
+        date1.removeEventListener('px-previous-field', listener);
         done();
       };
 
@@ -181,7 +181,7 @@ function runCustomTests() {
       fireKeyboardEvent(cells[cells.length-1], 'ArrowLeft');
 
       setTimeout(function() {
-        date1.removeEventListener('px-previous-field', listener)
+        date1.removeEventListener('px-previous-field', listener);
         done();
       }, 200);
     });
@@ -195,7 +195,7 @@ function runCustomTests() {
 
       var listener = function(evt) {
 
-        date1.removeEventListener('px-next-field', listener)
+        date1.removeEventListener('px-next-field', listener);
         done();
       };
 
@@ -213,7 +213,7 @@ function runCustomTests() {
       var listener = function(evt) {
 
         assert.isTrue(false);
-        date1.removeEventListener('px-next-field', listener)
+        date1.removeEventListener('px-next-field', listener);
         done();
       };
 
@@ -222,7 +222,7 @@ function runCustomTests() {
       fireKeyboardEvent(cells[0], 'ArrowRight');
 
       setTimeout(function() {
-        date1.removeEventListener('px-next-field', listener)
+        date1.removeEventListener('px-next-field', listener);
         done();
       }, 200);
     });
@@ -236,7 +236,7 @@ function runCustomTests() {
       var listener = function(evt) {
 
         assert.equal(evt.detail.dir, -1);
-        cells[0].removeEventListener('px-entry-cell-move', listener)
+        cells[0].removeEventListener('px-entry-cell-move', listener);
         done();
       };
 
@@ -480,7 +480,7 @@ function runCustomTests() {
 
           buttons.hideCancel = false;
           done();
-        })
+        });
       });
     });
 
@@ -539,7 +539,7 @@ function runCustomTests() {
       presetLinks[presetLinks.length-1].click();
     });
   });
-};
+}
 
 function fireKeyboardEvent(elem, key){
   var evt = new CustomEvent('keydown',{detail:{'key':key,'keyIdentifier':key}});
