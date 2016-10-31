@@ -383,13 +383,11 @@ function runCustomTests() {
 
       //change value to 02
       fireKeyboardEvent(cells[1], '0');
-      fireKeyboardEvent(cells[1], '2');
+      fireKeyboardEvent(cells[1], '3');
 
       //wait for validation to kick in
       setTimeout(function() {
-
         assert.isTrue(date1.isValid);
-
         //simulate focus on second cell....
         cells[1]._handleFocus();
         //press 0 then enter => autocomplete to 0 and date invalidated
