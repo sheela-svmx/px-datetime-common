@@ -1,3 +1,7 @@
+v0.6.6
+==================
+* updated entry to use px-polymer-font-awesome
+
 v0.6.5
 ==================
 * Updated dependencies
