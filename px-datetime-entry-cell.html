@@ -207,7 +207,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
           c = document.createElement('canvas'),
           ctx=c.getContext('2d'),
           length;
-
+          
+      if(fontSize === "0px" || fontSize === "0"){
+        console.log("fontSize is 0px");
+        setTimeout(function(){
+          this._sizeInputs();
+        }.bind(this),50);
+        return;
+      }
       ctx.font = fontSize + " " + fontFamily;
       length = ctx.measureText(this.dtWorkingCopy).width;
       length = Math.ceil(length);
