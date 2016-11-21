@@ -1,3 +1,7 @@
+v0.6.11
+==================
+* fixed validation timing bug by waiting for attached to fire ‘px-cell-validate'
+
 v0.6.10
 ==================
 * merging 'cell width issue' branch
