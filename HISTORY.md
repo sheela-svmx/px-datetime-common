@@ -1,6 +1,14 @@
-v0.6.11
+v0.6.13
 ==================
 * fixed validation timing bug by waiting for attached to fire ‘px-cell-validate'
+
+v0.6.12
+==================
+* update dependencies for dropdown
+
+v0.6.11
+==================
+* removing px-theme style call
 
 v0.6.10
 ==================
