@@ -1,3 +1,7 @@
+v0.6.14
+==================
+* updated px-datetime-entry-predix.scss dropdown css variables  
+
 v0.6.13
 ==================
 * fixed validation timing bug by waiting for attached to fire ‘px-cell-validate'
