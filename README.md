@@ -14,7 +14,7 @@ From the component's directory...
 ```
 $ npm install
 $ bower install
-$ grunt sass
+$ gulp sass
 ```
 
 ### API and examples
