@@ -1,3 +1,7 @@
+v0.7.1
+==================
+* fixed am/pm timezone validation bug
+
 v0.7.0
 ==================
 * Updated dependencies
