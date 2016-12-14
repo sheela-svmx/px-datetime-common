@@ -364,7 +364,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         }.bind(this), 50);
         return;
       }
-      this.fire('px-cell-validate');
+
+      //DO NOT REMOVE, this is needed so that other cells can have potential changes propagated before we validate
+      setTimeout(function() {
+        this.fire('px-cell-validate');
+      }.bind(this),10);
+      
     },
     /**
      * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)

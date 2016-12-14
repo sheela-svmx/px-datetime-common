@@ -83,7 +83,7 @@ var validate = {
 
         We want to use clone so it stays in utc or local time
       */
-      var newMoment = this.momentObj.clone();
+      var newMoment = this.momentObj.clone().tz(this.timeZone);
       // just use the relevant fields, so ok if not in utc timemoment
       var typedInMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone);
 
