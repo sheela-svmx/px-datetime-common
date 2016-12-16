@@ -1,3 +1,7 @@
+v0.7.3
+==================
+* Correct sass typo in v0.7.1
+
 v0.7.2
 ==================
 * Add theming variable for datetime entry field
