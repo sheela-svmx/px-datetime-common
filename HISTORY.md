@@ -1,3 +1,7 @@
+v0.7.2
+==================
+* Add theming variable for datetime entry field
+
 v0.7.1
 ==================
 * fixed am/pm timezone validation bug
@@ -20,7 +24,7 @@ v0.6.15
 
 v0.6.14
 ==================
-* updated px-datetime-entry-predix.scss dropdown css variables  
+* updated px-datetime-entry-predix.scss dropdown css variables
 
 v0.6.13
 ==================
