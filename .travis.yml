@@ -2,37 +2,33 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - stable
+- stable
 branches:
   except:
-    - gh-pages
+  - gh-pages
 addons:
+  firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
+    - google-chrome-stable
 before_script:
-  - npm install web-component-tester
-  - npm install bower
-  - 'export PATH=$PWD/node_modules/.bin:$PATH'
-  - bower install
+- npm install web-component-tester
+- npm install bower
+- export PATH=$PWD/node_modules/.bin:$PATH
+- bower install
 script:
-  - xvfb-run wct --skip-plugin sauce
-  - >-
-    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce
-    --skip-plugin local; fi
+- xvfb-run wct --skip-plugin sauce
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
+  local; fi
+after_success:
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k "$DEPLOYSECRET"
+  -in deploy.enc -out deploy_key -d; fi
+- cd $TRAVIS_BUILD_DIR/scripts
+- chmod 755 ghp.sh
+- "./ghp.sh"
 env:
   global:
-    - secure: >-
-        qDEr4+mFT+m2Bi5dZAHk85SmoKmOlYe5ymZxZbAF3AFkkro9HIvJfkk/DITdrBJvcAFYpR3Z4THNz0G9+cRd++43YAcb8cA8v23KX6AobVHbBeuwkT4/AQtefhO4LG3mF6zwUIgKfsKmRYjJRma4Rb2NBi0YUIRks6rZaDUhu5soHt8vmjMxwyO7LwZPK0Uso2BqUwrr2G0dKnDBjEBxEyllNi/CaFjbrG1wZRDzyZfIhbSfX4stnAeILs9lp6W4O5qUrndikR6M3zd+vhYGGhUIB6HCNEk/tlOBYHWvKxJoNfFaqHIiNWMHuJSOZl43a9xRUohKwHxO5lwHApzbMoFVppEKck5bgbUEsfhA7BQylKN3Eg0+OE7FHaMEBMNdtQgyHbgw0Ovqe9B1k6cx557FYd+ABJR91pQPbi/XDpeRpTwKAY0OL0ikAy89Hv2HpesAQ6OkxOO044yLhKa0w0DzPoPfIvJGGx12O1AqK+hKSEtxsGMBwvvRhBBMusYCMHKQOt5u4uRoRuO9ieqEyGE7BEIqdRVQ0r9+OlulMxxo2AwiyYMhLSH6XF34EUm/ONyaf72PS2UrWBg3We+3x4/8s6AoXrT/Xa3JKr94wYBGu2bw2/EvZ6SVRgt3qZNmx1Anor+rFdGUouJ33n74tE9ow/dQSUKsqaRunSnBVC4=
-    - secure: >-
-        CE5/DYVe6rc01vl0Bf13KFp4a6wAG1jMJuycnOk3FGid+U/iTm4UxNIZ9V8Lfnm5dF7VP3XSM/d00bj+oo8L5svMxXF/+p8KD+uAtEZHDbtYIgMUaRYZdnuMOQAyPbssgqqn2dPetpxiIBNt4kVnGA+vFAP8s1lxuw0PsNiAVdEAwfelApkCfsLIZ2xES/VffvHt2kfI+0LLtC+5sVD8qIWhdl/c++9Pn//eqKsmrVI0iyuxnv1+QHrNOXbGTzahhPZLnQJKKH5FnTCh2tAljD39CKW740RLOnoQR643BKCp6othw02THw4iDrIw6oEugYdHfCVCEpKDB2HzDTlGUB8un9+9YZ6MiW0IYfzfafkMoIDo7thcY+F1XKGeZTGbKiMsZgTKYUO/W5YYl643E3M4MPZvKBSk6GCu9r5gQH2fJaXu8BneoCpANiB2jmjPm5w4xAgG5icWY1FLIH+3zJ6ZYbQtg50eYY43hSVyAvH1tRIvxOwkzpQcYvP/ygEh/1vzHEEIxBgv+/j0/ulCo/DY0cOk1A1PV/cuxLv1TKp25XAvEc6tjB3ZAWoqhOVQlDqC8dhDVDSdiWXG6odL1CNHG9PX7U7upSHplau1PdPEAPGZ7X+r3ZSHj90Ub01uOSF9oUmFJWD46lIC3xUeK21aKLhJvQzrmgWpfSso75Q=
-before_install:
-  - >-
-    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k
-    "$password" -in id_rsa.enc -out deploy_key -d; fi
-after_success:
-  - cd $TRAVIS_BUILD_DIR/scripts
-  - chmod 755 ghp.sh
-  - ./ghp.sh
+  - secure: QWTu+h4OuriLIYCLeQjuvf3UPcLSF7YYE4eG+y5tJ6ZH+jsWRMlZafjojDsi2y6l5xrhW+aqsel7nUtr8vLg7DutCUvqcDG34QetIxzCHGRcflZWQxZaDTjygIeXQGCzCSm855jOMdPQUW8zJWlb69OfVc0l3DqTI8WkacIbF+wCMPal0xehBrbN4i0rWnxX29iYNN2PytCwMZQSdjXexMwToTHKkVa/BfDZ2xyJ2KFg9StNh2QKXNZihEWxPMGwblSrgpBLPcqrpz4vDvc2f2SlhQnBPz7SGdiMBRCsMPmV78M2vQxKCJrBZO7irG0C7I9TJbCiQsahr6CLsk0U6k+q9tFk6ksa8kjd647BrpGVNHJpbEckBco0MiFzsvrY2jsflDQTqYohVp/StcE6TLnT45M8N/mefwCLv6ScciyafbV7qQfzieJxPiP4sq2JZK1C432lhrk08Cm66WgDrw0aW1Ic2SPyazO19QTepe4UtAuh/SNsl77Xw8KllxVTz5EncwOmVEzLv7CQ6dVgJJ3YctIz2Oj024Gx7r/aFMvcTu7Kh3maeEDk7Wuab63RrrdLTnKV/sLLJEMBjfM/pUEKsLuwcfiH8JWGYDXXcm4/fEQwGIAGdqvAk5L9M1i623kNfZHLE/A0l7jPeuS//DQct4XNeyQ09IQk9Ityhp4=
+  - secure: PK445/W9Xl/5UqvfTtHxqDP8XpxNNIqVt4+9nxGuvK1VfAB5D3BVuNT+muRVAu5lB99WrKzQjUTdUrCTEUZ5r91E/H0FzB3rkcRpuXma11KvnUZwd4qHJaXZ78oLq95508LSgsbOwDO23eJ15wPp36EfgsWN8vrBhGhVS1fj2vwJfJyUfc30EGxDooKNNmWnayb3N+7/UmSD+sZNAQ9I4PUinuhpgUeBgzCs5efdmdEIeWOgqaxaLKbOMEqEGo5pwnIDu/4nAzWZCz7X3M+vJv0ZidbqxePSAg0JEV/IQpQ4ZMKNOli8IUUA9a9En/0pD8adias049I7l/xFO92hxdDO7OXiSs9ZqRZyl3oRBC375GxC/kcJg3H3FHrxbbDqeUsRPNL2s3MbxVsg8T7vmqD+EiU37mgtuxfryQBoIRsKxALAhKUI+2XEpq/wFgIPz/t9ROe+102QsIYh45wVBm6h/bCaLAmhi2pmv2WEZjl+oYYIjbCr3R8OYl5x5quFAB4qgeKNDhhlVvYoE5aQHKc5P+cHsCxPOZ5+CQ4rQCTgdjo/fyy6PK1lpkxo8H51oYQT2VwgvkuNUoygl/mDOguTMA8YAXbn4TsvDyV1vEDkGYHe5CB9CZzpa93zB4YT5SLzNzl1tu1LgxyeMvNDxbKze9rWLPAdTiOSqKPnRBw=
