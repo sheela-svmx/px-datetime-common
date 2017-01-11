@@ -1,3 +1,7 @@
+v0.7.4
+==================
+* changing ghp.sh to account for Alpha releases
+
 v0.7.3
 ==================
 * Correct sass typo in v0.7.1
