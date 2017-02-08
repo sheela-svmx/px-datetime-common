@@ -1,3 +1,7 @@
+v0.7.6
+==================
+* Fix observer listed as listener in px-datetime-range-common
+
 v0.7.5
 ==================
 * Update colors design to pick up new colors
