@@ -70,7 +70,8 @@ var pxDatetimeRangeBehavior = [{
           from: Px.moment().subtract(7, 'day').toISOString(),
           to: Px.moment().toISOString()
         };
-      }
+      },
+      // observer: '_notifyRangeChanged'
     },
 
     /**
@@ -192,20 +193,21 @@ var pxDatetimeRangeBehavior = [{
    * @param {object} range - {from, to} the ISO 8601 Strings representing the date/time chosen by the user
    * @param {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
    */
-  _notifyRangeChanged: function(evt) {
+  _notifyRangeChanged: function(r) {
+    var newRange = r.value;
 
     if(!this._preventRangeUpdate) {
       this._preventRangeUpdate = true;
 
       //make sure we keep the moment synchronized in case range has been changed externally
-      if(!this.fromMoment || this.fromMoment.toISOString() !== evt.from) {
-        this.set('fromMoment', this._convertISOtoMoment(evt.from));
+      if(!this.fromMoment || this.fromMoment.toISOString() !== newRange.from) {
+        this.set('fromMoment', this._convertISOtoMoment(newRange.from));
       }
-      if(!this.toMoment || this.toMoment.toISOString() !== evt.to) {
-        this.set('toMoment', this._convertISOtoMoment(evt.to));
+      if(!this.toMoment || this.toMoment.toISOString() !== newRange.to) {
+        this.set('toMoment', this._convertISOtoMoment(newRange.to));
       }
 
-      this.range = evt;
+      this.range = newRange;
 
       //notify the range has changed
       this.fire('px-datetime-range-submitted', {range: this.range, momentObjs: {from: this.fromMoment, to: this.toMoment}});
