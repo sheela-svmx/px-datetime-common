@@ -1,3 +1,7 @@
+v0.7.7
+==================
+* removed px-time-input & px-time-rangepicker css 
+
 v0.7.6
 ==================
 * Fix observer listed as listener in px-datetime-range-common
