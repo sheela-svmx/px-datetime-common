@@ -1,14 +1,18 @@
 {
     "name": "px-datetime-common",
-    "version": "0.7.7",
+    "version": "0.7.8",
     "main": [
         "px-datetime-common.html"
     ],
     "ignore": [
-        ".*",
+        "**/.*",
+        "scripts",
+        "*.md",
+        "*.png",
         "npm-debug.log",
         "gulpfile.js",
         "sass",
+        ".github",
         "bower_components",
         "node_modules",
         "test"

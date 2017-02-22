@@ -1,6 +1,10 @@
+v0.7.8
+==================
+* added button type to avoid issues in forms
+
 v0.7.7
 ==================
-* removed px-time-input & px-time-rangepicker css 
+* removed px-time-input & px-time-rangepicker css
 
 v0.7.6
 ==================

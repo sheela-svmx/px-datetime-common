@@ -18,13 +18,13 @@ Date time button component.
 <dom-module id="px-datetime-buttons">
   <template>
     <style include="px-datetime-buttons-styles"></style>
-    
+
     <template is="dom-if" if="{{ !hideCancel }}">
-      <button class="btn u-mr--" on-tap="_fireCancelEvent">Cancel</button>
+      <button type="button" class="btn u-mr--" on-tap="_fireCancelEvent">Cancel</button>
     </template>
     <template is="dom-if" if="{{ !hideSubmit }}">
       <button class$="{{submitBtnClasses('btn btn--primary', isSubmitButtonValid)}}"
-              type=submit
+              type="button"
               on-tap="_fireSubmitEvent"
               id="submitButton"
               disabled="{{!isSubmitButtonValid}}">
