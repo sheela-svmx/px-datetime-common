@@ -1,3 +1,7 @@
+v0.7.9
+==================
+* fixed css variable names for dropdown
+
 v0.7.8
 ==================
 * added button type to avoid issues in forms
