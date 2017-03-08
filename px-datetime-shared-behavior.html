@@ -19,11 +19,11 @@ var pxDatetimeSharedBehavior = [{
 
     /**
      *
-     * Set this attribute when you do want to allow future dates in the 'px-date-panel' component.
+     * Set this attribute when you do not want to allow future dates to be selected (future dates will be disabled and unclickable).
      *
-     * Defined In: 'pxDatetimeBehavior'
+     * Defined in: 'pxDatetimeBehavior'
      *
-     * @default false (future dates will be disabled and unclickable)
+     * @default false
      */
     blockFutureDates: {
       type: Boolean,
@@ -31,11 +31,11 @@ var pxDatetimeSharedBehavior = [{
     },
     /**
      *
-     * Set this attribute when you do want to allow past dates in the 'px-date-panel' component.
+     * Set this attribute when you do not want to allow past dates to be selected (past dates will be disabled and unclickable).
      *
-     * Defined In: 'pxDatetimeBehavior'
+     * Defined in: 'pxDatetimeBehavior'
      *
-     * @default false (past dates will be disabled and unclickable)
+     * @default false
      */
     blockPastDates: {
       type: Boolean,
@@ -44,22 +44,22 @@ var pxDatetimeSharedBehavior = [{
     /**
      *
      * Moment-timezone string for using a specific timezone. See
-     * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/
+     * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/.
      *
-     * if not provided tries to guess the current local
+     * If not provided, tries to guess the current local timezone.
      */
     timeZone: {
       type: String,
       notify: true,
       value: function() {
-        
+
         return Px.moment.tz.guess();
       },
       observer: '_timeZoneChanged'
     }
   },
   /**
-  * Takes an ISO 8601 String and returns a moment object
+  * Takes an ISO 8601 String and returns a moment object.
   *
   *
   * @param {String} timeString

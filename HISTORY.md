@@ -1,3 +1,7 @@
+v0.7.10
+==================
+* fix typos in documentation
+
 v0.7.9
 ==================
 * fixed css variable names for dropdown

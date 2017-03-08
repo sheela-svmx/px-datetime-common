@@ -37,7 +37,7 @@ var pxDatetimeRangeBehavior = [{
      *   ]
      * ```
      *
-     * Defined In: 'pxDatetimeRangeBehavior'
+     * Defined in: 'pxDatetimeRangeBehavior'
      *
      * @default no presetRanges
      */
@@ -46,9 +46,9 @@ var pxDatetimeRangeBehavior = [{
     /**
      * (required: 'px-{datetime}-range-{picker}')
      *
-     * This is the object you use to instantiate px-datetime components and retrive it through 2-way data-binding
+     * This is the object you use to instantiate px-datetime components. You can retrieve the object through 2-way data-binding.
      *
-     * Format ISO8601 strings
+     * Formated as ISO8601 strings
      * ```
      * {
      *    "from": "2013-01-07T22:44:30.652Z",
@@ -58,7 +58,7 @@ var pxDatetimeRangeBehavior = [{
      *
      * This object which will be changed when the user Submits their new selected range.
      *
-     * Defined In: 'pxDatetimeRangeBehavior'
+     * Defined in: 'pxDatetimeRangeBehavior'
      *
      * @default the last 7 days
      */
@@ -76,7 +76,7 @@ var pxDatetimeRangeBehavior = [{
     /**
      * Moment object start date & time
      *
-     * Defined In: 'pxDatetimeRangeBehavior'
+     * Defined in: 'pxDatetimeRangeBehavior'
      *
      * @private
      */
@@ -88,7 +88,7 @@ var pxDatetimeRangeBehavior = [{
     /**
      * Moment object end date & time
      *
-     * Defined In: 'pxDatetimeRangeBehavior'
+     * Defined in: 'pxDatetimeRangeBehavior'
      *
      * @private
      */
@@ -117,7 +117,7 @@ var pxDatetimeRangeBehavior = [{
    *
    * Triggered from a click on cancel, submit, esc, or enter
    *
-   * Defined In: 'pxDatetimeRangeBehavior'
+   * Defined in: 'pxDatetimeRangeBehavior'
    */
   _setMomentFromRange: function() {
     // set to and from based on inputed range
@@ -156,7 +156,7 @@ var pxDatetimeRangeBehavior = [{
     this._setMomentFromRange();
   },
   /**
-   * makes sure the moment objects reflexts the timezone
+   * makes sure the moment objects reflect the timezone
    */
   _timeZoneChanged: function() {
     if(this.fromMoment) {
@@ -182,14 +182,14 @@ var pxDatetimeRangeBehavior = [{
     }
   },
   /**
-   * px-datetime-range-submitted event. This event is fired differently depending on config:
-   *  - If the px-datetime component has an apply button then it is fired when the
-   *   user clicks the apply button (or press enter) AND the date/time is valid
-   *  - If the px-datetime component does not have an apply button then it is fired
-   *   every time a change is made to the date/time AND the date/time is valid
+   * This event is fired differently depending on config:
+   *  - If the px-datetime component has an Apply button, then it is fired when the
+   *   user clicks the Apply button (or presses enter) AND the selected date/time is valid
+   *  - If the px-datetime component does not have an Apply button, then it is fired
+   *   every time a change is made to the date/time AND the selected date/time is valid
    *
    * @event px-datetime-range-submitted
-   * @param {object} range - {from, to} the ISO 8601 Strings representing the date/time chosen by the user
+   * @param {object} range - {from, to} the ISO 8601 strings representing the date/time chosen by the user
    * @param {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
    */
   _notifyRangeChanged: function(r) {

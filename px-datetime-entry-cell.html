@@ -23,7 +23,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 <dom-module id="px-datetime-entry-cell">
   <template>
     <style include="px-datetime-entry-cell-styles"></style>
-    
+
 
     <input
       id="dtEntry"
@@ -167,14 +167,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._addGeneralKeyBindings();
       this._sizeInputs();
       this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
-      this._isAttached = true;  
+      this._isAttached = true;
     },
     _onEnter: function() {
       this._checkValue();
       this._moveFocusForward();
     },
     /**
-     * returns the classList everything momentFormat is changed
+     * returns the classList every time momentFormat is changed
      *
      * @method _addGeneralKeyBindings
      */
@@ -187,7 +187,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       return classList;
     },
     /**
-     *  Caleld every time the data of the cell changed
+     *  Called every time the data of the cell is changed
      */
     _dataChanged: function() {
 
@@ -215,7 +215,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
           c = document.createElement('canvas'),
           ctx=c.getContext('2d'),
           length;
-          
+
       if(fontSize === "0px" || fontSize === "0"){
         setTimeout(function(){
           this._sizeInputs();
@@ -356,7 +356,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @method _inputValueChanged
      */
     _inputValueChanged: function(evt){
-      //this setTimeout needs to wait for entry cell to be attached so that entry can properly call validate. 
+      //this setTimeout needs to wait for entry cell to be attached so that entry can properly call validate.
       //this functionality should probably be handeld by entry, due to time constrains this is the solution we had
       if(!this._isAttached) {
         setTimeout(function() {
@@ -369,7 +369,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       setTimeout(function() {
         this.fire('px-cell-validate');
       }.bind(this),10);
-      
+
     },
     /**
      * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)

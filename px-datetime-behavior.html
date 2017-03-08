@@ -17,8 +17,8 @@ var pxDatetimeBehavior = [{
 
   properties: {
     /**
-     * Moment value with the date or time to display.  Will be parsed according to the moment format.  (see momentFormat property)
-     * Default to now.
+     * Moment value with the date or time to display.  Will be parsed according to the moment format. (See momentFormat property.)
+     * Defaults to now.
      *
      * @private
      */
@@ -31,15 +31,15 @@ var pxDatetimeBehavior = [{
     },
     /**
      *
-     * This is the string you use to interact with px-datetime components. it holds
-     * a date and time representing the value in the related component
+     * This is the string you use to interact with px-datetime components. It holds
+     * a date and time representing the value in the corresponding component.
      *
-     * Format ISO8601 strings
+     * Formatted as an ISO8601 string:
      * ```
      * "2013-01-07T22:44:30.652Z"
      * ```
      *
-     * This will be changed when the user Submits their new date/time.
+     * This will be changed when the user submits a new date/time.
      *
      */
     dateTime: {
@@ -53,7 +53,7 @@ var pxDatetimeBehavior = [{
   }, //properties close bracket
 
   /**
-   * makes sure the moment object reflexts the timezone
+   * Makes sure the moment object reflects the right timezone.
    */
   _timeZoneChanged: function() {
     if(this.momentObj) {
@@ -62,16 +62,16 @@ var pxDatetimeBehavior = [{
     }
   },
   /**
-   * px-datetime-submitted event. This event is fired differently depending on config:
-   *  - If the px-datetim component has an apply button then it is fired when the
-   *    user clicks the apply button (or press enter) AND the date/time is valid
-   *  - If the px-datetim component does not have an apply button then it is fired
-   *    every time a change is made to the date/time AND the date/time is valid
+   * This event is fired differently depending on config:
+   *  - If the px-datetime component has an Apply button, then it is fired when the
+   *    user clicks the Apply button (or press enter) AND the selected date/time is valid
+   *  - If the px-datetime component does not have an apply button, then it is fired
+   *    every time a change is made to the date/time AND the selected date/time is valid
    *
    * @event px-datetime-submitted
    *
-   * @param {string} dateTime - the ISO 8601 String representing the date/time chosen by the user
-   * @param {object} momentObj - the moment.js object representing the date/time chosen by the user
+   * @param {string} dateTime - The ISO 8601 string representing the date/time chosen by the user
+   * @param {object} momentObj - The moment.js object representing the date/time chosen by the user
    */
   _notifyDateTimeChanged: function(dateTime) {
 
