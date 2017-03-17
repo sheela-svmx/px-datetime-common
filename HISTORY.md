@@ -1,3 +1,7 @@
+v0.7.11
+==================
+* fix #8 - validation text color
+
 v0.7.10
 ==================
 * fix typos in documentation
