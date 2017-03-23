@@ -1,6 +1,6 @@
 {
     "name": "px-datetime-common",
-    "version": "0.7.11",
+    "version": "0.7.12",
     "main": [
         "px-datetime-common.html"
     ],
@@ -23,7 +23,7 @@
         "polymer": "^1.6.1",
         "px-theme": "^2.0.1",
         "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
-        "px-dropdown": "^2.1.0",
+        "px-dropdown": "^3.1.0",
         "polymer-font-awesome": "px-polymer-font-awesome#^0.1.9"
     },
     "devDependencies": {

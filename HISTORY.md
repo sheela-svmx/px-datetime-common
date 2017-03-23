@@ -1,3 +1,7 @@
+v0.7.12
+==================
+* bump dropdown dependency
+
 v0.7.11
 ==================
 * fix #8 - validation text color
