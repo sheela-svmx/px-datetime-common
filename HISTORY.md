@@ -1,3 +1,7 @@
+v0.8.0
+==================
+* added localization and pxDatetimeSharedBehavior.dayWeekStartIndex
+
 v0.7.12
 ==================
 * bump dropdown dependency

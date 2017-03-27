@@ -1,5 +1,6 @@
 <link rel="import" href="px-datetime-imports.html" />
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../px-localize-behavior/px-localize-behavior.html"/>
 
 <script>
 /**
@@ -14,9 +15,8 @@
 
 */
 
-var pxDatetimeButtonBehavior = {
+var pxDatetimeButtonBehavior = [{
 
-  behavior: [Polymer.IronA11yKeysBehavior],
   properties: {
     /**
      * Whether to show Apply and Cancel buttons in the range fields
@@ -26,6 +26,6 @@ var pxDatetimeButtonBehavior = {
       value: false
     }
   }
-};
+}, Polymer.IronA11yKeysBehavior, PxLocalizeBehavior];
 
 </script>

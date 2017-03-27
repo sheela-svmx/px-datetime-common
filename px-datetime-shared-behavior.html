@@ -97,4 +97,30 @@ var pxDatetimeSharedBehavior = [{
 
 
 
+/*
+    pxDatetimeSharedBehavior.dayWeekStartIndex
+
+    Description:
+    Behavior providing the dayWeekStartIndex property
+    @polymerBehavior PxVisBehavior.dayWeekStartIndex
+*/
+pxDatetimeSharedBehavior.dayWeekStartIndex = {
+  properties: {
+    /**
+     * Index representing the week day at which the week should start on a calendar. Can be:
+     * - 0: sunday
+     * - 1: monday
+     * - 2: tuesday
+     * - 3: wednesday
+     * - 4: thursday
+     * - 5: friday
+     * - 6: saturday
+     */
+    dayWeekStartIndex: {
+      type: Number,
+      value: 0
+    }
+  }
+}
+
 </script>
