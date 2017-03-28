@@ -2,6 +2,43 @@
 <link rel="import" href="px-datetime-shared-behavior.html" />
 
 <script>
+var PxDatetimeBehavior = PxDatetimeBehavior || {};
+
+/*
+    PxDatetimeBehavior.rangeMoments
+
+    Description:
+    Behavior providing the fromMoment and toMoment properties
+    @polymerBehavior PxDatetimeBehavior.rangeMoments
+*/
+PxDatetimeBehavior.rangeMoments = {
+  properties: {
+    /**
+     * Moment object start date & time
+     *
+     * Defined in: 'pxDatetimeRangeBehavior'
+     *
+     * @private
+     */
+    fromMoment: {
+      type: Object,
+      notify: true
+    },
+
+    /**
+     * Moment object end date & time
+     *
+     * Defined in: 'pxDatetimeRangeBehavior'
+     *
+     * @private
+     */
+    toMoment: {
+      type: Object,
+      notify: true
+    }
+  }
+}
+
 
 /**
   ```pxDatetimeRangeBehavior```
@@ -73,29 +110,7 @@ var pxDatetimeRangeBehavior = [{
       }
     },
 
-    /**
-     * Moment object start date & time
-     *
-     * Defined in: 'pxDatetimeRangeBehavior'
-     *
-     * @private
-     */
-    fromMoment: {
-      type: Object,
-      notify: true
-    },
 
-    /**
-     * Moment object end date & time
-     *
-     * Defined in: 'pxDatetimeRangeBehavior'
-     *
-     * @private
-     */
-    toMoment: {
-      type: Object,
-      notify: true
-    },
     _preventRangeUpdate: {
       type: Boolean,
       value: false
@@ -213,7 +228,7 @@ var pxDatetimeRangeBehavior = [{
       this._preventRangeUpdate = false;
     }
   }
-}, pxDatetimeSharedBehavior];
+}, pxDatetimeSharedBehavior, PxDatetimeBehavior.rangeMoments];
 
 
 
