@@ -2,8 +2,8 @@
     "name": "px-datetime-common",
     "author": "General Electric",
     "description": "A Px component",
-    "version": "0.7.12",
-    "private": true,
+    "version": "1.0.0",
+    "private": false,
     "extName": null,
     "repository": {
         "type": "git",

@@ -1,6 +1,6 @@
 {
     "name": "px-datetime-common",
-    "version": "0.7.12",
+    "version": "1.0.0",
     "main": [
         "px-datetime-common.html"
     ],
@@ -21,18 +21,18 @@
         "pxmoment": "moment#~2.13.0",
         "pxmoment-timezone": "moment-timezone#~0.5.3",
         "polymer": "^1.6.1",
-        "px-theme": "^2.0.1",
+        "px-theme": "^3.0.0",
         "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
-        "px-dropdown": "^3.1.0",
-        "polymer-font-awesome": "px-polymer-font-awesome#^0.1.9"
+        "px-dropdown": "^4.0.0",
+        "px-polymer-font-awesome": "^2.0.0"
     },
     "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#~v1.1.0",
-        "px-starter-kit-design": "^0.7.0",
-        "px-buttons-design": "^1.1.0",
-        "px-forms-design": "^1.1.0",
-        "px-list-bare-design": "^0.3.0",
-        "px-tables-design": "^1.1.0",
-        "px-actionable-text-icons-design": "^1.1.0"
+        "px-starter-kit-design": "^1.0.0",
+        "px-buttons-design": "^2.0.0",
+        "px-forms-design": "^2.0.0",
+        "px-list-bare-design": "^1.0.0",
+        "px-tables-design": "^2.0.0",
+        "px-actionable-text-icons-design": "^2.0.0"
     }
 }
