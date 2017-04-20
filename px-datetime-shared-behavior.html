@@ -1,5 +1,6 @@
 <link rel="import" href="px-datetime-imports.html" />
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 
 <script>
 var PxDatetimeBehavior = PxDatetimeBehavior || {};
@@ -64,11 +65,24 @@ var pxDatetimeSharedBehavior = [{
       type: String,
       notify: true,
       value: function() {
-
         return Px.moment.tz.guess();
-      },
-      observer: '_timeZoneChanged'
-    }
+      }
+     },
+     /**
+      * set a default for localizing
+      */
+     language: {
+       type: String,
+       value: 'en'
+     },
+     /**
+      * Use the key for localization if value for  language is missing. Should
+      * always be true for  our components
+      */
+     useKeyIfMissing: {
+       type: Boolean,
+       value: true
+     }
   },
   /**
   * Takes an ISO 8601 String and returns a moment object.
@@ -105,35 +119,7 @@ var pxDatetimeSharedBehavior = [{
       this._rollbackMomentFromString();
     }
   }
-},Polymer.IronA11yKeysBehavior, PxDatetimeBehavior.blockDates];
-
-
-
-/*
-    pxDatetimeSharedBehavior.dayWeekStartIndex
-
-    Description:
-    Behavior providing the dayWeekStartIndex property
-    @polymerBehavior PxVisBehavior.dayWeekStartIndex
-*/
-pxDatetimeSharedBehavior.dayWeekStartIndex = {
-  properties: {
-    /**
-     * Index representing the week day at which the week should start on a calendar. Can be:
-     * - 0: sunday
-     * - 1: monday
-     * - 2: tuesday
-     * - 3: wednesday
-     * - 4: thursday
-     * - 5: friday
-     * - 6: saturday
-     */
-    dayWeekStartIndex: {
-      type: Number,
-      value: 0
-    }
-  }
-}
+}, Polymer.IronA11yKeysBehavior, PxDatetimeBehavior.blockDates, Polymer.AppLocalizeBehavior];
 
 
 

@@ -2,7 +2,7 @@
 <link rel="import" href="px-datetime-behavior.html"/>
 <link rel="import" href="validate.html"/>
 <link rel="import" href="px-datetime-imports.html" />
-<link rel="import" href="../px-localize-behavior/px-localize-behavior.html"/>
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 
 
 <!--
@@ -29,7 +29,7 @@ Date time button component.
               on-tap="_fireSubmitEvent"
               id="submitButton"
               disabled="{{!isSubmitButtonValid}}">
-      <i class$="{{submitIcon}}"></i>{{submitText}}</button>
+      <i class$="{{submitIcon}}"></i>[[localize('Apply')]]</button>
     </template>
   </template>
 </dom-module>
@@ -40,7 +40,7 @@ Date time button component.
 
     behaviors: [
       validate,
-      PxLocalizeBehavior
+      Polymer.AppLocalizeBehavior
     ],
 
     properties: {
@@ -79,26 +79,37 @@ Date time button component.
         type: String
       },
       /**
-       *  Text to be used for the Submit button
-       *
+       * List of key/values to be included for translating this component
        */
-      submitText: {
-        type: String,
-        value: 'Apply'
-      }
+      resources: {
+        type: Object,
+        value: {
+          'en': {
+            'Cancel': 'Cancel',
+            'Apply': 'Apply'
+          }
+        }
+      },
+      /**
+      * set a default for localizing
+      */
+     language: {
+       type: String,
+       value: 'en'
+     },
+     /**
+      * Use the key for localization if value for  language is missing. Should
+      * always be true for  our components
+      */
+     useKeyIfMissing: {
+       type: Boolean,
+       value: true
+     }
 
     },
     observers: [
       '_submitButtonState(isSubmitButtonValid)'
     ],
-    /**
-     * Sets up listeners for a variety of events fired from or passing through this component
-     *
-     */
-    ready: function() {
-      // listens for a button click, enter key, or esp key
-      // document.addEventListener('px-datetime-submit', '_dateTimeButtons');
-    },
     /**
      *
      *

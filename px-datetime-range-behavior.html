@@ -117,7 +117,8 @@ var pxDatetimeRangeBehavior = [{
     }
   },
   observers: [
-    '_notifyRangeChanged(range.*)'
+    '_notifyRangeChanged(range.*)',
+    '_localeChanged(language)'
   ],
   /**
    * for legacy purposes
@@ -125,6 +126,17 @@ var pxDatetimeRangeBehavior = [{
   _setRange: function() {
     if(!this._preventRangeUpdate) {
       this._setMomentFromRange();
+    }
+  },
+  _localeChanged: function() {
+
+    //make sure the moment obj pick up the possibly new moment locale
+    if(this.fromMoment) {
+      this.set('fromMoment', this.fromMoment.locale(Px.moment.locale()));
+    }
+
+    if(this.toMoment) {
+      this.set('toMoment', this.toMoment.locale(Px.moment.locale()));
     }
   },
   /**

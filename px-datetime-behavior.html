@@ -52,6 +52,16 @@ var pxDatetimeBehavior = [{
     }
   }, //properties close bracket
 
+  observers: ['_localeChanged(language)'],
+
+  _localeChanged: function() {
+
+    //make sure the moment obj pick up the possibly new moment locale
+    if(this.momentObj) {
+      this.set('momentObj', this.momentObj.locale(Px.moment.locale()));
+    }
+  },
+
   /**
    * Makes sure the moment object reflects the right timezone.
    */

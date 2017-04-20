@@ -25,7 +25,7 @@
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
     "px-dropdown": "^3.1.0",
     "polymer-font-awesome": "px-polymer-font-awesome#^0.1.9",
-    "px-localize-behavior": "^0.0.3"
+    "app-localize-behavior": "^1.0.2"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#~v1.1.0",

@@ -1,3 +1,4 @@
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 <script>
 /**
   ```validate```
@@ -9,7 +10,7 @@
   @polymerBehavior validate
 */
 
-var validate = {
+var validate = [Polymer.AppLocalizeBehavior, {
   properties: {
     /**
      * Boolean stating if the current component is valid. Gets updated in '_validateInput'
@@ -42,6 +43,39 @@ var validate = {
     validationErrorMessage:{
       type: String,
       value: 'invalid'
+    },
+    /**
+    * set a default for localizing
+    */
+    language: {
+      type: String,
+      value: 'en'
+    },
+    /**
+    * Use the key for localization if value for  language is missing. Should
+    * always be true for  our components
+    */
+    useKeyIfMissing: {
+      type: Boolean,
+      value: true
+    },
+    resources: {
+      type: Object,
+      value: {
+        'en': {
+          'Future dates are not allowed': 'Future dates are not allowed',
+          'Past dates are not allowed': 'Past dates are not allowed',
+          'Year': 'Year',
+          'Month': 'Month',
+          'Day': 'Day',
+          'Hour': 'Hour',
+          'Minute': 'Minute',
+          'Second': 'Second',
+          'Millisecond': 'Millisecond',
+          'is not valid': 'is not valid',
+          'This hour is not within a 12 hour clock': 'This hour is not within a 12 hour clock'
+        }
+      }
     }
   },
   /**
@@ -66,11 +100,11 @@ var validate = {
     //added to be able to use Moment strict parsing
     inputStr = inputStr.split('\xa0').join(' ');
     var inputMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone),
-        notAllowedInFuture = this.dateOrTime.toLowerCase() === 'date' && 
-                              this.blockFutureDates && 
+        notAllowedInFuture = this.dateOrTime.toLowerCase() === 'date' &&
+                              this.blockFutureDates &&
                               inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone), 'day'),
-        notAllowedInPast = this.dateOrTime.toLowerCase() === 'date' && 
-                              this.blockPastDates && 
+        notAllowedInPast = this.dateOrTime.toLowerCase() === 'date' &&
+                              this.blockPastDates &&
                               inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone), 'day');
 
     // if the component datetime string is a valid datetime
@@ -111,38 +145,38 @@ var validate = {
     } else {
       //the input box string is not a valid date/time
       if(notAllowedInFuture) {
-        this.set('validationErrorMessage', 'Future dates are not allowed');
+        this.set('validationErrorMessage', this.localize('Future dates are not allowed'));
       } else if(notAllowedInPast) {
-        this.set('validationErrorMessage', 'Past dates are not allowed');
+        this.set('validationErrorMessage', this.localize('Past dates are not allowed'));
       } else {
         var invalidAt = inputMoment.invalidAt();
 
         if(invalidAt !== -1) {
           switch(invalidAt) {
             case 0:
-              this.set('validationErrorMessage', 'Year ' + inputMoment._a[invalidAt] + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Year') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid'));
               break;
             case 1:
-              this.set('validationErrorMessage', 'Month ' + (inputMoment._a[invalidAt] + 1) + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Month') + ' ' + (inputMoment._a[invalidAt] + 1) + ' ' + this.localize('is not valid'));
               break;
             case 2:
-              this.set('validationErrorMessage', 'Day ' + inputMoment._a[invalidAt] + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Day') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid'));
               break;
             case 3:
-              this.set('validationErrorMessage', 'Hour ' + inputMoment._a[invalidAt] + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Hour') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid'));
               break;
             case 4:
-              this.set('validationErrorMessage', 'Minute ' + inputMoment._a[invalidAt]  + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Minute') + ' ' + inputMoment._a[invalidAt]  + ' ' + this.localize('is not valid'));
               break;
             case 5:
-              this.set('validationErrorMessage', 'Second ' + inputMoment._a[invalidAt] + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Second') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid'));
               break;
             case 6:
-              this.set('validationErrorMessage', 'Millisecond ' + inputMoment._a[invalidAt] + ' is not valid');
+              this.set('validationErrorMessage', this.localize('Millisecond') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid'));
               break;
           }
         } else if(inputMoment.parsingFlags().bigHour === true) {
-          this.set('validationErrorMessage', 'This hour is not within a 12 hour clock');
+          this.set('validationErrorMessage', this.localize('This hour is not within a 12 hour clock'));
         }
       }
 
@@ -163,7 +197,7 @@ var validate = {
   _submitButtonState: function(state) {
       this.set('isSubmitButtonValid', state);
   }
-};
+}];
 
 
 </script>
