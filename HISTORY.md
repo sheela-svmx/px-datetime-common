@@ -1,6 +1,10 @@
-v0.8.0
+v1.0.0
 ==================
-* added localization and pxDatetimeSharedBehavior.dayWeekStartIndex
+* Added localization for moment.js through Px.moment.changeLocale() and localize elements using app-localize-behavior
+
+v1.0.0-prerelease
+==================
+* updated dependencies for design refresh
 
 v0.7.12
 ==================
