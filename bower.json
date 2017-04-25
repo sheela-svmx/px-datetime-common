@@ -5,6 +5,7 @@
       "px-datetime-common.html"
   ],
   "ignore": [
+    "*.enc",
       "**/.*",
       "scripts",
       "*.md",
