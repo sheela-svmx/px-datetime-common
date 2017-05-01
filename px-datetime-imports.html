@@ -158,13 +158,13 @@
                   return scripts[scripts.length - 1];
                 })();
             var BASE_URI = currentScript.ownerDocument.baseURI;
-            Px.moment.localeURL =  Polymer.ResolveUrl.resolveUrl('./px-datetime-common/', BASE_URI);
+            Px.moment.localeURL =  Polymer.ResolveUrl.resolveUrl('./px-datetime-common/momentLocale/', BASE_URI);
           }
 
           //dynamically create script tag for this locale
           var fileref=document.createElement('script')
           fileref.setAttribute("type","text/javascript")
-          fileref.setAttribute("src",  Px.moment.localeURL + 'momentLocale/' + newLocale + '.js')
+          fileref.setAttribute("src",  Px.moment.localeURL + '/' + newLocale + '.js')
 
           if(callback) {
             fileref.addEventListener('load', function() {

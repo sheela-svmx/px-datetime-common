@@ -83,11 +83,13 @@ Date time button component.
        */
       resources: {
         type: Object,
-        value: {
-          'en': {
-            'Cancel': 'Cancel',
-            'Apply': 'Apply'
-          }
+        value: function() {
+          return {
+            'en': {
+              'Cancel': 'Cancel',
+              'Apply': 'Apply'
+            }
+          };
         }
       },
       /**

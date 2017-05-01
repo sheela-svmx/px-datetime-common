@@ -77,10 +77,12 @@ The list of preset ranges in the rangepicker modal.
        */
       resources: {
         type: Object,
-        value: {
-          'en': {
-            'Presets': 'Presets'
-          }
+        value: function() {
+          return {
+            'en': {
+             'Presets': 'Presets'
+            }
+          };
         }
       },
       /**
