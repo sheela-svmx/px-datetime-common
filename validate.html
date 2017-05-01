@@ -61,20 +61,22 @@ var validate = [Polymer.AppLocalizeBehavior, {
     },
     resources: {
       type: Object,
-      value: {
-        'en': {
-          'Future dates are not allowed': 'Future dates are not allowed',
-          'Past dates are not allowed': 'Past dates are not allowed',
-          'Year': 'Year',
-          'Month': 'Month',
-          'Day': 'Day',
-          'Hour': 'Hour',
-          'Minute': 'Minute',
-          'Second': 'Second',
-          'Millisecond': 'Millisecond',
-          'is not valid': 'is not valid',
-          'This hour is not within a 12 hour clock': 'This hour is not within a 12 hour clock'
-        }
+      value: function() {
+        return {
+          'en': {
+            'Future dates are not allowed': 'Future dates are not allowed',
+            'Past dates are not allowed': 'Past dates are not allowed',
+            'Year': 'Year',
+            'Month': 'Month',
+            'Day': 'Day',
+            'Hour': 'Hour',
+            'Minute': 'Minute',
+            'Second': 'Second',
+            'Millisecond': 'Millisecond',
+            'is not valid': 'is not valid',
+            'This hour is not within a 12 hour clock': 'This hour is not within a 12 hour clock'
+          }
+        };
       }
     }
   },
