@@ -1,3 +1,8 @@
+v0.8.2
+==================
+* Ensure moment is loaded through through px-moment-imports so that Px.moment.changeLocale() is available
+* DELETED px-datetime-imports (internal old mechanism to load moment)
+
 v0.8.1
 ==================
 * update dev dependencies to not pick up design refresh
