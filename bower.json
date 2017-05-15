@@ -19,8 +19,7 @@
       "test"
   ],
   "dependencies": {
-      "pxmoment": "moment#~2.13.0",
-      "pxmoment-timezone": "moment-timezone#~0.5.3",
+      "px-moment-imports": "^0.0.1",
       "polymer": "^1.6.1",
       "px-theme": "^3.0.0",
       "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",

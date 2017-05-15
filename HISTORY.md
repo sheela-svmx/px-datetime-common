@@ -1,6 +1,8 @@
 v1.0.0
 ==================
 * Added localization for moment.js through Px.moment.changeLocale() and localize elements using app-localize-behavior
+* load moment through  px-moment-imports
+* DELETED px-datetime-imports
 
 v1.0.0-prerelease
 ==================
