@@ -1,6 +1,6 @@
 {
   "name": "px-datetime-common",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "main": [
       "px-datetime-common.html"
   ],
@@ -22,9 +22,10 @@
       "pxmoment": "moment#~2.13.0",
       "pxmoment-timezone": "moment-timezone#~0.5.3",
       "polymer": "^1.6.1",
-      "px-theme": "^3.0.0",
+      "px-theme": "^2.0.1",
       "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
-      "px-polymer-font-awesome": "^2.0.0",
+      "px-dropdown": "^3.1.0",
+      "px-polymer-font-awesome": "^0.1.9",
       "app-localize-behavior": "^1.0.2"
   },
   "devDependencies": {

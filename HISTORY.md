@@ -1,4 +1,4 @@
-v1.0.0
+v0.8.0
 ==================
 * Added localization for moment.js through Px.moment.changeLocale() and localize elements using app-localize-behavior
 
