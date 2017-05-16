@@ -3,7 +3,7 @@
 <link rel="import" href="validate.html" />
 <link rel="import" href="px-datetime-behavior.html" />
 <link rel="import" href="px-datetime-entry-cell.html" />
-<link rel="import" href="../px-polymer-font-awesome/polymer-font-awesome.html" />
+<link rel="import" href="../px-polymer-font-awesome/px-icon-set.html" />
 <link rel="import" href="../px-dropdown/px-dropdown.html" />
 
 
@@ -80,7 +80,7 @@ Range field component which displays a time or date and font awesome icon.
       <template is="dom-if" if="{{!isValid}}">
         <div class="fa fa-fw validation-container flex flex--middle">
           <iron-icon class$="{{_getValidationIconClass(isValid)}}"
-            icon="fa:fa-exclamation-circle">
+            icon="px:alerts">
           </iron-icon>
           <template is="dom-if" if="{{!isValid}}">
             <px-tooltip
@@ -284,9 +284,9 @@ Range field component which displays a time or date and font awesome icon.
      */
     _setIcon: function(){
       if (this.dateOrTime.toLowerCase() === 'date') {
-        return 'fa:fa-calendar'
+        return 'px:calendar'
       } else {
-        return 'fa:fa-clock-o'
+        return 'px:clock'
       }
     },
     /**
