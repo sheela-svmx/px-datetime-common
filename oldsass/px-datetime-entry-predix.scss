@@ -29,14 +29,14 @@ common/abstract rules go in px-datetime-entry-sketch.scss, not in this file.
   --px-dropdown-border-color--hover: transparent;
   --px-dropdown-border-color--opened: transparent;
   --px-dropdown-text-padding: 0;
-  --px-dropdown-text-color--hover: $select-blue-default;
-  --px-dropdown-text-color--pressed: $select-blue-pressed;
-  --px-dropdown-text-color--opened: $select-blue-default;
+  --px-dropdown-text-color--hover: $select-default;
+  --px-dropdown-text-color--pressed: $select-pressed;
+  --px-dropdown-text-color--opened: $select-default;
   font-size: var(--px-datetime-entry-font-size, inherit);
 }
 
 .validation-container__icon--failed {
-  color: $alert-red;
+  color: $status-red3;
 }
 
 // Component
