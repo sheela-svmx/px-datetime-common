@@ -48,9 +48,12 @@ $inuit-enable-validation-states : true;
   --px-dropdown-border-color--hover: transparent;
   --px-dropdown-border-color--opened: transparent;
   --px-dropdown-text-padding: 0;
-  --px-dropdown-text-color--hover: $select-default;
-  --px-dropdown-text-color--pressed: $select-pressed;
-  --px-dropdown-text-color--opened: $select-default;
+  --px-dropdown-text-color--hover: darkCyan;
+  --px-dropdown-text-color--pressed: teal;
+  --px-dropdown-text-color--opened: darkSlateGray;
+  // --px-dropdown-text-color--hover: $select-default;
+  // --px-dropdown-text-color--pressed: $select-pressed;
+  // --px-dropdown-text-color--opened: $select-default;
   font-size: var(--px-datetime-entry-font-size, inherit);
 }
 
@@ -71,12 +74,14 @@ when the text is non editable the cursor is the default black arrow
 .text-input,
 .dtIcon {
   &, & label {
-    color: $gray7;
+    // color: $gray7;
+    color: gray;
   }
 }
 
 .text-input--non-editable {
-  color: $gray5;
+  // color: $gray5;
+  color: gray;
 }
 
 /*
@@ -89,7 +94,8 @@ adjusts size and position of the Calendar and Clock icon
 }
 
 .dtLabel {
-  color: $gray6;
+  // color: $gray6;
+  color: gray;
 }
 
 .timezone__dropdown {
@@ -112,7 +118,8 @@ adjusts size and position of the Calendar and Clock icon
 }
 
 .validation-container__icon--failed {
-  color: $status-red3;
+  // color: $status-red3;
+  color: red;
 }
 
 .cell {

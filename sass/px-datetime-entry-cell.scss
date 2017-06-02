@@ -34,7 +34,6 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 
 $inuit-enable-text-input--bare  : true;
 $inuit-enable-validation-states : true;
-
 @import "px-forms-design/_base.forms.scss";
 
 // Objects
@@ -48,6 +47,7 @@ $inuit-enable-validation-states : true;
   margin: 0;
   padding: 0;
   border-radius: 3px;
+  border: 0;
 
   background: transparent;
 
@@ -60,10 +60,9 @@ $inuit-enable-validation-states : true;
   cursor:default;
 }
 
-// Trumps
-$inuit-enable-margins--tiny     : true;
-$inuit-enable-margins--small    : true;
-$inuit-enable-margins--none     : true;
-$inuit-enable-margins--large    : true;
-
-@import "px-spacing-design/_trumps.spacing.scss";
+// // Trumps
+// $inuit-enable-margins--tiny     : true;
+// $inuit-enable-margins--small    : true;
+// $inuit-enable-margins--none     : true;
+// $inuit-enable-margins--large    : true;
+// @import "px-spacing-design/_trumps.spacing.scss";

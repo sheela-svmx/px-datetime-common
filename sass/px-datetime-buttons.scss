@@ -30,7 +30,8 @@ $inuit-enable-margins--tiny      : true;
 }
 
 .is-selected {
-  background-color: var(--px-datetime-entry-selected, $cyan2);
+  // background-color: var(--px-datetime-entry-selected, $cyan2);
+  background-color: var(--px-datetime-entry-selected, cyan);
 }
 
 .text-input--bare {
