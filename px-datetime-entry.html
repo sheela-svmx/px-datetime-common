@@ -27,22 +27,22 @@ Range field component which displays a time or date and font awesome icon.
   <template>
     <style include="px-datetime-entry-styles"></style>
 
-    <div id='wrapper' class="inline--flex">
-      <div class="inline--flex">
-          <label class="label--inline dt-label-icon" on-tap="_iconClicked">
-              <span class="a11y dtLabel">{{dateOrTime}}</span>
+    <div id='wrapper' class="inline--flex flex--middle" style="background-color: aliceblue;">
+      <div class="inline--flex flex--middle">
+          <div class$="{{_getIconClass(hideIcon)}}" on-tap="_iconClicked">
+              <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
                 <iron-icon
                   id="icon"
-                  class="fa fa-fw dtIcon"
+                  class="fa fa-fw dt-icon"
                   icon="[[_setIcon(dateOrTime)]]">
                 </iron-icon>
               </template>
-          </label>
+          </div>
           <template is="dom-repeat" items="{{_cellFormatArray}}">
             <px-datetime-entry-cell
               id="cell{{index}}"
-              class="cell "
+              class="cell"
               order='{{index}}'
               moment-obj="[[momentObj]]"
               moment-format='[[item]]'
@@ -64,35 +64,23 @@ Range field component which displays a time or date and font awesome icon.
       </div>
       <div class$="{{_getTimeZoneTextClass(showTimeZone, isValid)}}">
         <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
-          <px-dropdown id="dropdown" display-value="[[timeZone]]" value="{{timeZone}}">
-            <px-dropdown-content
-              extend-dropdown="true"
-              extend-dropdown-by="50"
-              max-content-character-width="50"
-              items="[[_getTimeZoneList(showTimeZone)]]">
-            </px-dropdown-content>
+          <px-dropdown
+            id="dropdown"
+            display-value="[[timeZone]]"
+            button-style="bare"
+            search-mode
+            items="[[_getTimeZoneList(showTimeZone)]]">
           </px-dropdown>
+
         </template>
         <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
-          <span id="timeZoneText" class="text-input--non-editable">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
+          <span id="timeZoneText" class="dt-text-input--non-editable">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
         </template>
       </div>
-      <template is="dom-if" if="{{!isValid}}">
-        <div class="fa fa-fw validation-container flex flex--middle">
-          <iron-icon class$="{{_getValidationIconClass(isValid)}}"
-            icon="px:alerts">
-          </iron-icon>
-          <template is="dom-if" if="{{!isValid}}">
-            <px-tooltip
-              class="tooltip-font"
-              smart-orientation
-              orientation="top"
-              tooltip-message="{{validationErrorMessage}}">
-            </px-tooltip>
-          </template>
-        </div>
-      </template>
     </div>
+    <template is="dom-if" if="{{!isValid}}">
+      <div class="form-field__help validation-error dt-validation-text">{{validationErrorMessage}}</div>
+    </template>
   </template>
 </dom-module>
 
@@ -198,7 +186,8 @@ Range field component which displays a time or date and font awesome icon.
       'px-cell-validate': '_validateInput',
       'px-moment-changed': '_handleMoment',
       'px-request-datetime-entry-copy': '_handleCopy',
-      'px-request-datetime-entry-paste': '_handlePaste'
+      'px-request-datetime-entry-paste': '_handlePaste',
+      'px-dropdown-selection-changed': '_updateTimeZone'
     },
     /**
      *
@@ -387,6 +376,14 @@ Range field component which displays a time or date and font awesome icon.
      *
      *
      */
+    _updateTimeZone: function(e) {
+      this.set('timeZone', e.detail.val);
+    },
+    /**
+     *
+     *
+     *
+     */
     _handleCopy: function(e) {
       e.detail.setData('Text', Px.moment.tz(this.momentObj, this.timeZone).format(this.momentFormat));
       e.stopPropagation();
@@ -415,6 +412,16 @@ Range field component which displays a time or date and font awesome icon.
       e.stopPropagation();
     },
     /**
+     * Determines what classes should show on the label icon
+     */
+    _getIconClass: function(hideIcon){
+      var classList = "";
+      if (!hideIcon) {
+        classList += "u-mr--";
+      }
+      return classList;
+    },
+    /**
      *
      *
      *
@@ -429,32 +436,13 @@ Range field component which displays a time or date and font awesome icon.
     _getTimeZoneTextClass: function (showTimeZone, isValid) {
       var classList = "";
       if (showTimeZone) {
-        classList += "u-ml-- ";
-      }
-      if(showTimeZone === "dropdown" || showTimeZone === "extendedDropdown") {
-        classList += "align-dropdown ";
+        classList += "u-ml- ";
       }
       if (!isValid) {
         classList += "u-mr-- ";
       }
 
       return classList;
-    },
-    /**
-     *
-     *
-     *
-     */
-    _getValidationIconClass: function(isValid){
-      var classList= ['validation-container__icon'];
-
-      if(!isValid) {
-        classList.push('validation-container__icon--failed');
-      }
-      else {
-          classList.push('visuallyhidden');
-      }
-      return classList.join(' ');
     },
     /**
      * This event is fired when the calendar or clock icon has been clicked

@@ -22,23 +22,3 @@ $inuit-enable-btn--disabled        : true;
 
 $inuit-enable-margins--tiny      : true;
 @import "px-spacing-design/_trumps.spacing.scss";
-
-
-// Component
-:host {
-  color: inherit;
-}
-
-.is-selected {
-  // background-color: var(--px-datetime-entry-selected, $cyan2);
-  background-color: var(--px-datetime-entry-selected, cyan);
-}
-
-.text-input--bare {
-  color: inherit;
-  font-size: var(--px-datetime-entry-font-size, inherit);
-}
-
-.text-input--non-editable {
-  color: yellow;
-}

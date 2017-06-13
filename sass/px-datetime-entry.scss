@@ -21,7 +21,6 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 
 // Settings
 @import "px-defaults-design/_settings.defaults.scss";
-@import "px-mixins-design/_tools.mixins.scss";
 
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
@@ -30,114 +29,25 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 
 // Base
 @import "px-flexbox-design/_base.flexbox.scss";
-@import "px-viewport-design/_base.viewport.scss";
 
 $inuit-enable-validation-states : true;
-
 @import "px-forms-design/_base.forms.scss";
 
 // Objects
-@import "px-buttons-design/_objects.buttons.scss";
-
 // Component
-:host{
-  --px-dropdown-bg-color: transparent;
-  --px-dropdown-bg-color--hover: transparent;
-  --px-dropdown-bg-color--opened:  transparent;
-  --px-dropdown-border-color: transparent;
-  --px-dropdown-border-color--hover: transparent;
-  --px-dropdown-border-color--opened: transparent;
-  --px-dropdown-text-padding: 0;
-  --px-dropdown-text-color--hover: darkCyan;
-  --px-dropdown-text-color--pressed: teal;
-  --px-dropdown-text-color--opened: darkSlateGray;
-  // --px-dropdown-text-color--hover: $select-default;
-  // --px-dropdown-text-color--pressed: $select-pressed;
-  // --px-dropdown-text-color--opened: $select-default;
-  font-size: var(--px-datetime-entry-font-size, inherit);
-}
-
-.range-field__field {
-  cursor: pointer;
-  label {
-    margin: 0;
-  }
-}
-
-/*
-when the text is non editable the cursor is the default black arrow
-*/
-.text-input--non-editable {
+.dt-text-input--non-editable {
   cursor:default;
+  color: var(--px-datetime-read-only-text-color, salmon);
 }
 
-.text-input,
-.dtIcon {
-  &, & label {
-    // color: $gray7;
-    color: gray;
-  }
+.dt-icon{
+  color: var(--px-datetime-icon-color, lime);
+  width: calculateRem(16px);
 }
 
-.text-input--non-editable {
-  // color: $gray5;
-  color: gray;
-}
-
-/*
-adjusts size and position of the Calendar and Clock icon
-*/
-.dtIcon{
-  transform: scale(0.7, 0.7) translate(0, 0);
-  // margin: -3px 5px -3px -3px;
-  margin: -1px 0px;
-}
-
-.dtLabel {
-  // color: $gray6;
-  color: gray;
-}
-
-.timezone__dropdown {
-  width: calculateRem(150px);
-}
-
-.wrapper {
-  display: inline-flex;
-  align-items: center;
-}
-
-.validation-container {
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.validation-container__icon {
-  width: calculateRem(13px);
-  height: calculateRem(13px);
-}
-
-.validation-container__icon--failed {
-  // color: $status-red3;
-  color: red;
-}
-
-.cell {
-  display: inline-block;
-  font-size: var(--px-datetime-entry-font-size, inherit);
-  margin-bottom: -1px;
-}
-
-.-text-align-adjustment {
-  margin-top: 0px;
-}
-
-.dt-label-icon{
-  margin: -3px 3px -3px 0px;
-}
-
-.align-dropdown{
-  margin: -1px 0px;
+.dt-validation-text{
+  text-transform: uppercase;
+  display: block;
 }
 
 // Trumps
@@ -145,5 +55,4 @@ $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;
 $inuit-enable-margins--none     : true;
 $inuit-enable-margins--large    : true;
-
 @import "px-spacing-design/_trumps.spacing.scss";
