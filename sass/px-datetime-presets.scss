@@ -31,9 +31,7 @@ Predix branding rules go in px-rangepicker-predix.scss, not in this file.
 @import "px-viewport-design/_base.viewport.scss";
 
 // Object
-
 $actionable--select     : true;
-
 @import "px-actionable-text-icons-design/_objects.actionable.scss";
 @import "px-list-bare-design/_objects.list-bare.scss";
 
@@ -42,5 +40,4 @@ $inuit-enable-margins--small      : true;
 $inuit-enable-margins--none       : true;
 $inuit-enable-paddings--small     : true;
 $inuit-enable-paddings--large     : true;
-
 @import "px-spacing-design/_trumps.spacing.scss";
