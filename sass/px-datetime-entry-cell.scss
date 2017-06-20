@@ -28,14 +28,8 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 
 // Base
 @import "px-flexbox-design/_base.flexbox.scss";
-// @import "px-viewport-design/_base.viewport.scss";
 
-// $inuit-enable-text-input--bare  : true;
-// $inuit-enable-validation-states : true;
-// @import "px-forms-design/_base.forms.scss";
-
-// // Objects
-// @import "px-buttons-design/_objects.buttons.scss";
+// Objects
 
 // Component
 :host {

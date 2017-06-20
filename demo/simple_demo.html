@@ -25,21 +25,21 @@
   </br>
   </br>
   </br>
-  <px-datetime-entry
-    date-time="2016-10-05T01:00:00.000Z"
-    date-or-time="Date"
-    hide-icon
-    moment-format="MM/DD/YYYY Z">
-  </px-datetime-entry>
-  </br>
-  </br>
-  <px-datetime-entry
-    date-time="2016-10-05T01:00:00.000Z"
-    date-or-time="Time"
-    moment-format="hh:mm"
-    show-time-zone="extendedDropdown">
-  </px-datetime-entry>
-  </br>
+  <div style="display:inline-block; ">
+    <px-datetime-entry
+      date-time="2016-10-05T01:00:00.000Z"
+      date-or-time="Date"
+      block-future-dates
+      moment-format="MM/DD/YYYY Z">
+    </px-datetime-entry
+    ><px-datetime-entry
+      date-time="2016-10-05T01:00:00.000Z"
+      date-or-time="Time"
+      moment-format="hh:mm"
+      show-time-zone="extendedDropdown">
+    </px-datetime-entry>
+  </div>
+  <!--</br>
   </br>
   <px-datetime-entry
     date-time="2016-10-05T01:00:00.000Z"
@@ -55,7 +55,7 @@
     moment-format="hh:mm"
     time-zone="UTC"
     show-time-zone="text">
-  </px-datetime-entry>
+  </px-datetime-entry>-->
 </body>
 </html>
 

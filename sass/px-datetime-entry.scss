@@ -36,19 +36,16 @@ $inuit-enable-validation-states : true;
 // Objects
 
 // Component
+
 .dt-text-input--non-editable {
-  cursor:default;
+  cursor: default;
   color: var(--px-datetime-read-only-text-color, gray);
 }
 
 .dt-icon{
   color: var(--px-datetime-icon-color, gray);
   width: calculateRem(16px);
-}
-
-.dt-validation-text{
-  text-transform: uppercase;
-  display: block;
+  cursor: pointer;
 }
 
 // Trumps

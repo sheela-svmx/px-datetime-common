@@ -33,7 +33,7 @@ Range field component which displays a time or date and font awesome icon.
               <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
                 <iron-icon
-                  id="icon"
+                  id="icon"x
                   class="fa fa-fw dt-icon"
                   icon="[[_setIcon(dateOrTime)]]">
                 </iron-icon>
@@ -69,7 +69,9 @@ Range field component which displays a time or date and font awesome icon.
             display-value="[[timeZone]]"
             button-style="bare"
             search-mode
-            items="[[_getTimeZoneList(showTimeZone)]]">
+            items="[[_getTimeZoneList(showTimeZone)]]"
+            on-focus="_handleDropdownFocus"
+            on-blur="_handleDropdownBlur">
           </px-dropdown>
 
         </template>
@@ -78,9 +80,6 @@ Range field component which displays a time or date and font awesome icon.
         </template>
       </div>
     </div>
-    <template is="dom-if" if="{{!isValid}}">
-      <div class="form-field__help validation-error dt-validation-text">{{validationErrorMessage}}</div>
-    </template>
   </template>
 </dom-module>
 
@@ -99,17 +98,12 @@ Range field component which displays a time or date and font awesome icon.
        * Date or Time icon/text
        *
        * Format is 'Date' or 'Time'
-       *
-       * @property dateOrTime
-       * @type string
-       * @default none
        */
       dateOrTime: {
         type: String,
         value: 'Date'
       },
       /**
-       *
        * Moment format string for the format to display/validate this field against
        * (see http://momentjs.com/docs/#/parsing/string-format/)
        */
@@ -120,34 +114,20 @@ Range field component which displays a time or date and font awesome icon.
       },
       /**
        * Whether to hide the calendar or clock icon
-       *
        */
       hideIcon: {
         type: Boolean,
         value: false
       },
       /**
-       *
-       *
-       *
-       */
-      _editTimeout:{
-        type:Object,
-        value: function(){ return {} }
-      },
-      /**
-       *
-       *
-       *
+       * An array of tokens (e.g. ["YY","MM", "DD"])
        */
       _cellFormatArray:{
         type: Array,
         notify: true
       },
       /**
-       *
-       *
-       *
+       * An array of the separator characters (e.g. ["/","/"])
        */
       _symbolCharArray:{
         type: Array,
@@ -157,7 +137,6 @@ Range field component which displays a time or date and font awesome icon.
         }
       },
       /**
-       *
        * Determines how to display the timezone:
        * - 'dropdown': shows the timezone as a dropdown which the user can use to
        * select a different timezone. Only contains a subset of all timezones
@@ -171,8 +150,7 @@ Range field component which displays a time or date and font awesome icon.
         value: ''
       },
       /**
-       *  True if any cell is currently selected.
-       *
+       * True if any cell is currently selected.
        */
       isSelected: {
         type: Boolean,
@@ -190,30 +168,36 @@ Range field component which displays a time or date and font awesome icon.
       'px-dropdown-selection-changed': '_updateTimeZone'
     },
     /**
-     *
-     *
-     *
+     * calls `_formatChanged` if `momentFormat` is defined
      */
-    ready: function(){
-      this._splitFormat();
-      this._sizeSymbols();
+    attached: function(){
+      if (typeof this.momentFormat === 'string') {
+        this._formatChanged(this.momentFormat);
+      }
     },
     /**
-     *
-     *
-     *
+     * runs when `momentFormat` is changed
+     * Updates `_cellFormatArray` and `_symbolCharArray` if one of them as changed
      */
-    _formatChanged: function() {
-      this._splitFormat();
-      this._sizeSymbols();
+    _formatChanged: function(newMomentFormat) {
+      var format = this._splitFormat(newMomentFormat);
+
+      if (format._cellFormatArray !== this._cellFormatArray || format._symbolCharArray !== this._symbolCharArray) {
+
+        this._cellFormatArray = format._cellFormatArray;
+        this._symbolCharArray = format._symbolCharArray;
+
+        this.notifyPath('_cellFormatArray',this._cellFormatArray);
+        this.notifyPath('_symbolCharArray',this._symbolCharArray);
+
+        this._sizeSymbols();
+      }
+
     },
     /**
-     *
-     *
-     *
+     * create a dummy canvas to measure string and make size the input correctly
      */
     _sizeSymbols: function() {
-      //create a dummy canvas to measure string and make size the input correctly
       var style = window.getComputedStyle(this, null),
           fontSize = style.getPropertyValue('font-size'),
           fontFamily = style.getPropertyValue('font-family'),
@@ -230,19 +214,15 @@ Range field component which displays a time or date and font awesome icon.
       });
     },
     /**
-     *
-     *
-     *
+     * Regex that splits the `momentFormat` into two arrays. One for the tokens and one for the separators
      */
-    _splitFormat:function(){
+    _splitFormat:function(momentFormat){
       var re = /[MDYAaHhkmsSZXx]+/g;
       var reSymbol = /\W+/g;
-
-      this._cellFormatArray = this.momentFormat.match(re);
-      this._symbolCharArray = this.momentFormat.match(reSymbol);
-
-      this.notifyPath('_cellFormatArray',this._cellFormatArray);
-      this.notifyPath('_symbolCharArray',this._symbolCharArray);
+      return {
+        _cellFormatArray: momentFormat.match(re),
+        _symbolCharArray: momentFormat.match(reSymbol)
+      };
     },
     /**
      *
@@ -309,6 +289,22 @@ Range field component which displays a time or date and font awesome icon.
      */
     _handleBlur: function(){
       this._validateInput();
+    },
+    /**
+     * Catches the `on-focus-changed` from `px-dropdown` and fires this up for `px-datetime-field`
+     * @private
+     * @event px-dropdown-focused
+     */
+    _handleDropdownFocus: function(){
+      this.fire('px-dropdown-focused', {}, {cancelable:true})
+    },
+    /**
+     * Catches the `on-blur-changed` from `px-dropdown` and fires this up for `px-datetime-field`
+     * @private
+     * @event px-dropdown-blured
+     */
+    _handleDropdownBlur: function(){
+      this.fire('px-dropdown-blured', {}, {cancelable:true})
     },
     /**
      *
@@ -437,9 +433,6 @@ Range field component which displays a time or date and font awesome icon.
       var classList = "";
       if (showTimeZone) {
         classList += "u-ml- ";
-      }
-      if (!isValid) {
-        classList += "u-mr-- ";
       }
 
       return classList;

@@ -40,6 +40,7 @@ var pxDatetimeBehavior = [{
      *
      * This will be changed when the user submits a new date/time.
      *
+     * @default Px.moment().milliseconds(0).toISOString();
      */
     dateTime: {
       type: String,
@@ -53,9 +54,10 @@ var pxDatetimeBehavior = [{
 
   observers: ['_localeChanged(language)'],
 
+  /**
+   * Make sure the moment obj pick up the possibly new moment locale
+   */
   _localeChanged: function() {
-
-    //make sure the moment obj pick up the possibly new moment locale
     if(this.momentObj) {
       this.set('momentObj', this.momentObj.locale(Px.moment.locale()));
     }

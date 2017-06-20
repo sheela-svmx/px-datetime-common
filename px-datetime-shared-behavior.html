@@ -55,11 +55,12 @@ var pxDatetimeSharedBehavior = [{
   properties: {
 
     /**
-     *
      * Moment-timezone string for using a specific timezone. See
      * http://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/.
      *
      * If not provided, tries to guess the current local timezone.
+     *
+     * @default Px.moment.tz.guess();
      */
     timeZone: {
       type: String,
@@ -87,7 +88,6 @@ var pxDatetimeSharedBehavior = [{
   /**
   * Takes an ISO 8601 String and returns a moment object.
   *
-  *
   * @param {String} timeString
   */
   _convertISOtoMoment: function(timeString) {
@@ -95,7 +95,10 @@ var pxDatetimeSharedBehavior = [{
   },
   /**
    * Copies the time in toPreserve to dest and returns dest.
+   * used in `px-calendar-picker`, `px-datetime-picker`, and `px-datetime-range-panel`
    *
+   * @param {} toPreserve
+   * @param {} dest
    */
   _preserveTime: function(toPreserve, dest) {
     if(toPreserve && dest) {
@@ -109,10 +112,8 @@ var pxDatetimeSharedBehavior = [{
   /**
    * Applies the current moment values to the external facing strings or rollback
    * the current moment values to the external facing strings
-   *
    */
   _applyCurrentValues: function(doApply) {
-
     if(doApply){
       this._applyMomentToString();
     } else {
@@ -120,7 +121,6 @@ var pxDatetimeSharedBehavior = [{
     }
   }
 }, Polymer.IronA11yKeysBehavior, PxDatetimeBehavior.blockDates, Polymer.AppLocalizeBehavior];
-
 
 
 </script>

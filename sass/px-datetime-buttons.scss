@@ -11,9 +11,9 @@
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
-@import "px-helpers-design/_generic.helpers.scss";
 
-
+// Base
+@import "px-flexbox-design/_base.flexbox.scss";
 
 // Object
 $inuit-enable-btn--primary        : true;
@@ -22,3 +22,7 @@ $inuit-enable-btn--disabled        : true;
 
 $inuit-enable-margins--tiny      : true;
 @import "px-spacing-design/_trumps.spacing.scss";
+
+//component
+
+//trumps

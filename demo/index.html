@@ -24,7 +24,7 @@
     <!-- Header -->
     <px-demo-header
         module-name="px-datetime-common"
-        description="to do">
+        description="The base component for all the `px-datetime` and `px-rangepicker` components. It holds the funcationality for the entry, buttons, presets, and behavoirs">
     </px-demo-header>
 
     <!-- Interactive -->
@@ -35,7 +35,6 @@
       <!-- Props -->
       <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
 
-
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
         <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
@@ -43,15 +42,15 @@
         <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
 
         <px-datetime-entry
-            date-or-time="{{props.dateOrTime.value}}"
-            show-time-zone="{{props.showTimeZone.value}}"
-            time-zone="{{props.timeZone.value}}"
             block-future-dates="{{props.blockFutureDates.value}}"
             block-past-dates="{{props.blockPastDates.value}}"
             hide-icon="{{props.hideIcon.value}}"
+            date-or-time="{{props.dateOrTime.value}}"
+            show-time-zone="{{props.showTimeZone.value}}"
+            time-zone="{{props.timeZone.value}}"
+            moment-format="{{props.momentFormat.value}}"
             >
         </px-datetime-entry>
-            <!--moment-format="{{props.momentFormat.value}}"-->
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
 
@@ -62,7 +61,7 @@
     </px-demo-interactive>
 
     <!-- API Viewer -->
-    <!--<px-demo-api-viewer source="px-datetime-entry"></px-demo-api-viewer>-->
+    <px-demo-api-viewer source="px-datetime-entry"></px-demo-api-viewer>
 
     <!-- Footer -->
     <px-demo-footer></px-demo-footer>
