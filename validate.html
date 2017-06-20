@@ -28,32 +28,30 @@ var validate = [Polymer.AppLocalizeBehavior, {
      * Example: 'px-datetime-entry' can be either a date input or a time input. If you want a full date-time, you need both.
      * If 'this' is a time input, you want the neighbor date input to also have passed validation before accepting the full date-time.
      *
-     * @default true
-     *
      * @private
-    */
+     */
     neighborValid:{
       type:Boolean,
       value:true
     },
     /**
      * String used to describe the current invalid state
-    */
+     */
     validationErrorMessage:{
       type: String,
       value: 'invalid'
     },
     /**
-    * set a default for localizing
-    */
+     * set a default for localizing
+     */
     language: {
       type: String,
       value: 'en'
     },
     /**
-    * Use the key for localization if value for  language is missing. Should
-    * always be true for px components
-    */
+     * Use the key for localization if value for  language is missing. Should
+     * always be true for px components
+     */
     useKeyIfMissing: {
       type: Boolean,
       value: true
@@ -186,7 +184,6 @@ var validate = [Polymer.AppLocalizeBehavior, {
         }
       }
 
-
       this.toggleClass('validation-error', true, this.$.wrapper);
       this.set('isValid', false);
       this._submitButtonState(false);
@@ -196,7 +193,10 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
   },
   /**
+   * Fires when 'validationErrorMessage' is changed
    *
+   * @event px-validation-message
+   * @param {string} validationErrorMessage - Values validationErrorMessage
    */
   _updateValidationEvent: function(validationErrorMessage){
       this.fire('px-validation-message',{'validationErrorMessage': this.validationErrorMessage})

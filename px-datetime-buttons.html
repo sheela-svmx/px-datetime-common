@@ -52,20 +52,14 @@ Date time button component.
         value: true
       },
       /**
-       *
        * Hides the Submit button when true
-       *
-       * @default false
        */
       hideSubmit:{
         type:Boolean,
         value: false
       },
        /**
-        *
         * Hides the Cancel button when 'hide'
-        *
-        * @default 'show'
         */
       hideCancel:{
         type:Boolean,
@@ -73,7 +67,6 @@ Date time button component.
       },
       /**
        * Icon to be used for the Submit button
-       *
        */
       submitIcon: {
         type: String
@@ -92,7 +85,7 @@ Date time button component.
           };
         }
       },
-      /**
+     /**
       * set a default for localizing
       */
      language: {
@@ -114,29 +107,23 @@ Date time button component.
     ],
     /**
      *
-     *
      */
     _fireCancelEvent:function(){
       this.fire('px-datetime-button-clicked',{ action:false });
-      // this._processButtons(false);
     },
     /**
-     *
      *
      */
     _fireSubmitEvent:function(){
       this.fire('px-datetime-button-clicked',{ action:true });
-      // this._processButtons(true);
     },
     /**
-     *
      *
      */
     submitBtnClasses: function(base, submitButtonValid) {
       return (submitButtonValid) ? base : base + ' btn--disabled';
     },
     /**
-     *
      *
      */
     _isEqual: function(source, target) {

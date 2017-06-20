@@ -15,19 +15,14 @@ PxDatetimeBehavior.rangeMoments = {
     /**
      * Moment object start date & time
      *
-     * Defined in: 'pxDatetimeRangeBehavior'
-     *
      * @private
      */
     fromMoment: {
       type: Object,
       notify: true
     },
-
     /**
      * Moment object end date & time
-     *
-     * Defined in: 'pxDatetimeRangeBehavior'
      *
      * @private
      */
@@ -38,7 +33,6 @@ PxDatetimeBehavior.rangeMoments = {
   }
 }
 
-
 /**
   ```pxDatetimeRangeBehavior```
 
@@ -48,7 +42,6 @@ PxDatetimeBehavior.rangeMoments = {
 
   @polymerBehavior pxDatetimeRangeBehavior
 */
-
 var pxDatetimeRangeBehavior = [{
 
   properties: {
@@ -73,8 +66,6 @@ var pxDatetimeRangeBehavior = [{
      *   ]
      * ```
      *
-     * Defined in: 'pxDatetimeRangeBehavior'
-     *
      * @default no presetRanges
      */
     presetRanges: Object, //may be useless
@@ -94,8 +85,6 @@ var pxDatetimeRangeBehavior = [{
      *
      * This object which will be changed when the user Submits their new selected range.
      *
-     * Defined in: 'pxDatetimeRangeBehavior'
-     *
      * @default the last 7 days
      */
     range: {
@@ -108,8 +97,8 @@ var pxDatetimeRangeBehavior = [{
         };
       }
     },
-
-
+    /**
+     */
     _preventRangeUpdate: {
       type: Boolean,
       value: false
@@ -127,13 +116,13 @@ var pxDatetimeRangeBehavior = [{
       this._setMomentFromRange();
     }
   },
+  /**
+   */
   _localeChanged: function() {
-
     //make sure the moment obj pick up the possibly new moment locale
     if(this.fromMoment) {
       this.set('fromMoment', this.fromMoment.locale(Px.moment.locale()));
     }
-
     if(this.toMoment) {
       this.set('toMoment', this.toMoment.locale(Px.moment.locale()));
     }
@@ -142,8 +131,6 @@ var pxDatetimeRangeBehavior = [{
    * Converts range into from and to moments
    *
    * Triggered from a click on cancel, submit, esc, or enter
-   *
-   * Defined in: 'pxDatetimeRangeBehavior'
    */
   _setMomentFromRange: function() {
     // set to and from based on inputed range
@@ -240,7 +227,6 @@ var pxDatetimeRangeBehavior = [{
     }
   }
 }, pxDatetimeSharedBehavior, PxDatetimeBehavior.rangeMoments];
-
 
 
 </script>
