@@ -61,7 +61,7 @@
     </px-demo-interactive>
 
     <!-- API Viewer -->
-    <px-demo-api-viewer source="px-datetime-entry-cell"></px-demo-api-viewer>
+    <px-demo-api-viewer source="px-datetime-entry"></px-demo-api-viewer>
 
     <!-- Footer -->
     <px-demo-footer></px-demo-footer>
@@ -92,17 +92,15 @@
         type: Array,
         value: function(){
           return [
-
             {
               blockFutureDates:false,
               blockPastDates:false,
               hideIcon:false,
               momentFormat:"MM/DD/YY",
               dateOrTime:"date",
-              showTimeZone:"dropdown",
+              showTimeZone:"text",
               timeZone: "UTC"
             }
-
           ]
         }
       }
@@ -147,7 +145,7 @@
 
       showTimeZone: {
         type: String,
-        defaultValue: 'dropdown',
+        defaultValue: 'text',
         inputType: 'dropdown',
         inputChoices: ['dropdown', 'extendedDropdown', 'text', 'abbreviatedText']
       },

@@ -136,10 +136,8 @@ Range field component which displays a time or date and font awesome icon.
       },
       /**
        * Determines how to display the timezone:
-       * - 'dropdown': shows the timezone as a dropdown which the user can use to
-       * select a different timezone. Only contains a subset of all timezones
-       * - 'extendedDropdown': shows the timezone as a dropdown which the user can use to
-       * select a different timezone. Contains all existing timezones (588)
+       * - 'dropdown': shows the timezone as a dropdown which the user can use to select a different timezone. Only contains a subset of all timezones
+       * - 'extendedDropdown': shows the timezone as a dropdown which the user can use to select a different timezone. Contains all existing timezones (588)
        * - 'text': shows the timezone as text, non editable
        * - 'abbreviatedText': shows the timezone as an abbreviated text, non editable (e.g. UTC, PST, EST, etc)
        */
@@ -327,7 +325,11 @@ Range field component which displays a time or date and font awesome icon.
       return showTimeZone === "dropdown" || showTimeZone === "extendedDropdown";
     },
     /**
-     * create the `extendedDropdown` and `dropdown` items for `px-dropdown`
+     * Create the `extendedDropdown` and `dropdown` items for `px-dropdown`
+     *
+     * If showTimeZone is not `extendedDropdown` or `dropdown` return and empty array.
+     * Because of a timing issue `_getTimeZoneList` can be called before `_showTimeZoneDropdown`
+     * causing an issue if the dropdown tries to redraw without `items` being defined.
      */
     _getTimeZoneList: function(showTimeZone) {
       if(showTimeZone === "extendedDropdown") {
@@ -368,6 +370,7 @@ Range field component which displays a time or date and font awesome icon.
           "UTC",
         ];
       }
+      return [];
     },
     /**
      * when `px-dropdown-selection-changed` is fired update `timeZone`
