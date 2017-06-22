@@ -20,9 +20,8 @@ $inuit-enable-btn--primary        : true;
 $inuit-enable-btn--disabled        : true;
 @import "px-buttons-design/_objects.buttons.scss";
 
-$inuit-enable-margins--tiny      : true;
-@import "px-spacing-design/_trumps.spacing.scss";
-
 //component
 
 //trumps
+$inuit-enable-margins--tiny      : true;
+@import "px-spacing-design/_trumps.spacing.scss";
