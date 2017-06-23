@@ -439,8 +439,10 @@ Custom property | Description
      */
     _getTimeZoneTextClass: function (showTimeZone, isValid) {
       var classList = "";
-      if (showTimeZone) {
+      if (showTimeZone === "text" || showTimeZone === "abbreviatedText") {
         classList += "u-ml- ";
+      }else if (showTimeZone === "dropdown" || showTimeZone === "extendedDropdown") {
+        classList += "u-ml-- ";
       }
       return classList;
     },
