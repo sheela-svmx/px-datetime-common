@@ -52,6 +52,12 @@ $inuit-enable-validation-states : true;
   cursor: pointer;
 }
 
+.dt-entry-symbol{
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
+  align-items: center;
+}
+
 // Trumps
 $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;

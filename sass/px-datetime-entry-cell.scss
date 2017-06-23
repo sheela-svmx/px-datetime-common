@@ -33,7 +33,7 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 // Component
 :host {
   color: inherit;
-  height: 30px;
+  height: $inuit-base-spacing-unit--huge;
   display: flex;
   align-items: center;
 }

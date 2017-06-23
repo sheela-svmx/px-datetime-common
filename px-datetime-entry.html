@@ -64,7 +64,7 @@ Custom property | Description
               formats="[[formats]]">
             </px-datetime-entry-cell>
             <template is="dom-if" if={{_isSymbol(index,_symbolCharArray)}}>
-              <div class="dtEntrySymbol">
+              <div class="dt-entry-symbol">
                 {{_returnSymbol(index,_symbolCharArray)}}
               </div>
             </template>
@@ -208,7 +208,7 @@ Custom property | Description
           fontFamily = style.getPropertyValue('font-family'),
           c = document.createElement('canvas'),
           ctx=c.getContext('2d'),
-          symbols = Polymer.dom(this.root).querySelectorAll('.dtEntrySymbol'),
+          symbols = Polymer.dom(this.root).querySelectorAll('.dt-entry-symbol'),
           length;
 
       ctx.font = fontSize + " " + fontFamily;
