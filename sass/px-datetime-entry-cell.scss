@@ -33,6 +33,9 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 // Component
 :host {
   color: inherit;
+  height: 30px;
+  display: flex;
+  align-items: center;
 }
 
 .text-input--bare {

@@ -14,19 +14,22 @@
   <link rel="import" href="../px-datetime-entry.html" />
 </head>
 <body>
-  <div style="display:inline-block; ">
+  <div style="display:flex; ">
     <px-datetime-entry
       date-time="2016-10-05T01:00:00.000Z"
       date-or-time="Date"
       block-future-dates
-      moment-format="MM/DD/YYYY Z">
+      time-zone="UTC"
+      show-time-zone="dropdown"
+      moment-format="YYYY">
     </px-datetime-entry>
-    </br>
     <px-datetime-entry
       date-time="2016-10-05T01:00:00.000Z"
       date-or-time="Time"
-      moment-format="hh:mm"
-      show-time-zone="extendedDropdown">
+      moment-format="hhmm"
+      time-zone="UTC"
+      show-time-zone="dropdown"
+      hide-icon>
     </px-datetime-entry>
   </div>
 </body>

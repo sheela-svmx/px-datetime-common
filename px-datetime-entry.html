@@ -36,14 +36,14 @@ Custom property | Description
   <template>
     <style include="px-datetime-entry-styles"></style>
 
-    <div id='wrapper' class="inline--flex flex--middle">
-      <div class="inline--flex flex--middle">
+    <div id='wrapper' class="flex flex--middle">
+      <div class="flex flex--middle">
           <div class$="{{_getIconClass(hideIcon)}}" on-tap="_iconClicked">
               <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
                 <iron-icon
                   id="icon"x
-                  class="fa fa-fw dt-icon"
+                  class="dt-icon"
                   icon="[[_setIcon(dateOrTime)]]">
                 </iron-icon>
               </template>
