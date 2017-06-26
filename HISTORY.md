@@ -2,8 +2,13 @@ v1.0.0
 ==================
 * updated dependencies for design refresh
 * added new icons
-* load moment through  px-moment-imports
+* load moment through px-moment-imports
 * DELETED px-datetime-imports
+* Updated to new demo style
+* Updated documentation
+* Added a simple demo
+* Removed unused properties
+* combined -predix and -sketch sass files
 
 v0.8.0
 ==================
