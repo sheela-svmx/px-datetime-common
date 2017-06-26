@@ -250,7 +250,6 @@ function runCustomTests() {
 
     test('click on date icon fires event', function(done) {
       var iconLabel = Polymer.dom(date1.root).querySelector('#wrapper > div > div');
-      debugger
 
       var listener = function(evt) {
         assert.equal(evt.detail.dateOrTime, 'Date');
