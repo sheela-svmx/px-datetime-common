@@ -20,50 +20,42 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 */
 
 // Settings
-@import "px-defaults-design/_settings.defaults.scss";
-@import "px-mixins-design/_tools.mixins.scss";
 
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
-@import "px-helpers-design/_generic.helpers.scss";
 
 // Base
-@import "px-flexbox-design/_base.flexbox.scss";
-@import "px-viewport-design/_base.viewport.scss";
-
-$inuit-enable-text-input--bare  : true;
-$inuit-enable-validation-states : true;
-
-@import "px-forms-design/_base.forms.scss";
 
 // Objects
-@import "px-buttons-design/_objects.buttons.scss";
 
 // Component
+:host {
+  color: inherit;
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
+  align-items: center;
+}
+
 .text-input--bare {
   text-align: center;
-  cursor:text;
-
+  cursor: text;
+  color: inherit;
+  background: transparent;
   margin: 0;
   padding: 0;
-  border-radius: 3px;
-
-  background: transparent;
-
-  @include inuit-font-size(15px);
-  font-family: var(--px-font-family);
-  line-height: 1;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 .text-input--non-editable {
-  cursor:default;
+  color: var(--px-datetime-read-only-text-color, gray);
+  cursor: default;
+}
+
+.is-selected {
+  background-color: var(--px-datetime-entry-selected, lightskyblue);
 }
 
 // Trumps
-$inuit-enable-margins--tiny     : true;
-$inuit-enable-margins--small    : true;
-$inuit-enable-margins--none     : true;
-$inuit-enable-margins--large    : true;
-
-@import "px-spacing-design/_trumps.spacing.scss";

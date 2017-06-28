@@ -20,8 +20,6 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 */
 
 // Settings
-@import "px-defaults-design/_settings.defaults.scss";
-@import "px-mixins-design/_tools.mixins.scss";
 
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
@@ -30,75 +28,33 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 
 // Base
 @import "px-flexbox-design/_base.flexbox.scss";
-@import "px-viewport-design/_base.viewport.scss";
 
 $inuit-enable-validation-states : true;
-
 @import "px-forms-design/_base.forms.scss";
 
 // Objects
-@import "px-buttons-design/_objects.buttons.scss";
 
 // Component
 
-.range-field__field {
+:host {
+  color: inherit;
+}
+
+.dt-text-input--non-editable {
+  cursor: default;
+  color: var(--px-datetime-read-only-text-color, gray);
+}
+
+.dt-icon{
+  color: var(--px-datetime-icon-color, gray);
+  width: calculateRem(16px);
   cursor: pointer;
-  label {
-    margin: 0;
-  }
 }
 
-/*
-when the text is non editable the cursor is the default black arrow
-*/
-.text-input--non-editable {
-  cursor:default;
-}
-
-/*
-adjusts size and position of the Calendar and Clock icon
-*/
-.dtIcon{
-  transform: scale(0.7, 0.7) translate(0, 0);
-  // margin: -3px 5px -3px -3px;
-  margin: -1px 0px;
-}
-
-.timezone__dropdown {
-  width: calculateRem(150px);
-}
-
-.wrapper {
-  display: inline-flex;
+.dt-entry-symbol{
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
   align-items: center;
-}
-
-.validation-container {
-  cursor: pointer;
-  margin-left: auto;
-}
-
-.validation-container__icon {
-  width: calculateRem(13px);
-  height: calculateRem(13px);
-}
-
-.cell {
-  display: inline-block;
-  font-size: var(--px-datetime-entry-font-size, inherit);
-  margin-bottom: -1px;
-}
-
-.-text-align-adjustment {
-  margin-top: 0px;
-}
-
-.dt-label-icon{
-  margin: -3px 3px -3px 0px;
-}
-
-.align-dropdown{
-  margin: -1px 0px;
 }
 
 // Trumps
@@ -106,5 +62,4 @@ $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;
 $inuit-enable-margins--none     : true;
 $inuit-enable-margins--large    : true;
-
 @import "px-spacing-design/_trumps.spacing.scss";

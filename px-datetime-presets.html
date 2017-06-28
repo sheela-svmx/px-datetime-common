@@ -5,10 +5,11 @@
 <!--
 The list of preset ranges in the rangepicker modal.
 
-##### Usage
+### Usage
 
     <px-datetime-presets preset-ranges="{{...}}">
     </px-datetime-presets>
+
 -->
 
 <link rel="import" href="css/px-datetime-presets-styles.html">
@@ -66,6 +67,8 @@ The list of preset ranges in the rangepicker modal.
           return [];
         }
       },
+      /**
+       */
       selectedItem: {
         type: Object,
         value: function(){
@@ -101,11 +104,14 @@ The list of preset ranges in the rangepicker modal.
        value: true
      }
     },
+    /**
+     */
     _usePreset: function(e) {
       this.set('selectedItem', e.model.preset);
       this.fire('px-preset-selected', e.model.preset);
     },
-
+    /**
+     */
     _getButtonClass: function(selectedItem, presetObject){
       var classlist = ['actionable'];
 
@@ -116,6 +122,5 @@ The list of preset ranges in the rangepicker modal.
       }
       return classlist.join(' ');
     }
-
   });
 </script>

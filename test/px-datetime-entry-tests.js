@@ -249,7 +249,7 @@ function runCustomTests() {
     });
 
     test('click on date icon fires event', function(done) {
-      var iconLabel = Polymer.dom(date1.root).querySelector('#wrapper > div > label');
+      var iconLabel = Polymer.dom(date1.root).querySelector('#wrapper > div > div');
 
       var listener = function(evt) {
         assert.equal(evt.detail.dateOrTime, 'Date');
@@ -265,7 +265,7 @@ function runCustomTests() {
     });
 
     test('click on time icon fires event', function(done) {
-      var iconLabel = Polymer.dom(time1.root).querySelector('#wrapper > div > label');
+      var iconLabel = Polymer.dom(time1.root).querySelector('#wrapper > div > div');
 
       var listener = function(evt) {
         assert.equal(evt.detail.dateOrTime, 'Time');
