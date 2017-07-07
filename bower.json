@@ -21,9 +21,9 @@
   "dependencies": {
     "px-moment-imports": "^1.0.0",
     "polymer": "^1.9.0",
-    "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
+    "iron-a11y-keys-behavior": "^2.0.0",
     "px-polymer-font-awesome": "^2.0.0",
-    "app-localize-behavior": "^1.0.2"
+    "app-localize-behavior": "^2.0.0"
   },
   "devDependencies": {
     "px-theme": "^3.0.0",
