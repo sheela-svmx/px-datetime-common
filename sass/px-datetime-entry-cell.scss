@@ -47,6 +47,7 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
   border: 0;
   font-family: inherit;
   font-size: var(--px-datetime-entry-font-size, inherit);
+  text-transform: uppercase;
 }
 
 .text-input--non-editable {
