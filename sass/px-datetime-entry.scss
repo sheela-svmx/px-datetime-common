@@ -38,6 +38,7 @@ $inuit-enable-validation-states : true;
 
 :host {
   color: inherit;
+  font-size: var(--px-datetime-entry-font-size, inherit);
 }
 
 .dt-text-input--non-editable {
@@ -47,8 +48,8 @@ $inuit-enable-validation-states : true;
 
 .dt-icon{
   color: var(--px-datetime-icon-color, gray);
-  width: calculateRem(16px);
   cursor: pointer;
+  --iron-icon-width: var(--px-datetime-icon-size, calculateRem(16px));
 }
 
 .dt-entry-symbol{

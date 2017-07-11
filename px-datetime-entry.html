@@ -42,7 +42,7 @@ Custom property | Description
               <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
                 <iron-icon
-                  id="icon"x
+                  id="icon"
                   class="dt-icon"
                   icon="[[_setIcon(dateOrTime)]]">
                 </iron-icon>
@@ -419,7 +419,7 @@ Custom property | Description
      * Determines what classes should show on the label icon
      */
     _getIconClass: function(hideIcon){
-      var classList = "";
+      var classList = "flex ";
       if (!hideIcon) {
         classList += "u-mr--";
       }
