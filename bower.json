@@ -36,6 +36,7 @@
     "px-list-bare-design": "^1.0.0",
     "px-actionable-design": "^2.0.0",
     "px-spacing-design": "^1.0.0",
+    "px-headings-design": "^1.0.0",
     "px-demo": "^2.0.0"
   },
   "resolutions": {
