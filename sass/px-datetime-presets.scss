@@ -35,6 +35,9 @@ Predix branding rules go in px-rangepicker-predix.scss, not in this file.
 .presetTitle {
   text-transform: uppercase;
   color: var(--px-datetime-preset-title-color, gray);
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
+  align-items: center;
 }
 
 .presetList {
@@ -42,5 +45,5 @@ Predix branding rules go in px-rangepicker-predix.scss, not in this file.
 }
 
 // Trumps
-$inuit-enable-margins             : true;
+$inuit-enable-margins--tiny             : true;
 @import "px-spacing-design/_trumps.spacing.scss";

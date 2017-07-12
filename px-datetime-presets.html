@@ -18,8 +18,8 @@ The list of preset ranges in the rangepicker modal.
   <template>
     <style include="px-datetime-presets-styles"></style>
 
-    <div class="presetTitle zeta u-mb">[[localize('Presets')]]</div>
-    <ul class="list-bare">
+    <div class="presetTitle zeta">[[localize('Presets')]]</div>
+    <ul class="list-bare u-mt--">
       <template is="dom-repeat" items="{{presetRanges}}" as="preset">
         <li class="presetList">
           <span class$="{{_getButtonClass(selectedItem, preset)}}" on-tap="_usePreset">{{preset.displayText}}</span>
