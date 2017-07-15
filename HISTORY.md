@@ -1,3 +1,7 @@
+v0.8.3
+==================
+* part of the timezone time issue fix. px-rangepicker issue #39
+
 v0.8.2
 ==================
 * Ensure moment is loaded through through px-moment-imports so that Px.moment.changeLocale() is available

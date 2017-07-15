@@ -25,7 +25,7 @@ var pxDatetimeBehavior = [{
       type: Object,
       notify: true,
       value: function() {
-                return Px.moment().milliseconds(0);
+                return Px.moment().tz(this.timeZone);
               }
     },
     /**
@@ -51,7 +51,8 @@ var pxDatetimeBehavior = [{
     }
   }, //properties close bracket
 
-  observers: ['_localeChanged(language)'],
+  observers: ['_localeChanged(language)',
+              '_timeZoneChanged(timeZone)'],
 
   _localeChanged: function() {
 
