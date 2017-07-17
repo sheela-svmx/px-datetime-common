@@ -21,9 +21,9 @@
   "dependencies": {
     "px-moment-imports": "^1.0.0",
     "polymer": "^1.9.0",
-    "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
-    "px-polymer-font-awesome": "^2.0.0",
-    "app-localize-behavior": "^1.0.2"
+    "iron-a11y-keys-behavior": "^2.0.0",
+    "px-icon-set": "^2.0.0",
+    "app-localize-behavior": "^2.0.0"
   },
   "devDependencies": {
     "px-theme": "^3.0.0",
@@ -37,5 +37,8 @@
     "px-actionable-design": "^2.0.0",
     "px-spacing-design":"^1.0.0",
     "px-demo": "^2.0.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.24"
   }
 }

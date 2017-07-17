@@ -3,7 +3,8 @@
 <link rel="import" href="validate.html" />
 <link rel="import" href="px-datetime-behavior.html" />
 <link rel="import" href="px-datetime-entry-cell.html" />
-<link rel="import" href="../px-polymer-font-awesome/px-icon-set.html" />
+<link rel="import" href="../px-icon-set/px-icon-set.html" />
+<link rel="import" href="../px-icon-set/px-icon.html" />
 <link rel="import" href="../px-dropdown/px-dropdown.html" />
 
 
@@ -41,11 +42,11 @@ Custom property | Description
           <div class$="{{_getIconClass(hideIcon)}}" on-tap="_iconClicked">
               <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
-                <iron-icon
-                  id="icon"x
+                <px-icon
+                  id="icon"
                   class="dt-icon"
                   icon="[[_setIcon(dateOrTime)]]">
-                </iron-icon>
+                </px-icon>
               </template>
           </div>
           <template is="dom-repeat" items="{{_cellFormatArray}}">
@@ -253,9 +254,9 @@ Custom property | Description
      */
     _setIcon: function(){
       if (this.dateOrTime.toLowerCase() === 'date') {
-        return 'px:calendar'
+        return 'pxl:calendar'
       } else {
-        return 'px:clock'
+        return 'pxs:clock'
       }
     },
     /**
