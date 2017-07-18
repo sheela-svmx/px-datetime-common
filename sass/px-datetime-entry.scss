@@ -46,17 +46,21 @@ $inuit-enable-validation-states : true;
   color: var(--px-datetime-read-only-text-color, gray);
 }
 
-.dt-icon{
+.dt-icon {
   color: var(--px-datetime-icon-color, gray);
   --iron-icon-width: calculateRem(16px);
   --iron-icon-height: calculateRem(16px);
   cursor: pointer;
 }
 
-.dt-entry-symbol{
+.dt-entry-symbol {
   height: $inuit-base-spacing-unit--huge;
   display: flex;
   align-items: center;
+}
+
+.dropdown {
+  --px-dropdown-content-color: var(--px-datetime-dropdown-content-color, black);
 }
 
 // Trumps
