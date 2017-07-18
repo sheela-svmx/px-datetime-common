@@ -23,18 +23,27 @@ Predix branding rules go in px-rangepicker-predix.scss, not in this file.
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
-@import "px-helpers-design/_generic.helpers.scss";
 
 // Base
+@import "px-headings-design/_base.headings.scss";
 
 // Object
-$actionable--select     : true;
 @import "px-actionable-design/_objects.actionable.scss";
 @import "px-list-bare-design/_objects.list-bare.scss";
 
 //component
+.presetTitle {
+  text-transform: uppercase;
+  color: var(--px-datetime-preset-title-color, gray);
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
+  align-items: center;
+}
+
+.presetList {
+  margin-bottom: calculateRem(12px);
+}
 
 // Trumps
-$inuit-enable-margins--small      : true;
-$inuit-enable-margins--none       : true;
+$inuit-enable-margins--tiny             : true;
 @import "px-spacing-design/_trumps.spacing.scss";

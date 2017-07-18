@@ -106,7 +106,8 @@ var pxDatetimeRangeBehavior = [{
   },
   observers: [
     '_notifyRangeChanged(range.*)',
-    '_localeChanged(language)'
+    '_localeChanged(language)',
+    '_timeZoneChanged(timeZone)'
   ],
   /**
    * for legacy purposes

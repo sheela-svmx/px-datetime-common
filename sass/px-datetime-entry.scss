@@ -38,6 +38,7 @@ $inuit-enable-validation-states : true;
 
 :host {
   color: inherit;
+  font-size: var(--px-datetime-entry-font-size, inherit);
 }
 
 .dt-text-input--non-editable {
