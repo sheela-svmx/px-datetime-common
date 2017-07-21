@@ -38,7 +38,7 @@ Custom property | Description
     <style include="px-datetime-entry-styles"></style>
 
     <div id='wrapper' class="flex flex--middle">
-      <div class="flex flex--middle">
+      <div class="flex flex--middle dt-flex--no-shrink">
           <div class$="{{_getIconClass(hideIcon)}}" on-tap="_iconClicked">
               <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if={{!hideIcon}}>
@@ -422,11 +422,7 @@ Custom property | Description
      * Determines what classes should show on the label icon
      */
     _getIconClass: function(hideIcon){
-      var classList = "flex ";
-      if (!hideIcon) {
-        classList += "u-mr--";
-      }
-      return classList;
+      return !hideIcon ? "u-mr--" : "";
     },
     /**
      */
@@ -441,7 +437,7 @@ Custom property | Description
      * css helper. If a dropdown is showing add a margin-left of 10px;
      */
     _getTimeZoneTextClass: function (showTimeZone, isValid) {
-      var classList = "";
+      var classList = "dt-flex--no-shrink ";
       if (showTimeZone === "text" || showTimeZone === "abbreviatedText") {
         classList += "u-ml- ";
       }else if (showTimeZone === "dropdown" || showTimeZone === "extendedDropdown") {

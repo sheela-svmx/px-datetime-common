@@ -63,6 +63,12 @@ $inuit-enable-validation-states : true;
   --px-dropdown-content-color: var(--px-datetime-dropdown-content-color, black);
 }
 
+//Safari 9 fix
+.dt-flex--no-shrink {
+  flex: 0 0 auto;
+}
+
+
 // Trumps
 $inuit-enable-margins--tiny     : true;
 $inuit-enable-margins--small    : true;
