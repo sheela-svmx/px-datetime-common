@@ -193,7 +193,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
           ctx=c.getContext('2d'),
           length;
 
-      if(fontSize === "0px" || fontSize === "0"){
+      if(fontSize === "0px" || fontSize === "0" || fontSize === ""){
         setTimeout(function(){
           this._sizeInputs();
         }.bind(this),50);
@@ -202,7 +202,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       ctx.font = fontSize + " " + fontFamily;
       length = ctx.measureText(this.dtWorkingCopy).width;
       length = Math.ceil(length);
-
       this.$.dtEntry.style['width'] = length + 'px';
     },
     /**
