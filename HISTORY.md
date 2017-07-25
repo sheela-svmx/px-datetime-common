@@ -1,3 +1,7 @@
+v1.0.1
+==================
+* update readme, fix typos in documentation
+
 v1.0.0
 ==================
 * updated dependencies for design refresh
