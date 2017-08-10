@@ -1,3 +1,7 @@
+v1.0.2
+==================
+* Fix comments for analyzer
+
 v1.0.1
 ==================
 * update readme, fix typos in documentation
