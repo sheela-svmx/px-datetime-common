@@ -26,6 +26,24 @@ PxDatetimeBehavior.blockDates = {
     blockPastDates: {
       type: Boolean,
       value: false
+    },
+    /**
+     * The minimum / earliest allowed date, as a Moment object (dates before this will be disabled and unclickable).
+     */
+    min: {
+      type: Object,
+      value: function() {
+        return {};
+      }
+    },
+    /**
+     * The maximum / latest allowed date, as a Moment object (dates after this will be disabled and unclickable).
+     */
+    max: {
+      type: Object,
+      value: function() {
+        return {};
+      }
     }
   }
 }

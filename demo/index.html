@@ -9,6 +9,7 @@
 <link rel="import" href="../../px-demo/px-demo-props.html" />
 <link rel="import" href="../../px-demo/px-demo-interactive.html" />
 <link rel="import" href="../../px-demo/px-demo-component-snippet.html" />
+<link rel="import" href="../../px-demo/px-demo-code-editor.html" />
 
 <!-- Imports for this component -->
 <link rel="import" href="../../px-demo/css/px-demo-styles.html" />
@@ -33,6 +34,8 @@
       <!-- Props -->
       <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
 
+      <px-demo-code-editor props="{{props}}" config="[[chosenConfig]]"></px-demo-code-editor>
+
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
         <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
@@ -47,7 +50,8 @@
             show-time-zone="{{props.showTimeZone.value}}"
             time-zone="{{props.timeZone.value}}"
             moment-format="{{props.momentFormat.value}}"
-            >
+            min="{{props.min.value}}"
+            max="{{props.max.value}}">
         </px-datetime-entry>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -153,6 +157,18 @@
         defaultValue: 'UTC',
         inputType: 'text',
         inputPlaceholder: 'UTC'
+      },
+
+      min: {
+        type: Object,
+        defaultValue: Px.moment().subtract(7, 'day'),
+        inputType: 'code:JSON'
+      },
+
+      max: {
+        type: Object,
+        defaultValue: Px.moment().add(7, 'day'),
+        inputType: 'code:JSON'
       }
 
     }
