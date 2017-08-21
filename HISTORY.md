@@ -1,3 +1,7 @@
+v1.0.4
+==================
+* support min and max as strings
+
 v1.0.3
 ==================
 * add min and max date support

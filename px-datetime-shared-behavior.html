@@ -28,22 +28,34 @@ PxDatetimeBehavior.blockDates = {
       value: false
     },
     /**
-     * The minimum / earliest allowed date, as a Moment object (dates before this will be disabled and unclickable).
+     * The minimum / earliest allowed date, as an ISO 8601 String or a Moment object (dates before this will be disabled and unclickable).
      */
     min: {
       type: Object,
       value: function() {
         return {};
-      }
+      },
+      observer: '_minChanged'
     },
     /**
-     * The maximum / latest allowed date, as a Moment object (dates after this will be disabled and unclickable).
+     * The maximum / latest allowed date, as an ISO 8601 String or a Moment object (dates after this will be disabled and unclickable).
      */
     max: {
       type: Object,
       value: function() {
         return {};
-      }
+      },
+      observer: '_maxChanged'
+    }
+  },
+  _minChanged: function() {
+    if(typeof this.min === 'string') {
+      this.min = Px.moment(this.min);
+    }
+  },
+  _maxChanged: function() {
+    if(typeof this.max === 'string') {
+      this.max = Px.moment(this.max);
     }
   }
 }
