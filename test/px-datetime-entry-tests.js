@@ -400,7 +400,7 @@ function runCustomTests() {
 
           assert.isFalse(date1.isValid);
 
-          //reset it to somwhting valid
+          //reset it to something valid
           fireKeyboardEvent(cells[1], '1');
           fireKeyboardEvent(cells[1], 'Enter');
 
@@ -415,6 +415,28 @@ function runCustomTests() {
       //wait for validation to kick in
       setTimeout(function() {
         assert.isFalse(date2.isValid);
+        done();
+      }, 200);
+    });
+
+    test('block dates before min', function(done) {
+      date1.set('min', date1.momentObj.clone().subtract(1, 'day'));
+      date1.momentObj = date1.momentObj.clone().subtract(1, 'month');
+
+      //wait for validation to kick in
+      setTimeout(function() {
+        assert.isFalse(date1.isValid);
+        done();
+      }, 200);
+    });
+
+    test('block dates after max', function(done) {
+      date1.set('max', date1.momentObj.clone().add(1, 'day'));
+      date1.momentObj = date1.momentObj.clone().add(1, 'month');
+
+      //wait for validation to kick in
+      setTimeout(function() {
+        assert.isFalse(date1.isValid);
         done();
       }, 200);
     });

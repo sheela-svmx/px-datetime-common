@@ -147,7 +147,8 @@ Custom property | Description
       },
       /**
        * Determines how to display the timezone:
-       * - 'dropdown': shows the timezone as a dropdown which the user can use to select a different timezone. Only contains a subset of all timezones
+       * - 'dropdown': shows the timezone as a dropdown which the user can use to select a different timezone. Only contains a subset of all timezones.
+       * **NOTE: this collection of timezones uses the POSIX convention for timezone offset, meaning that positive values correspond to timezones WEST of GMT and negative values correspond to timezones EAST of GMT.**
        * - 'extendedDropdown': shows the timezone as a dropdown which the user can use to select a different timezone. Contains all existing timezones (588)
        * - 'text': shows the timezone as text, non editable
        * - 'abbreviatedText': shows the timezone as an abbreviated text, non editable (e.g. UTC, PST, EST, etc)
