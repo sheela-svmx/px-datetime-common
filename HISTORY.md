@@ -1,3 +1,7 @@
+v1.0.5
+==================
+* Update documentation for presets
+
 v1.0.4
 ==================
 * support min and max as strings
