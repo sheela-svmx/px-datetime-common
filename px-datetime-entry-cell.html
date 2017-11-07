@@ -413,8 +413,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *
      */
      _setAMPM:function(ampm){
-       var mo = Px.moment('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat);
+       var mo = Px.moment.tz('01:00:00 '+ ampm, 'hh:mm:ss ' + this.momentFormat, this.timeZone);
        this.set('dtWorkingCopy', mo.tz(this.timeZone).format(this.momentFormat));
+
      },
     /**
      * Delete the last letter of the dtWorkingCopy
