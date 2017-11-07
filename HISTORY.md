@@ -1,3 +1,7 @@
+v1.0.6
+==================
+* fixed am/pm timezone bug
+
 v1.0.5
 ==================
 * Update documentation for presets
