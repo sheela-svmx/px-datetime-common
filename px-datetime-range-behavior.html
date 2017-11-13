@@ -120,12 +120,14 @@ var pxDatetimeRangeBehavior = [{
   /**
    */
   _localeChanged: function() {
-    //make sure the moment obj pick up the possibly new moment locale
-    if(this.fromMoment) {
-      this.set('fromMoment', this.fromMoment.locale(Px.moment.locale()));
-    }
-    if(this.toMoment) {
-      this.set('toMoment', this.toMoment.locale(Px.moment.locale()));
+    if(this.language !== undefined) {
+      //make sure the moment obj pick up the possibly new moment locale
+      if(this.fromMoment) {
+        this.set('fromMoment', this.fromMoment.locale(Px.moment.locale()));
+      }
+      if(this.toMoment) {
+        this.set('toMoment', this.toMoment.locale(Px.moment.locale()));
+      }
     }
   },
   /**
@@ -173,13 +175,15 @@ var pxDatetimeRangeBehavior = [{
    * makes sure the moment objects reflect the timezone
    */
   _timeZoneChanged: function() {
-    if(this.fromMoment) {
-      var newMom = this.fromMoment.clone().tz(this.timeZone);
-      this.set('fromMoment', newMom);
-    }
-    if(this.toMoment) {
-      newMom = this.toMoment.clone().tz(this.timeZone);
-      this.set('toMoment', newMom);
+    if(this.timeZone !== undefined) {
+      if(this.fromMoment) {
+        var newMom = this.fromMoment.clone().tz(this.timeZone);
+        this.set('fromMoment', newMom);
+      }
+      if(this.toMoment) {
+        newMom = this.toMoment.clone().tz(this.timeZone);
+        this.set('toMoment', newMom);
+      }
     }
   },
   /**
@@ -207,24 +211,26 @@ var pxDatetimeRangeBehavior = [{
    * @param {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
    */
   _notifyRangeChanged: function(r) {
-    var newRange = r.value;
+    if(r !== undefined) {
+      var newRange = r.value;
 
-    if(!this._preventRangeUpdate) {
-      this._preventRangeUpdate = true;
+      if(!this._preventRangeUpdate) {
+        this._preventRangeUpdate = true;
 
-      //make sure we keep the moment synchronized in case range has been changed externally
-      if(!this.fromMoment || this.fromMoment.toISOString() !== newRange.from) {
-        this.set('fromMoment', this._convertISOtoMoment(newRange.from));
+        //make sure we keep the moment synchronized in case range has been changed externally
+        if(!this.fromMoment || this.fromMoment.toISOString() !== newRange.from) {
+          this.set('fromMoment', this._convertISOtoMoment(newRange.from));
+        }
+        if(!this.toMoment || this.toMoment.toISOString() !== newRange.to) {
+          this.set('toMoment', this._convertISOtoMoment(newRange.to));
+        }
+
+        this.range = newRange;
+
+        //notify the range has changed
+        this.fire('px-datetime-range-submitted', {range: this.range, momentObjs: {from: this.fromMoment, to: this.toMoment}});
+        this._preventRangeUpdate = false;
       }
-      if(!this.toMoment || this.toMoment.toISOString() !== newRange.to) {
-        this.set('toMoment', this._convertISOtoMoment(newRange.to));
-      }
-
-      this.range = newRange;
-
-      //notify the range has changed
-      this.fire('px-datetime-range-submitted', {range: this.range, momentObjs: {from: this.fromMoment, to: this.toMoment}});
-      this._preventRangeUpdate = false;
     }
   }
 }, pxDatetimeSharedBehavior, PxDatetimeBehavior.rangeMoments];

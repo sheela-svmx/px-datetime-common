@@ -172,15 +172,19 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *  Called every time the data of the cell is changed
      */
     _dataChanged: function() {
-      //only try to validate if the cell is full
-      if(this.cellLength === this.$.dtEntry.value.length) {
-        this._inputValueChanged();
+      if(this.dtWorkingCopy !== undefined) {
+        //only try to validate if the cell is full
+        if(this.cellLength === this.$.dtEntry.value.length) {
+          this._inputValueChanged();
+        }
       }
     },
     _formatChanged: function() {
-      this._updateAndValidateWorkingCopy();
-      this._sizeInputs();
-      this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
+      if(this.momentFormat !== undefined) {
+        this._updateAndValidateWorkingCopy();
+        this._sizeInputs();
+        this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
+      }
     },
     /**
      * Size the input fields based on the number of characters in dtWorkingCopy
@@ -233,7 +237,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      *
      */
     _updateAndValidateWorkingCopy: function() {
-      if(this.momentObj) {
+      if(this.momentObj !== undefined && this.timeZone !== undefined) {
         this.set('dtWorkingCopy', this.momentObj.tz(this.timeZone).format(this.momentFormat));
         this.toggleClass('validation-error', false, this.$$('input'));
 
