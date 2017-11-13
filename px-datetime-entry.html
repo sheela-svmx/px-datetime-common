@@ -188,19 +188,20 @@ Custom property | Description
      * Updates `_cellFormatArray` and `_symbolCharArray` if one of them as changed
      */
     _formatChanged: function(newMomentFormat) {
-      var format = this._splitFormat(newMomentFormat);
+      if(newMomentFormat !== undefined) {
+        var format = this._splitFormat(newMomentFormat);
 
-      if (format._cellFormatArray !== this._cellFormatArray || format._symbolCharArray !== this._symbolCharArray) {
+        if (format._cellFormatArray !== this._cellFormatArray || format._symbolCharArray !== this._symbolCharArray) {
 
-        this._cellFormatArray = format._cellFormatArray;
-        this._symbolCharArray = format._symbolCharArray;
+          this._cellFormatArray = format._cellFormatArray;
+          this._symbolCharArray = format._symbolCharArray;
 
-        this.notifyPath('_cellFormatArray',this._cellFormatArray);
-        this.notifyPath('_symbolCharArray',this._symbolCharArray);
+          this.notifyPath('_cellFormatArray',this._cellFormatArray);
+          this.notifyPath('_symbolCharArray',this._symbolCharArray);
 
-        this._sizeSymbols();
+          this._sizeSymbols();
+        }
       }
-
     },
     /**
      * create a dummy canvas to measure string and make size the input correctly

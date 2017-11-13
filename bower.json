@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "px-moment-imports": "^1.0.0",
-    "polymer": "^1.9.0",
+    "polymer": "#1.9 - 2",
     "iron-a11y-keys-behavior": "^2.0.0",
     "px-icon-set": "^2.0.0",
     "app-localize-behavior": "^2.0.0",
@@ -38,9 +38,23 @@
     "px-actionable-design": "^2.0.0",
     "px-spacing-design": "^1.0.0",
     "px-headings-design": "^1.0.0",
-    "px-demo": "^2.0.0"
+    "px-demo": "^3.0.0",
+    "web-component-tester": "^6.4.0"
   },
   "resolutions": {
-    "webcomponentsjs": "^0.7.24"
+    "webcomponentsjs": "^1.0.0"
+  },
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "^1.9.0"
+      },
+      "devDependencies": {
+        "web-component-tester": "^5.0.0"
+      },
+      "resolutions": {
+        "webcomponentsjs": "^0.7.0"
+      }
+    }
   }
 }

@@ -205,7 +205,9 @@ var validate = [Polymer.AppLocalizeBehavior, {
    * @param {string} validationErrorMessage - Values validationErrorMessage
    */
   _updateValidationEvent: function(validationErrorMessage){
+    if(validationErrorMessage !== undefined) {
       this.fire('px-validation-message',{'validationErrorMessage': this.validationErrorMessage})
+    }
   },
   /**
    * Sets the button state based on if validation has been passed or not. This in turn enables or disables the Submit button.

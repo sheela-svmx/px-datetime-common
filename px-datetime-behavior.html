@@ -59,7 +59,7 @@ var pxDatetimeBehavior = [{
    * Make sure the moment obj pick up the possibly new moment locale
    */
   _localeChanged: function() {
-    if(this.momentObj) {
+    if(this.language !== undefined && this.momentObj) {
       this.set('momentObj', this.momentObj.locale(Px.moment.locale()));
     }
   },
@@ -67,7 +67,7 @@ var pxDatetimeBehavior = [{
    * Makes sure the moment object reflects the right timezone.
    */
   _timeZoneChanged: function() {
-    if(this.momentObj) {
+    if(this.timeZone !== undefined && this.momentObj) {
       var newMom = this.momentObj.clone().tz(this.timeZone);
       this.set('momentObj', newMom);
     }
@@ -85,12 +85,14 @@ var pxDatetimeBehavior = [{
    * @param {object} momentObj - The moment.js object representing the date/time chosen by the user
    */
   _notifyDateTimeChanged: function(dateTime) {
-    //make sure we keep the moment synchronized in case moment has been changed externally
-    if(!this.momentObj || this.momentObj.toISOString() !== this.dateTime) {
-      this.set('momentObj', this._convertISOtoMoment(this.dateTime));
-    }
+    if(dateTime !== undefined) {
+      //make sure we keep the moment synchronized in case moment has been changed externally
+      if(!this.momentObj || this.momentObj.toISOString() !== this.dateTime) {
+        this.set('momentObj', this._convertISOtoMoment(this.dateTime));
+      }
 
-    this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
+      this.fire('px-datetime-submitted', {dateTime: this.dateTime, momentObj: this.momentObj});
+    }
   },
   /**
    * Applies the current moment object to the external facing datetime string

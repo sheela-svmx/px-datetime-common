@@ -1,67 +1,59 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Web Component Test : Fixture for px-datetime-common</title>
 
-    <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
-    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <!-- web-component-tester automatically provides local copy of brower.js below
-         for any URL ending with "/web-component-tester/browser.js"
-         when wct is run from the command line -->
-    <script src="../web-component-tester/browser.js"></script>
-    <link rel="import" href="../px-datetime-entry.html" />
-    <link rel="import" href="../px-datetime-buttons.html" />
-    <link rel="import" href="../px-datetime-presets.html" />
-    <!-- Retain this link for px-theme.html -->
-    <!-- px-theme is needed for WCT to run without errors -->
-    <link rel="import" href="../../px-theme/px-theme-styles.html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web Component Test : Fixture for px-datetime-common</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <link rel="import" href="../px-datetime-entry.html" />
+  <link rel="import" href="../px-datetime-buttons.html" />
+  <link rel="import" href="../px-datetime-presets.html" />
+  <link rel="import" href="../../px-theme/px-theme-styles.html">
+  <script src="px-datetime-entry-tests.js"></script>
+</head>
+
+<body>
+  <custom-style>
     <style include="px-theme-styles" is="custom-style"></style>
-    <!-- This script link will contain the generated script for basic wct test cases -->
-    <script src="px-datetime-common-base-tests.js"></script>
-    <!-- This script link will contain the generated script stub for custom, developer-added test cases -->
-    <script src="px-datetime-entry-tests.js"></script>
-  </head>
+  </custom-style>
 
-  <body>
-    <h2> DATE </h2>
-    <div>
-      <div>UTC timezone, basic timezone dropdown. Format: YYYY/MM/DD Z</div>
-      <px-datetime-entry
-        id="dateEntry"
-        date-or-time = 'Date'
-        moment-format = "YYYY/MM/DD Z"
-        show-time-zone= "dropdown"
-        time-zone="UTC"
-        >
+
+  <test-fixture id="dateEntry">
+    <template>
+      <px-datetime-entry date-or-time='Date' moment-format="YYYY/MM/DD Z" show-time-zone="dropdown" time-zone="UTC">
       </px-datetime-entry>
-    </div>
-    <br>
-    <div>
-      <div>Default to local timezone, extended timezone dropdown. Format: MM/DD/YY Z</div>
-      <px-datetime-entry
-        id="dateEntry2"
-        date-or-time = 'Date'
-        moment-format = "MM/DD/YY Z"
-        show-time-zone= "extendedDropdown"
-        block-future-dates
-        >
+    </template>
+  </test-fixture>
+
+  <test-fixture id="dateEntry2">
+    <template>
+      <px-datetime-entry date-or-time='Date' moment-format="MM/DD/YY Z" show-time-zone="extendedDropdown" block-future-dates>
       </px-datetime-entry>
-    </div>
-    <h2> TIME </h2>
-    <div>
-      <px-datetime-entry
-        id="timeEntry"
-        date-or-time = 'Time'
-        moment-format = "hh:mm:ss.SSS A"
-        show-time-zone= "text"
-        >
+    </template>
+  </test-fixture>
+
+  <test-fixture id="timeEntry">
+    <template>
+      <px-datetime-entry date-or-time='Time' moment-format="hh:mm:ss.SSS A" show-time-zone="text">
       </px-datetime-entry>
-    </div>
-    <px-datetime-buttons id="buttons">
-    </px-datetime-buttons>
-    <px-datetime-presets id="presets">
-    </px-datetime-presets>
-  </body>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="buttons">
+    <template>
+      <px-datetime-buttons>
+      </px-datetime-buttons>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="presets">
+    <template>
+      <px-datetime-presets>
+      </px-datetime-presets>
+    </template>
+  </test-fixture>
+</body>
+
 </html>
