@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html"/>
-<link rel="import" href="validate.html"/>
+<link rel="import" href="px-datetime-validate.html"/>
 <link rel="import" href="px-datetime-behavior.html"/>
 <link rel="import" href="css/px-datetime-entry-cell-styles.html"/>
 
@@ -78,6 +78,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       dtWorkingCopy:{
         type:String,
         notify: true,
+        value: '',
         observer: '_dataChanged'
       },
       /**
@@ -148,7 +149,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     attached: function(){
       this._addGeneralKeyBindings();
       this._sizeInputs();
-      this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
+      // Set the cellLength to the number of characters that are in dtWorkingCopy.
+      // Unless dtWorkingCopy.length is 1, then set cellLength to 2.
+      this.cellLength = (this.dtWorkingCopy && this.dtWorkingCopy.length > 1) ? this.dtWorkingCopy.length : 2;
       this._isAttached = true;
     },
     /**
@@ -183,13 +186,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(this.momentFormat !== undefined) {
         this._updateAndValidateWorkingCopy();
         this._sizeInputs();
-        this.cellLength = (this.dtWorkingCopy.length > 1)? this.dtWorkingCopy.length : 2;
+        // Set the cellLength to the number of characters that are in dtWorkingCopy.
+        // Unless dtWorkingCopy.length is 1, then set cellLength to 2.
+        this.cellLength = (this.dtWorkingCopy && this.dtWorkingCopy.length > 1) ? this.dtWorkingCopy.length : 2;
       }
     },
     /**
      * Size the input fields based on the number of characters in dtWorkingCopy
-     *
-     * Set the cellLength to the number of characters that are in dtWorkingCopy. Unless dtWorkingCopy.length is 1, then set cellLength to 2.
      */
     _sizeInputs: function(){
       //create a dummy canvas to measure string and make size the input correctly
@@ -207,7 +210,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         return;
       }
       ctx.font = fontSize + " " + fontFamily;
-      length = ctx.measureText(this.dtWorkingCopy).width;
+      if(this.dtWorkingCopy) {
+        length = ctx.measureText(this.dtWorkingCopy.toUpperCase()).width;
+      }
+      else {
+        length = ctx.measureText(this.momentFormat.toUpperCase()).width;
+      }
       length = Math.ceil(length);
       this.$.dtEntry.style['width'] = length + 'px';
     },
@@ -294,16 +302,16 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _checkValue: function(){
       //if our format requires two digits and we only have one, add a 0 in front
-      if(this.dtWorkingCopy.length === 1 &&
+      if(this.dtWorkingCopy && this.dtWorkingCopy.length === 1 &&
       ['MM','DD','HH','hh','kk','mm','ss'].indexOf(this.momentFormat) >= 0){
         this.set('dtWorkingCopy', '0' + this.dtWorkingCopy);
       }
-      //if the format is YYYY or Y and the input is 2 characters then covert the input to a 4 characters year representation
-      else if(this.dtWorkingCopy.length === 2 && this.momentFormat === 'YYYY'){
+      //if the format is YYYY or Y and the input is 2 characters then convert the input to a 4 character year representation
+      else if(this.dtWorkingCopy && this.dtWorkingCopy.length === 2 && this.momentFormat === 'YYYY'){
         var mo = Px.moment(this.dtWorkingCopy, 'YY');
         this.set('dtWorkingCopy',mo.format(this.momentFormat));
       }
-      else if(this.momentFormat[0] === 'S' && this.dtWorkingCopy.length < this.momentFormat.length){
+      else if(this.dtWorkingCopy && this.momentFormat[0] === 'S' && this.dtWorkingCopy.length < this.momentFormat.length){
         var dtNumber = parseInt(this.dtWorkingCopy);
         dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.dtWorkingCopy.length));
         this.set('dtWorkingCopy', dtNumber.toString());
@@ -325,13 +333,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._setIsSelected(false);
     },
     /**
-     * Listner attached to the input and sets up a timeout to trigger validation.
+     * Listener attached to the input and sets up a timeout to trigger validation.
      *
      * @event px-cell-validate
      */
     _inputValueChanged: function(evt){
       //this setTimeout needs to wait for entry cell to be attached so that entry can properly call validate.
-      //this functionality should probably be handeld by entry, due to time constrains this is the solution we had
+      //this functionality should probably be handled by entry, due to time constraints this is the solution we had
       if(!this._isAttached) {
         setTimeout(function() {
           this._inputValueChanged();
@@ -355,7 +363,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       var digit = evt.detail.combo;
 
       // if already at full length, we just entered the input, so delete it
-      if(this.dtWorkingCopy.length === this.cellLength){
+      if(this.dtWorkingCopy && this.dtWorkingCopy.length === this.cellLength){
         this.set('dtWorkingCopy', '');
         this._addSeparatorKeyBinding();
       }

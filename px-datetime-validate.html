@@ -94,7 +94,11 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
     //Create a string from all of the fields put together
     for (var i = 0; i < inputArr.length; i++) {
-      if(inputArr[i].momentFormat !== "Z"){
+      if(inputArr[i].dtWorkingCopy === '') {
+        this.set('momentObj', undefined);
+        return false;
+      }
+      if(inputArr[i].momentFormat !== "Z") {
         inputStr = inputStr + inputArr[i].dtWorkingCopy + inputArr[i].symbol;
       }
     }
@@ -127,7 +131,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
         We want to use clone so it stays in utc or local time
       */
-      var newMoment = this.momentObj.clone().tz(this.timeZone);
+      var newMoment = Px.moment().tz(this.timeZone);
       // just use the relevant fields, so ok if not in utc timemoment
       var typedInMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone);
 
@@ -146,7 +150,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
       this.set('isValid', true);
       // if the neighbor is also valid, then we can set our moment object
-      if(this.neighborValid && !this.momentObj.isSame(newMoment)) {
+      if(this.neighborValid && (!this.momentObj || (this.momentObj && !this.momentObj.isSame(newMoment)))) {
         this.set('momentObj', newMoment);
         this.fire('px-moment-changed',{'momentObj':newMoment})
       }

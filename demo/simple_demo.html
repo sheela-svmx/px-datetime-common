@@ -5,18 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Predix UI</title>
-  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../polymer/polymer.html" />
 
   <link rel="import" href="../../px-theme/px-theme-styles.html">
-  <style include="px-theme-styles" is="custom-style"></style>
 
   <link rel="import" href="../px-datetime-entry.html" />
 </head>
 <body>
+  <custom-style>
+    <style include="px-theme-styles" is="custom-style"></style>
+  </custom-style>
   <div style="display:flex; ">
     <px-datetime-entry
-      date-time="2016-10-05T01:00:00.000Z"
       date-or-time="Date"
       block-future-dates
       time-zone="UTC"
@@ -24,12 +25,10 @@
       moment-format="MM/DD/YY">
     </px-datetime-entry>
     <px-datetime-entry
-      date-time="2016-10-05T01:00:00.000Z"
       date-or-time="Time"
       moment-format="hh:mm a"
       time-zone="UTC"
-      show-time-zone="dropdown"
-      hide-icon>
+      show-time-zone="dropdown">
     </px-datetime-entry>
   </div>
 </body>
