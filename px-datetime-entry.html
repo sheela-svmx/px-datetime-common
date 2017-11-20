@@ -58,7 +58,6 @@ Custom property | Description
               symbol=[[_returnSymbol(index,_symbolCharArray)]]
               is-valid$={{isValid}}
               time-zone="[[timeZone]]"
-              is-selected={{isSelected}}
               resources="[[resources]]"
               language="[[language]]"
               formats="[[formats]]">
@@ -168,7 +167,7 @@ Custom property | Description
 
     listeners: {
       'px-entry-cell-move': '_entryCellMove',
-      'px-cell-blured': '_handleBlur',
+      'px-cell-blurred': '_handleBlur',
       'px-cell-validate': '_validateInput',
       'px-moment-changed': '_handleMoment',
       'px-request-datetime-entry-copy': '_handleCopy',
@@ -296,7 +295,7 @@ Custom property | Description
       this._focusCell(this._cellFormatArray.length - 1);
     },
     /**
-     * when `px-cell-blured` is fired run `_validateInput`
+     * when `px-cell-blurred` is fired run `_validateInput`
      */
     _handleBlur: function(){
       this._validateInput();

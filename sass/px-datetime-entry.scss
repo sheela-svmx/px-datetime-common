@@ -61,6 +61,7 @@ $inuit-enable-validation-states : true;
 
 .dropdown {
   --px-dropdown-content-color: var(--px-datetime-dropdown-content-color, black);
+  --px-btn-min-width: 0px;
 }
 
 //Safari 9 fix
