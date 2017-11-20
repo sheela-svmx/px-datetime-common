@@ -84,7 +84,7 @@ Custom property | Description
           </px-dropdown>
         </template>
         <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
-          <span id="timeZoneText" class="dt-text-input--non-editable">{{_getTimeZoneText(timeZone, showTimeZone, momentObj)}}</span>
+          <span id="timeZoneText" class="dt-text-input--non-editable">{{_getTimeZoneText(timeZone, showTimeZone)}}</span>
         </template>
       </div>
     </div>
@@ -168,8 +168,8 @@ Custom property | Description
     listeners: {
       'px-entry-cell-move': '_entryCellMove',
       'px-cell-blurred': '_handleBlur',
-      'px-cell-validate': '_validateInput',
-      'px-moment-changed': '_handleMoment',
+      // 'px-cell-validate': '_validateInput',
+      // 'px-moment-changed': '_handleMoment',
       'px-request-datetime-entry-copy': '_handleCopy',
       'px-request-datetime-entry-paste': '_handlePaste',
       'px-dropdown-selection-changed': '_updateTimeZone'
@@ -181,6 +181,24 @@ Custom property | Description
       if (typeof this.momentFormat === 'string') {
         this._formatChanged(this.momentFormat);
       }
+    },
+    /**
+     * Clears the input value for each entry-cell input field.
+     */
+    clear: function() {
+      var cells = Polymer.dom(this.root).querySelectorAll('.cell');
+      cells.forEach(function(cell) {
+        cell.clear();
+      });
+    },
+    /**
+     * Resets the input value for each entry-cell input field to the current momentObj.
+     */
+    reset: function() {
+      var cells = Polymer.dom(this.root).querySelectorAll('.cell');
+      cells.forEach(function(cell) {
+        cell.reset();
+      });
     },
     /**
      * runs when `momentFormat` is changed
@@ -314,14 +332,14 @@ Custom property | Description
      * @event px-dropdown-blured
      */
     _handleDropdownBlur: function(){
-      this.fire('px-dropdown-blured', {}, {cancelable:true})
+      this.fire('px-dropdown-blurred', {}, {cancelable:true})
     },
     /**
      * when `px-moment-changed` is fired update `momentObj`
      */
-    _handleMoment: function(evt){
-      this.set('momentObj', evt.detail.momentObj);
-    },
+    // _handleMoment: function(evt){
+    //   this.set('momentObj', evt.detail.momentObj);
+    // },
     /**
      * used in a dom-if
      * determines whether to display the `text` or `abbreviatedText` option
@@ -426,8 +444,8 @@ Custom property | Description
     },
     /**
      */
-    _getTimeZoneText: function(timeZone, showTimeZone, momentObj) {
-      if(showTimeZone === "abbreviatedText") {
+    _getTimeZoneText: function(timeZone, showTimeZone) {
+      if(this.momentObj !== undefined && showTimeZone === "abbreviatedText") {
         return Px.moment.tz.zone(timeZone).abbr(momentObj);
       } else if (showTimeZone === "text"){
         return timeZone;

@@ -88,7 +88,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
    *
    * @return {Boolean} passed validation
    */
-  _validateInput: function() {
+  _validateInput: function(showButtons) {
     var inputStr = '',
         inputArr = Polymer.dom(this.root).querySelectorAll('.cell');
 
@@ -132,7 +132,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
         We want to use clone so it stays in utc or local time
       */
-      var newMoment = Px.moment().tz(this.timeZone);
+      var newMoment = (this.momentObj === undefined) ? Px.moment().tz(this.timeZone) : this.momentObj.clone().tz(this.timeZone);
       // just use the relevant fields, so ok if not in utc timemoment
       var typedInMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone);
 
@@ -152,10 +152,9 @@ var validate = [Polymer.AppLocalizeBehavior, {
       this.set('isValid', true);
       // if the neighbor is also valid, then we can set our moment object
       if(this.neighborValid && (!this.momentObj || (this.momentObj && !this.momentObj.isSame(newMoment)))) {
-        this.set('momentObj', newMoment);
-        this.fire('px-moment-changed',{'momentObj':newMoment})
+        this.fire('px-moment-valid',{'momentObj':newMoment})
       }
-      return true;
+      return newMoment;
 
     } else {
       //the input box string is not a valid date/time

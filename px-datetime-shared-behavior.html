@@ -105,14 +105,14 @@ var pxDatetimeSharedBehavior = [{
        value: true
      }
   },
-  /**
-  * Takes an ISO 8601 String and returns a moment object.
-  *
-  * @param {String} timeString
-  */
-  _convertISOtoMoment: function(timeString) {
-    return Px.moment.tz(Px.moment(timeString, Px.moment.ISO_8601), this.timeZone);
-  },
+  // /**
+  // * Takes an ISO 8601 String and returns a moment object.
+  // *
+  // * @param {String} timeString
+  // */
+  // _convertISOtoMoment: function(timeString) {
+  //   return Px.moment.tz(Px.moment(timeString, Px.moment.ISO_8601), this.timeZone);
+  // },
   /**
    * Copies the time in toPreserve to dest and returns dest.
    * used in `px-calendar-picker`, `px-datetime-picker`, and `px-datetime-range-panel`
@@ -133,13 +133,13 @@ var pxDatetimeSharedBehavior = [{
    * Applies the current moment values to the external facing strings or rollback
    * the current moment values to the external facing strings
    */
-  _applyCurrentValues: function(doApply) {
-    if(doApply){
-      this._applyMomentToString();
-    } else {
-      this._rollbackMomentFromString();
-    }
-  }
+  // _applyCurrentValues: function(doApply) {
+  //   if(doApply){
+  //     this._applyMomentToString();
+  //   } else {
+  //     this._rollbackMomentFromString();
+  //   }
+  // }
 }, Polymer.IronA11yKeysBehavior, PxDatetimeBehavior.blockDates, Polymer.AppLocalizeBehavior];
 
 

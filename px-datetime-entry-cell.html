@@ -116,6 +116,15 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._addGeneralKeyBindings();
     },
     /**
+     * Clears the input value for the cell.
+     */
+    clear: function() {
+      this.$.dtEntry.value = '';
+    },
+    reset: function() {
+      this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
+    },
+    /**
      *
      */
     _onEnter: function() {
@@ -183,18 +192,27 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
       }
     },
-
+    /**
+     * Sets up separator keybindings
+     */
+     _addSeparatorKeyBinding: function(){
+      var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
+      this.addOwnKeyBinding(separator,'_moveFocusForward');
+    },
     /**
      *
      */
     _updateInputValue: function() {
       if(this.momentObj !== undefined && this.timeZone !== undefined) {
-        this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
+        this.reset();
         this.toggleClass('validation-error', false, this.$$('input'));
 
         if(this.momentFormat === 'MMM' || this.momentFormat === 'MMMM') {
           this._sizeInputs();
         }
+      }
+      else {
+        this.$.dtEntry.value = '';
       }
     },
     /**
@@ -256,6 +274,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)
      */
     _digit: function(evt){
+      // if already at full length, we just entered the input, so delete it
+      if(this.$.dtEntry.value.length === this.cellLength){
+        this.$.dtEntry.value = '';
+        this._addSeparatorKeyBinding();
+      }
       // if it is full, we're done with this cell, go to the next
       if(this.$.dtEntry.value.length === this.cellLength - 1) {
         this._moveFocusForward();
@@ -394,6 +417,12 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       if(["S","SS","SSS"].includes(momentFormat)) {
         return 999;
+      }
+      if(momentFormat === "YY") {
+        return 99;
+      }
+      if(momentFormat === "YYYY") {
+        return 9999;
       }
     },
     _getMin: function(momentFormat) {
