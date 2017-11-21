@@ -194,8 +194,8 @@ var pxDatetimeRangeBehavior = [{
   _validateRangeOrder: function() {
     // if the from date is before the to date, everything is ok
     if(this.fromMoment && this.toMoment) {
-      return this.fromMoment.isBefore(this.toMoment);
-    }else {
+      return this.fromMoment.isSame(this.toMoment) || this.fromMoment.isBefore(this.toMoment);
+    } else {
       return false;
     }
   },
@@ -211,7 +211,7 @@ var pxDatetimeRangeBehavior = [{
    * @param {object} momentObjs - {from, to}: the moment.js objects representing the date/time chosen by the user
    */
   _notifyRangeChanged: function(r) {
-    if(r !== undefined) {
+    if(r !== undefined && r.value !== undefined) {
       var newRange = r.value;
 
       if(!this._preventRangeUpdate) {
