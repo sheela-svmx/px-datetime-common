@@ -58,6 +58,7 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 }
 .text-input--bare:focus {
   background-color: var(--px-datetime-entry-selected, lightskyblue);
+  outline: none;
 }
 
 input:invalid {
