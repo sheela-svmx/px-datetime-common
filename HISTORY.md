@@ -1,3 +1,7 @@
+v1.1.2
+==================
+* Added validation error message for min and max
+
 v1.1.1
 ==================
 * Polymer 1.x/2.x hybrid element support

@@ -158,6 +158,10 @@ var validate = [Polymer.AppLocalizeBehavior, {
         this.set('validationErrorMessage', this.localize('Future dates are not allowed'));
       } else if(notAllowedInPast) {
         this.set('validationErrorMessage', this.localize('Past dates are not allowed'));
+      } else if(notAllowedAfterMax) {
+        this.set('validationErrorMessage', this.localize('Date is past max range'));
+      } else if(notAllowedBeforeMin) {
+        this.set('validationErrorMessage', this.localize('Date is before min range'));
       } else {
         var invalidAt = inputMoment.invalidAt();
 
