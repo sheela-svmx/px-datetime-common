@@ -179,11 +179,10 @@ var validate = [Polymer.AppLocalizeBehavior, {
       dateEntry.toggleClass('validation-error', false, this.$.wrapper);
       dateEntry.set('isValid', true);
 
-      // if the neighbor is also valid, then we can set our moment object
+      //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
       if(this.neighborValid && (!this.momentObj || (this.momentObj && !this.momentObj.isSame(dateTimeMoment)))) {
-        this.fire('px-moment-valid',{'momentObj':dateTimeMoment})
+        return dateTimeMoment;
       }
-      return dateTimeMoment;
 
     }
     else {
