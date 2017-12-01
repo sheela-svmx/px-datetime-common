@@ -29,6 +29,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       id="dtEntry"
       order="{{order}}"
       class="text-input--bare"
+      on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-paste="_handlePaste"
       on-beforepaste="_beforePaste"
@@ -91,6 +92,15 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         type: Number,
         reflectToAttribute: true
       },
+      /**
+      * Whether the cell is currently selected. Read-only.
+      */
+      isSelected: {
+        type: Boolean,
+        readOnly: true,
+        notify: true,
+        value: false
+      }
     },
 
     observers:[
@@ -235,6 +245,15 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       setTimeout(function(){
         this.fire('px-entry-cell-move', { 'dir' : 1 });
       }.bind(this),10);
+    },
+    /**
+    * Propagate the focus event up to entry to apply inline edit styles if applicable.
+    */
+    _handleFocus: function(evt) {
+      if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
+        this._setIsSelected(true);
+      }
+      this.fire('px-cell-focused');
     },
     /**
      * Checks that the value has the correct number of digits for our format
