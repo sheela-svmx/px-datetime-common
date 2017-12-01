@@ -78,12 +78,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         type:String
       },
       /**
-      * Used to determine how big the input-width needs to be.
-      */
-      _cellLength:{
-        type: Number
-      },
-      /**
        * Order number this cell is in px-datetime-entry, passed down from px-datetime-entry
        *
        * @private
@@ -200,6 +194,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
       } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
+        this.addOwnKeyBinding('down up', '_wraparound');
       }
     },
     /**
@@ -255,6 +250,17 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       this.fire('px-cell-focused');
     },
+    _wraparound: function(evt) {
+      var key = evt.detail.combo;
+      if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
+        evt.preventDefault();
+        this.$.dtEntry.value = this._getMin(this.momentFormat);
+      }
+      else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
+        evt.preventDefault();
+        this.$.dtEntry.value = this._getMax(this.momentFormat);
+      }
+    },
     /**
      * Checks that the value has the correct number of digits for our format
      * Autocomplete function
@@ -275,6 +281,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.$.dtEntry.value.length));
         this.$.dtEntry.value =  dtNumber.toString();
       }
+      this._sizeInputs();
     },
     /**
      * Fires on blur
@@ -333,21 +340,24 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
        var mo = Px.moment.tz('01:00:00 ' + ampm, 'hh:mm:ss ' + this.momentFormat, this.timeZone);
        this.$.dtEntry.value = mo.tz(this.timeZone).format(this.momentFormat);
      },
-    /**
+     /**
      * Prevent the delete button from navigating back
      */
     _preventDeleteDefault: function(evt){
       evt.preventDefault();
+      this.clear();
     },
     /**
-     * If the momentFormat format is not 'Z', 'ZZ', 'X', or 'x' then return the momentFormat
+     * If the momentFormat format is not 'Z', 'ZZ', 'X', 'x', 'A' or 'a' then return the momentFormat
      */
     _placeholderText: function(momentFormat){
       var phText = {
         'Z': String.fromCharCode(177) + 'xx:xx',
         'ZZ': String.fromCharCode(177) + 'xxxx',
         'X': 'epoch time (s)',
-        'x': 'epoch time (ms)'
+        'x': 'epoch time (ms)',
+        'a': 'AM',
+        'A': 'AM'
       };
 
       if(phText[momentFormat]){
