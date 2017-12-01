@@ -283,7 +283,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _handleBlur: function(evt) {
       var ne = Polymer.dom(evt);
-
+      this._setIsSelected(false);
       this._checkValue();
 
       this.fire('px-cell-blurred');
