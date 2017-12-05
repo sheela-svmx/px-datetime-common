@@ -37,11 +37,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(momentFormat)]]"
-      min="[[_getMin(momentFormat)]]"
-      max="[[_getMax(momentFormat)]]"
       step="1"
       placeholder="[[_placeholderText(momentFormat)]]" />
-  </template>
+    </template>
+    <!-- min="[[_getMin(momentFormat)]]"
+    max="[[_getMax(momentFormat)]]" -->
 </dom-module>
 
 <script>
@@ -194,7 +194,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
       } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
-        this.addOwnKeyBinding('down up', '_wraparound');
+        // this.addOwnKeyBinding('down up', '_wraparound');
       }
     },
     /**
@@ -250,17 +250,17 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       this.fire('px-cell-focused');
     },
-    _wraparound: function(evt) {
-      var key = evt.detail.combo;
-      if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
-        evt.preventDefault();
-        this.$.dtEntry.value = this._getMin(this.momentFormat);
-      }
-      else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
-        evt.preventDefault();
-        this.$.dtEntry.value = this._getMax(this.momentFormat);
-      }
-    },
+    // _wraparound: function(evt) {
+    //   var key = evt.detail.combo;
+    //   if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
+    //     evt.preventDefault();
+    //     this.$.dtEntry.value = this._getMin(this.momentFormat);
+    //   }
+    //   else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
+    //     evt.preventDefault();
+    //     this.$.dtEntry.value = this._getMax(this.momentFormat);
+    //   }
+    // },
     /**
      * Checks that the value has the correct number of digits for our format
      * Autocomplete function
@@ -431,6 +431,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       return momentTypeConversion[this.momentFormat[0]]
     },
     _getMax: function(momentFormat) {
+      console.log(momentFormat)
       if(["M","MM","h","hh"].includes(momentFormat)) {
         return 12;
       }
