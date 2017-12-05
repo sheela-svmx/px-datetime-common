@@ -299,14 +299,12 @@ suite('Interaction px-datetime-entry', function () {
   });
 
   test('text mode uses a span', function (done) {
-    timeFixt = fixture('timeEntry');
-    timeFixt.momentObj = now;
-    timeFixt.showTimeZone = 'abbreviatedText';
+    timeAbbTextFixt = fixture('timeEntryAbbText');
+    timeAbbTextFixt.momentObj = now;
 
     flush(function () {
-      debugger
-      var text = Polymer.dom(timeFixt.root).querySelector('#timeZoneText'),
-          dropdown = Polymer.dom(timeFixt.root).querySelector('px-dropdown');
+      var text = Polymer.dom(timeAbbTextFixt.root).querySelector('#timeZoneText'),
+          dropdown = Polymer.dom(timeAbbTextFixt.root).querySelector('px-dropdown');
 
       assert.isNotNull(text);
       assert.isNull(dropdown);
@@ -324,10 +322,6 @@ suite('Interaction px-datetime-entry', function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
         secondInput = Polymer.dom(cells[1].root).querySelector('input');
 
-      //simulate focus on second cell....
-      secondInput.focus();
-
-      //change value to 99
       secondInput.value = "99";
       cells[1]._handleBlur();
 
@@ -347,12 +341,8 @@ suite('Interaction px-datetime-entry', function () {
 
     flush(() => {
       var cells = Polymer.dom(dateExFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        firstInput = Polymer.dom(cells[0].root).querySelector('input');
+          firstInput = Polymer.dom(cells[0].root).querySelector('input');
 
-      //simulate focus on first cell....
-      firstInput.focus();
-
-      //change value to 99
       firstInput.value = "18";
       cells[0]._handleBlur();
 
@@ -364,12 +354,186 @@ suite('Interaction px-datetime-entry', function () {
     });
   });
 
+  test('block dates before min', function (done) {
+    dateFixt = fixture('dateEntryDropdown');
+    dateFixt.momentObj = now;
+    dateFixt.set('min', dateFixt.momentObj.clone().subtract(1, 'day'));
+
+    flush(() => {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          firstInput = Polymer.dom(cells[0].root).querySelector('input');
+
+      firstInput.value = "16";
+      cells[0]._handleBlur();
+
+      //wait for validation to kick in
+      setTimeout(function () {
+        assert.isFalse(dateFixt.isValid);
+        done();
+      }, 200);
+    });
+
+  });
+
+  test('block dates after max', function (done) {
+    dateFixt = fixture('dateEntryDropdown');
+    dateFixt.momentObj = now;
+
+    dateFixt.set('max', dateFixt.momentObj.clone().add(1, 'day'));
+
+    flush(() => {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          firstInput = Polymer.dom(cells[0].root).querySelector('input');
+
+      firstInput.value = "18";
+      cells[0]._handleBlur();
+
+      //wait for validation to kick in
+      setTimeout(function () {
+        assert.isFalse(dateFixt.isValid);
+        done();
+      }, 200);
+    });
+  });
+
 
 
 });
 
+/**
+ * BUTTONS
+ */
 
+suite('buttons', function () {
 
+  let buttons;
 
+  setup(function (done) {
+    buttons = fixture('buttons');
+    flush(() => {
+      done();
+    });
+  });
+
+  test('show/hide cancel', function (done) {
+    var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+    //both shown
+    assert.notEqual(internalButtons[0].style.display, 'none');
+    assert.notEqual(internalButtons[1].style.display, 'none');
+
+    buttons.hideSubmit = true;
+    flush(function () {
+
+      assert.notEqual(internalButtons[0].style.display, 'none');
+      assert.equal(internalButtons[1].style.display, 'none');
+
+      buttons.hideSubmit = false;
+      buttons.hideCancel = true;
+      flush(function () {
+        assert.equal(internalButtons[0].style.display, 'none');
+        assert.notEqual(internalButtons[1].style.display, 'none');
+
+        buttons.hideCancel = false;
+        done();
+      });
+    });
+  });
+
+  test('click apply fire event', function (done) {
+    var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+    var listener = function (evt) {
+      buttons.removeEventListener('px-datetime-button-clicked', listener);
+      assert.isTrue(evt.detail.action);
+      done();
+    };
+
+    buttons.addEventListener('px-datetime-button-clicked', listener);
+
+    internalButtons[1].click();
+  });
+
+  test('click cancel fire event', function (done) {
+    var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+    var listener = function (evt) {
+      buttons.removeEventListener('px-datetime-button-clicked', listener);
+      assert.isFalse(evt.detail.action);
+      done();
+    };
+
+    buttons.addEventListener('px-datetime-button-clicked', listener);
+
+    internalButtons[0].click();
+  });
+
+  test('disable submit button', function () {
+    var internalButtons = Polymer.dom(buttons.root).querySelectorAll('button');
+
+    buttons.isSubmitButtonValid = false;
+    assert.isTrue(internalButtons[1].disabled);
+  });
+});
+
+/**
+ * PRESETS
+ */
+suite('presets', function (done) {
+
+  let presets, now;
+
+  setup(function (done) {
+    presets = fixture('presets');
+    now = Px.moment();
+    presets.presetRanges = [
+      {
+        "displayText": "Today",
+        "startDateTime": now,
+        "endDateTime": now
+      },
+      {
+        "displayText": "Yesterday",
+        "startDateTime": now.clone().subtract(1, 'day'),
+        "endDateTime": now.clone().subtract(1, 'day')
+      },
+      {
+        "displayText": "Last 7 Days",
+        "startDateTime": now.clone().subtract(7, 'days'),
+        "endDateTime": now
+      },
+      {
+        "displayText": "This Month",
+        "startDateTime": now.clone().startOf('month'),
+        "endDateTime": now.clone().endOf('month')
+      },
+      {
+        "displayText": "Last Month",
+        "startDateTime": now.clone().subtract(1, 'months').startOf('month'),
+        "endDateTime": now.clone().subtract(1, 'months').endOf('month')
+      }
+    ];
+    flush(() => {
+      done();
+    });
+  });
+
+  test('click presets fire event', function (done) {
+    var presetLinks = Polymer.dom(presets.root).querySelectorAll('span');
+
+    presets.addEventListener('px-preset-selected', function (evt) {
+
+      assert.equal(evt.detail.displayText, 'Last Month');
+      assert.isTrue(evt.detail.endDateTime.isValid());
+      assert.isTrue(evt.detail.startDateTime.isValid());
+      assert.isTrue(presetLinks[presetLinks.length - 1].classList.contains('actionable--select'));
+
+      done();
+    });
+
+    assert.isFalse(presetLinks[presetLinks.length - 1].classList.contains('actionable--select'));
+    presetLinks[presetLinks.length - 1].click();
+  });
+});
 
 
