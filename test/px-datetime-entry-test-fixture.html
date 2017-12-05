@@ -7,6 +7,7 @@
   <title>Web Component Test : Fixture for px-datetime-common</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <link rel="import" href="../px-datetime-entry.html" />
   <link rel="import" href="../px-datetime-buttons.html" />
   <link rel="import" href="../px-datetime-presets.html" />
@@ -20,23 +21,34 @@
   </custom-style>
 
 
-  <test-fixture id="dateEntry">
+  <test-fixture id="dateEntryDropdown">
     <template>
-      <px-datetime-entry date-or-time='Date' moment-format="YYYY/MM/DD Z" show-time-zone="dropdown" time-zone="UTC">
+      <px-datetime-entry
+        date-or-time='Date'
+        moment-format="YYYY/MM/DD Z"
+        show-time-zone="dropdown"
+        time-zone="UTC">
       </px-datetime-entry>
     </template>
   </test-fixture>
 
-  <test-fixture id="dateEntry2">
+  <test-fixture id="dateEntryExtDropdown">
     <template>
-      <px-datetime-entry date-or-time='Date' moment-format="MM/DD/YY Z" show-time-zone="extendedDropdown" block-future-dates>
+      <px-datetime-entry
+        date-or-time='Date'
+        moment-format="MM/DD/YY Z"
+        show-time-zone="extendedDropdown"
+        block-future-dates>
       </px-datetime-entry>
     </template>
   </test-fixture>
 
   <test-fixture id="timeEntry">
     <template>
-      <px-datetime-entry date-or-time='Time' moment-format="hh:mm:ss.SSS A" show-time-zone="text">
+      <px-datetime-entry
+        date-or-time='Time'
+        moment-format="hh:mm:ss.SSS A"
+        show-time-zone="text">
       </px-datetime-entry>
     </template>
   </test-fixture>

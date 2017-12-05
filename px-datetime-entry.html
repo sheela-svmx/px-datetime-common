@@ -439,8 +439,9 @@ Custom property | Description
     /**
      */
     _getTimeZoneText: function(timeZone, showTimeZone) {
-      if(this.momentObj !== undefined && showTimeZone === "abbreviatedText") {
-        return Px.moment.tz.zone(timeZone).abbr(momentObj);
+      if(timeZone !== undefined && showTimeZone === "abbreviatedText") {
+        tempMomentObj = this.momentObj ? this.momentObj : Px.moment();
+        return Px.moment.tz.zone(timeZone).abbr(tempMomentObj);
       } else if (showTimeZone === "text"){
         return timeZone;
       }
