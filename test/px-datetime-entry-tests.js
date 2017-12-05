@@ -1,7 +1,7 @@
 /**
  * DATETIME-ENTRY-CELL
  */
-suite('Interaction px-datetime-entry cell', function () {
+suite('px-datetime-entry-cell', function () {
 
   let dateFixt, timeFixt, now;
 
@@ -50,7 +50,6 @@ suite('Interaction px-datetime-entry cell', function () {
   //           setTimeout(callback, 1000);
   //         },
   //         function (err, n) {
-  //             debugger
   //             // check the active cell is the day cell
   //             done();
   //           }
@@ -211,35 +210,35 @@ suite('Interaction px-datetime-entry cell', function () {
     });
 
     // SHOULD WORK
-    // test('AM/PM', function () {
-    //   var cells = Polymer.dom(timeFixt.root).querySelectorAll('px-datetime-entry-cell'),
-    //   lastCell = cells[cells.length - 1],
-    //   lastInput = Polymer.dom(lastCell.root).querySelectorAll('#dtEntry');
+    test('AM/PM', function (done) {
+      var cells = Polymer.dom(timeFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          lastCell = cells[cells.length - 1],
+          lastInput = Polymer.dom(lastCell.root).querySelectorAll('#dtEntry');
 
-    //   //focus last cell
-    //   lastCell.focus();
+      flush(function () {
+        MockInteractions.pressAndReleaseKeyOn(lastCell, 65, [], 'a');
+        assert.equal(lastInput[0].value, 'AM', "AM 1st time");
+        MockInteractions.pressAndReleaseKeyOn(lastCell, 80, [], 'p');
+        assert.equal(lastInput[0].value, 'PM', "PM 1st time");
+        MockInteractions.pressAndReleaseKeyOn(lastCell, 65, [], 'a');
+        assert.equal(lastInput[0].value, 'AM', "AM 2nd time");
+        MockInteractions.pressAndReleaseKeyOn(lastCell, 38, [], 'ArrowUp');
+        assert.equal(lastInput[0].value, 'PM', "PM 2nd time");
+        MockInteractions.pressAndReleaseKeyOn(lastCell,  40, [], 'ArrowDown');
+        assert.equal(lastInput[0].value, 'AM', "AM 3rd time");
+        done();
+      });
 
-    //   // debugger
-    //   MockInteractions.pressAndReleaseKeyOn(lastCell, 65, [], 'a');
-    //   assert.equal(lastInput[0].placeholder, 'AM', "AM 1st time");
-    //   MockInteractions.pressAndReleaseKeyOn(lastCell, 80, [], 'p');
-    //   assert.equal(lastInput[0].placeholder, 'PM', "PM 1st time");
-    //   MockInteractions.pressAndReleaseKeyOn(lastCell, 65, [], 'a');
-    //   assert.equal(lastInput[0].placeholder, 'AM', "AM 2nd time");
-    //   MockInteractions.pressAndReleaseKeyOn(lastCell, 38, [], 'ArrowUp');
-    //   assert.equal(lastInput[0].placeholder, 'PM', "PM 2nd time");
-    //   MockInteractions.pressAndReleaseKeyOn(lastCell,  40, [], 'ArrowDown');
-    //   assert.equal(lastInput[0].placeholder, 'AM', "AM 3rd time");
-    // });
+    });
 
 
-  });
+  });// end of px-datetime-entry-cell
 
 
 /**
  * DATETIME-ENTRY
  */
-suite('Interaction px-datetime-entry', function () {
+suite('px-datetime-entry', function () {
 
   let dateFixt, dateExFixt, timeFixt, timeAbbTextFixt, now;
 
@@ -397,13 +396,43 @@ suite('Interaction px-datetime-entry', function () {
   });
 
 
+  test('_preserveTime', function () {
+    dateFixt = fixture('dateEntryDropdown');
+    dateFixt.momentObj = now;
 
-});
+    var moment = Px.moment.tz(Px.moment("2016-04-03T00:00:00Z", Px.moment.ISO_8601), this.timeZone),
+        moment2 = Px.moment.tz(Px.moment("2009-06-07T10:32:06Z", Px.moment.ISO_8601), this.timeZone);
+        moment2.milliseconds('500');
+
+    var result = dateFixt._preserveTime(moment2, moment);
+
+    //both result and moment should have the time to preserve
+    assert.equal(result.hour(), moment2.hours());
+    assert.equal(result.minute(), moment2.minute());
+    assert.equal(result.second(), moment2.second());
+    assert.equal(result.milliseconds(), moment2.milliseconds());
+    assert.equal(moment.hour(), moment2.hours());
+    assert.equal(moment.minute(), moment2.minute());
+    assert.equal(moment.second(), moment2.second());
+    assert.equal(moment.milliseconds(), moment2.milliseconds());
+  });
+
+
+  test('changing time zone changes moment timezone', function () {
+    dateFixt = fixture('dateEntryDropdown');
+    dateFixt.momentObj = now;
+
+    dateFixt.timeZone = 'Pacific/Noumea';
+    assert.equal(dateFixt.momentObj.tz(), 'Pacific/Noumea');
+  });
+
+});// end of px-datetime-entry
+
+
 
 /**
  * BUTTONS
  */
-
 suite('buttons', function () {
 
   let buttons;
@@ -474,7 +503,9 @@ suite('buttons', function () {
     buttons.isSubmitButtonValid = false;
     assert.isTrue(internalButtons[1].disabled);
   });
-});
+});// end of Buttons
+
+
 
 /**
  * PRESETS
@@ -534,6 +565,6 @@ suite('presets', function (done) {
     assert.isFalse(presetLinks[presetLinks.length - 1].classList.contains('actionable--select'));
     presetLinks[presetLinks.length - 1].click();
   });
-});
+});//end of presets
 
 
