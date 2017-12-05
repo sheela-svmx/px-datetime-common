@@ -376,47 +376,47 @@ suite('px-datetime-entry', function () {
     });
   });
 
-  // test('block dates before min', function (done) {
-  //   dateFixt = fixture('dateEntryDropdown');
-  //   dateFixt.momentObj = now;
-  //   dateFixt.set('min', dateFixt.momentObj.clone().subtract(1, 'day'));
+  test('block dates before min', function (done) {
+    dateFixt = fixture('dateEntryDropdown');
+    dateFixt.momentObj = now;
+    dateFixt.set('min', dateFixt.momentObj.clone().subtract(1, 'day'));
 
-  //   flush(() => {
-  //     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-  //         firstInput = Polymer.dom(cells[0].root).querySelector('input');
+    flush(() => {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          firstInput = Polymer.dom(cells[0].root).querySelector('input');
 
-  //     firstInput.value = "16";
-  //     cells[0]._handleBlur();
+      firstInput.value = "16";
+      cells[0]._handleBlur();
 
-  //     //wait for validation to kick in
-  //     setTimeout(function () {
-  //       assert.isFalse(dateFixt.isValid);
-  //       done();
-  //     }, 200);
-  //   });
+      //wait for validation to kick in
+      setTimeout(function () {
+        assert.isFalse(dateFixt.isValid);
+        done();
+      }, 200);
+    });
 
-  // });
+  });
 
-  // test('block dates after max', function (done) {
-  //   dateFixt = fixture('dateEntryDropdown');
-  //   dateFixt.momentObj = now;
+  test('block dates after max', function (done) {
+    dateFixt = fixture('dateEntryDropdown');
+    dateFixt.momentObj = now;
 
-  //   dateFixt.set('max', dateFixt.momentObj.clone().add(1, 'day'));
+    dateFixt.set('max', dateFixt.momentObj.clone().add(1, 'day'));
 
-  //   flush(() => {
-  //     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-  //         firstInput = Polymer.dom(cells[0].root).querySelector('input');
+    flush(() => {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          firstInput = Polymer.dom(cells[0].root).querySelector('input');
 
-  //     firstInput.value = "18";
-  //     cells[0]._handleBlur();
+      firstInput.value = "18";
+      cells[0]._handleBlur();
 
-  //     //wait for validation to kick in
-  //     setTimeout(function () {
-  //       assert.isFalse(dateFixt.isValid);
-  //       done();
-  //     }, 200);
-  //   });
-  // });
+      //wait for validation to kick in
+      setTimeout(function () {
+        assert.isFalse(dateFixt.isValid);
+        done();
+      }, 200);
+    });
+  });
 
 
   test('_preserveTime', function () {

@@ -37,11 +37,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(momentFormat)]]"
+      min="[[_getMin(momentFormat)]]"
+      max="[[_getMax(momentFormat)]]"
       step="1"
       placeholder="[[_placeholderText(momentFormat)]]" />
     </template>
-    <!-- min="[[_getMin(momentFormat)]]"
-    max="[[_getMax(momentFormat)]]" -->
 </dom-module>
 
 <script>
@@ -136,7 +136,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._moveFocusForward();
     },
     _getType: function(momentFormat) {
-      return (['a','A','MMM','MMMM','Do','ddd','dddd','Z','ZZ'].includes(momentFormat)) ? 'text' : 'number';
+      return (/^(?:a|A|MMM|MMMM|Do|ddd|dddd|Z|ZZ)$/.test(momentFormat)) ? 'text' : 'number';
     },
     /**
      * Disables the input field for time zone entry cells.
@@ -194,7 +194,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
       } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
         this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
-        // this.addOwnKeyBinding('down up', '_wraparound');
+        this.addOwnKeyBinding('down up', '_wraparound');
       }
     },
     /**
@@ -250,17 +250,17 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       this.fire('px-cell-focused');
     },
-    // _wraparound: function(evt) {
-    //   var key = evt.detail.combo;
-    //   if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
-    //     evt.preventDefault();
-    //     this.$.dtEntry.value = this._getMin(this.momentFormat);
-    //   }
-    //   else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
-    //     evt.preventDefault();
-    //     this.$.dtEntry.value = this._getMax(this.momentFormat);
-    //   }
-    // },
+    _wraparound: function(evt) {
+      var key = evt.detail.combo;
+      if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
+        evt.preventDefault();
+        this.$.dtEntry.value = this._getMin(this.momentFormat);
+      }
+      else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
+        evt.preventDefault();
+        this.$.dtEntry.value = this._getMax(this.momentFormat);
+      }
+    },
     /**
      * Checks that the value has the correct number of digits for our format
      * Autocomplete function
@@ -268,7 +268,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _checkValue: function(){
       //if our format requires two digits and we only have one, add a 0 in front
       if(this.$.dtEntry.value && this.$.dtEntry.value.length === 1 &&
-      ['MM','DD','HH','hh','kk','mm','ss','YY'].includes(this.momentFormat)){
+       /^(?:MM|DD|HH|hh|kk|mm|ss|YY)$/.test(this.momentFormat)){
         this.$.dtEntry.value =  '0' + this.$.dtEntry.value;
       }
       //if the format is YYYY or Y and the input is 2 characters then convert the input to a 4 character year representation
@@ -431,20 +431,19 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       return momentTypeConversion[this.momentFormat[0]]
     },
     _getMax: function(momentFormat) {
-      console.log(momentFormat)
-      if(["M","MM","h","hh"].includes(momentFormat)) {
+      if( /^(?:M|MM|h|hh)$/.test(momentFormat) ) {
         return 12;
       }
-      if(["D","DD"].includes(momentFormat)) {
+      if( /^(?:D|DD)$/.test(momentFormat) ) {
         return 31;
       }
-      if(["H","HH"].includes(momentFormat)) {
+      if( /^(?:H|HH)$/.test(momentFormat) ) {
         return 23;
       }
-      if(["m","mm","s","ss"].includes(momentFormat)) {
+      if( /^(?:m|mm|ss|s)$/.test(momentFormat) ) {
         return 59;
       }
-      if(["S","SS","SSS"].includes(momentFormat)) {
+      if( /^(?:S|SS|SSS)$/.test(momentFormat) ) {
         return 999;
       }
       if(momentFormat === "YY") {
@@ -455,10 +454,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
     },
     _getMin: function(momentFormat) {
-      if(["YY","YYYY","X","x","H","HH","m","mm","s","ss","S","SS","SSS"].includes(momentFormat)) {
+      if( /^(?:YY|YYYY|X|x|H|HH|m|mm|s|ss|S|SS|SSS)$/.test(momentFormat) ) {
         return 0;
       }
-      if(["M","MM","D","DD","h","hh","k","kk",].includes(momentFormat)) {
+      if( /^(?:M|MM|D|DD|h|hh|k|kk)$/.test(momentFormat) ) {
         return 1;
       }
     }
