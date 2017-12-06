@@ -446,6 +446,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if( /^(?:H|HH)$/.test(momentFormat) ) {
         return 23;
       }
+      if( /^(?:k|kk)$/.test(momentFormat) ) {
+        return 24;
+      }
       if( /^(?:m|mm|ss|s)$/.test(momentFormat) ) {
         return 59;
       }
@@ -458,11 +461,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(momentFormat === "SSS") {
         return 999;
       }
-      if(momentFormat === "YY") {
+      if( /^(?:YY|YYYY)$/.test(momentFormat) ) {
         return 99;
-      }
-      if(momentFormat === "YYYY") {
-        return 9999;
       }
     },
     /**
