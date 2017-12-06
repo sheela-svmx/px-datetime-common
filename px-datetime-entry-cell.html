@@ -37,7 +37,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(momentFormat)]]"
-      step="1"
       placeholder="[[_placeholderText(momentFormat)]]" />
     </template>
 </dom-module>
@@ -123,6 +122,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     clear: function() {
       this.$.dtEntry.value = '';
     },
+    /**
+     * resets the cell to the last momentObj
+     */
     reset: function() {
       this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
     },
@@ -133,6 +135,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._checkValue();
       this._moveFocusForward();
     },
+    /**
+     * Set the correct type of input field based on the momentFormat
+     */
     _getType: function(momentFormat) {
       return (/^(?:a|A|MMM|MMMM|Do|ddd|dddd|Z|ZZ)$/.test(momentFormat)) ? 'text' : 'number';
     },
