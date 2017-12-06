@@ -37,8 +37,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(momentFormat)]]"
-      min="[[_getMin(momentFormat)]]"
-      max="[[_getMax(momentFormat)]]"
       step="1"
       placeholder="[[_placeholderText(momentFormat)]]" />
     </template>
@@ -250,13 +248,18 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       this.fire('px-cell-focused');
     },
+    /**
+     * Allow the user to loop through valid cell values
+     * ex If the momentFormat is MM the cell value can go from 12 to 1 by hitting the up arrow
+     */
     _wraparound: function(evt) {
       var key = evt.detail.combo;
-      if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
+          dtEntryValue = this.$.dtEntry.value;
+      if(key === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._getMax(this.momentFormat))) {
         evt.preventDefault();
         this.$.dtEntry.value = this._getMin(this.momentFormat);
       }
-      else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
+      else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._getMin(this.momentFormat))) {
         evt.preventDefault();
         this.$.dtEntry.value = this._getMax(this.momentFormat);
       }
@@ -430,6 +433,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       // take the first char of the moment format and convert it to the other format
       return momentTypeConversion[this.momentFormat[0]]
     },
+    /**
+     * Set the max value a token can be
+     */
     _getMax: function(momentFormat) {
       if( /^(?:M|MM|h|hh)$/.test(momentFormat) ) {
         return 12;
@@ -443,7 +449,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if( /^(?:m|mm|ss|s)$/.test(momentFormat) ) {
         return 59;
       }
-      if( /^(?:S|SS|SSS)$/.test(momentFormat) ) {
+      if(momentFormat === "S") {
+        return 9;
+      }
+      if(momentFormat === "SS") {
+        return 99;
+      }
+      if(momentFormat === "SSS") {
         return 999;
       }
       if(momentFormat === "YY") {
@@ -453,6 +465,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         return 9999;
       }
     },
+    /**
+     * Set the min value a token can be
+     */
     _getMin: function(momentFormat) {
       if( /^(?:YY|YYYY|X|x|H|HH|m|mm|s|ss|S|SS|SSS)$/.test(momentFormat) ) {
         return 0;
