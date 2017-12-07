@@ -11,26 +11,56 @@
   <link rel="import" href="../../px-theme/px-theme-styles.html">
 
   <link rel="import" href="../px-datetime-entry.html" />
-</head>
-<body>
   <custom-style>
     <style include="px-theme-styles" is="custom-style"></style>
   </custom-style>
-  <div style="display:flex; ">
-    <px-datetime-entry
-      date-or-time="Date"
-      block-future-dates
-      time-zone="UTC"
-      show-time-zone="dropdown"
-      moment-format="MM/DD/YY">
-    </px-datetime-entry>
-    <px-datetime-entry
-      date-or-time="Time"
-      moment-format="hh:mm a"
-      time-zone="UTC"
-      show-time-zone="dropdown">
-    </px-datetime-entry>
-  </div>
+</head>
+<body>
+    <dom-bind>
+        <template is="dom-bind">
+      <div style="display:flex">
+        <px-datetime-entry
+          date-or-time="Date"
+          block-future-dates
+          time-zone="UTC"
+          show-time-zone="dropdown"
+          moment-format="MM/DD/YY">
+        </px-datetime-entry>
+        <px-datetime-entry
+          date-or-time="Time"
+          moment-format="hh:mm a"
+          time-zone="UTC"
+          show-time-zone="dropdown">
+        </px-datetime-entry>
+      </div>
+      </br>
+      <div style="display:flex">
+        <px-datetime-entry
+          date-or-time="Date"
+          block-future-dates
+          time-zone="UTC"
+          show-time-zone="dropdown"
+          moment-format="MM/DD/YY"
+          moment-obj="{{momentObj}}">
+        </px-datetime-entry>
+        <px-datetime-entry
+          date-or-time="Time"
+          moment-format="hh:mm a"
+          time-zone="UTC"
+          show-time-zone="dropdown"
+          moment-obj="{{momentObj}}">
+        </px-datetime-entry>
+      </div>
+  </template>
+</dom-bind>
+<script>
+  var template = document.querySelector('template[is=dom-bind]');
+  template.momentObj = Px.moment().subtract(7, 'days');
+
+  // Support hybrid mode
+  var templatev1 = document.querySelector('dom-bind');
+  templatev1.momentObj = template.momentObj;
+</script>
 </body>
 </html>
 

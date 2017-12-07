@@ -14,7 +14,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     class="cell"
     order='{{index}}'
     moment-obj="[[momentObj]]"
-    moment-format='[[item]]'>
+    moment-format='[[item]]'
+    time-zone="[[timeZone]]">
   </px-datetime-entry-cell>
 
 
@@ -260,13 +261,48 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _wraparound: function(evt) {
       var key = evt.detail.combo;
           dtEntryValue = this.$.dtEntry.value;
+      //If cell is empty, invalid, or equal to the max value loop around to the min value
       if(key === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._getMax(this.momentFormat))) {
         evt.preventDefault();
         this.$.dtEntry.value = this._getMin(this.momentFormat);
       }
+      //If cell is empty or equal to the min value loop around to the max value
       else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._getMin(this.momentFormat))) {
         evt.preventDefault();
         this.$.dtEntry.value = this._getMax(this.momentFormat);
+      }
+      // Invalid Field
+      // If the entry is invalid jump to the min value
+      else if (key === 'up' && this.isValid === false) {
+        numberValue = parseInt(dtEntryValue);
+        maxNumberValue = this._getMax(this.momentFormat);
+        if(numberValue > maxNumberValue){
+          evt.preventDefault();
+          this.$.dtEntry.value = minNumberValue;
+        }
+      }
+      // Invalid Field
+      // If the entry is invalid jump to the max value
+      // Need to take inconsideration not all months and 31 days
+      else if (key === 'down' && this.isValid === false) {
+        numberValue = parseInt(dtEntryValue);
+        maxNumberValue = this._getMax(this.momentFormat);
+        //handle value 0 if min number is 1
+        if(numberValue === 0 && this._getMin(this.momentFormat) === 1){
+          evt.preventDefault();
+          this.$.dtEntry.value = this._getMax(this.momentFormat);
+        }
+        if(numberValue > maxNumberValue){
+          evt.preventDefault();
+          //handle that not all months have 31 days
+          if (this.momentFormat === "D" || this.momentFormat === "DD") {
+            if(numberValue <= 31){
+              this.$.dtEntry.value = (numberValue - 1);
+              return;
+            }
+          }
+          this.$.dtEntry.value = this._getMax(this.momentFormat);
+        }
       }
     },
     /**

@@ -1,3 +1,12 @@
+v2.0.0
+==================
+* Removed `datetime` property
+* Removed `range` property
+* `momentObj` is new source of true
+* Allows a blank/empty state
+* Cell is no longer readonly
+* Added validate for field
+
 v1.1.0
 ==================
 * Polymer 1.x/2.x hybrid element support
