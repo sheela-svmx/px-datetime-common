@@ -1,3 +1,7 @@
+v2.0.1
+==================
+* Right align text in the cells
+
 v2.0.0
 ==================
 * Removed `datetime` property
