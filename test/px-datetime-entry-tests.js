@@ -764,9 +764,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on MM formatted cell', function (done) {
@@ -777,9 +775,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
     });
   });
 
@@ -792,9 +788,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on D formatted cell', function (done) {
@@ -805,9 +799,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('31', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('31', {within: 1000, every: 100}, done);
     });
   });
 
@@ -820,9 +812,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on DD formatted cell', function (done) {
@@ -833,9 +823,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('31', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('31', {within: 1000, every: 100}, done);
     });
   });
 
@@ -849,9 +837,7 @@ suite('px-datetime-entry-cell empty', function () {
   //       theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
   //   MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-  //   expect(theInput[0].value)
-  //     .to.eventuallyEqual('00', {within: 1000, every: 100}, done);
+  //   expect(theInput[0].value).to.eventuallyEqual('00', {within: 1000, every: 100}, done);
   //   });
   // });
   test('arrowDown on YYYY formatted cell', function (done) {
@@ -862,9 +848,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
     });
   });
 
@@ -877,9 +861,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on YY formatted cell', function (done) {
@@ -890,9 +872,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
     });
   });
 
@@ -905,9 +885,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on H formatted cell', function (done) {
@@ -918,9 +896,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('23', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('23', {within: 1000, every: 100}, done);
     });
   });
 
@@ -933,9 +909,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on HH formatted cell', function (done) {
@@ -946,9 +920,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('23', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('23', {within: 1000, every: 100}, done);
     });
   });
 
@@ -961,9 +933,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on h formatted cell', function (done) {
@@ -974,12 +944,22 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
     });
   });
+  test('arrowDown on "00" h formatted cell', function (done) {
+    dateFixt.momentFormat = "h";
 
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+    theInput[0].value = "00";
+    cells[0]._handleBlur();
+    MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
+    expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
 
   test('arrowUp on hh formatted cell', function (done) {
     dateFixt.momentFormat = "hh";
@@ -989,9 +969,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on hh formatted cell', function (done) {
@@ -1002,9 +980,20 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
+    expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" hh formatted cell', function (done) {
+    dateFixt.momentFormat = "hh";
 
-    expect(theInput[0].value)
-      .to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+    theInput[0].value = "00";
+    cells[0]._handleBlur();
+    MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
+    expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
     });
   });
 
@@ -1018,8 +1007,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on k formatted cell', function (done) {
@@ -1031,8 +1019,19 @@ suite('px-datetime-entry-cell empty', function () {
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
-    expect(theInput[0].value)
-      .to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "0" k formatted cell', function (done) {
+    dateFixt.momentFormat = "k";
+
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+    theInput[0].value = "0";
+    cells[0]._handleBlur();
+    MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
+    expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
     });
   });
 
@@ -1045,9 +1044,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
-
-    expect(theInput[0].value)
-      .to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
     });
   });
   test('arrowDown on kk formatted cell', function (done) {
@@ -1057,10 +1054,21 @@ suite('px-datetime-entry-cell empty', function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
-    MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
+    MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown')
+    expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" kk formatted cell', function (done) {
+    dateFixt.momentFormat = "kk";
 
-    expect(theInput[0].value)
-      .to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
     });
   });
 
@@ -1288,7 +1296,624 @@ suite('px-datetime-entry-cell empty', function () {
       .to.eventuallyEqual('0', {within: 1000, every: 100}, done);
     });
   });
+});
 
+
+
+/**
+ * PX-DATETIME-ENTRY-CELL EMPTY
+ */
+suite('px-datetime-entry-cell invalid', function () {
+
+  let dateFixt;
+
+    setup(function(done) {
+      dateFixt = fixture('dateEntryDropdown');
+      now = Px.moment();
+      dateFixt.momentObj = now;
+
+      flush(()=>{
+        var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+            theYearInput = Polymer.dom(cells[1].root).querySelectorAll('#dtEntry'),
+            theMonthInput = Polymer.dom(cells[1].root).querySelectorAll('#dtEntry');
+
+        theMonthInput[0].value = "99";
+        cells[1]._handleBlur();
+        done();
+      });
+    });
+
+
+  test('arrowUp on invalid M formatted cell', function (done) {
+    dateFixt.momentFormat = "M";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid M formatted cell', function (done) {
+    dateFixt.momentFormat = "M";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" M formatted cell', function (done) {
+    dateFixt.momentFormat = "M";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.equal(theInput[0].value, "00");
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid MM formatted cell', function (done) {
+    dateFixt.momentFormat = "MM";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid MM formatted cell', function (done) {
+    dateFixt.momentFormat = "MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" MM formatted cell', function (done) {
+    dateFixt.momentFormat = "MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.equal(theInput[0].value, "00");
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  //BUG NEEDS FIXING
+  // test('arrowUp on invalid YYYY formatted cell', function (done) {
+  //   dateFixt.momentFormat = "YYYY/MM";
+  //   flush(function () {
+  //   var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+  //       theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+  //     theInput[0].value = "99";
+  //     cells[0]._handleBlur();
+
+  //     assert.isFalse(dateFixt.isValid);
+  //     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+  //     expect(theInput[0].value).to.eventuallyEqual('00', {within: 1000, every: 100}, done);
+  //   });
+  // });
+  test('arrowDown on invalid YYYY formatted cell', function (done) {
+    dateFixt.momentFormat = "YYYY/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+
+  test('arrowUp on invalid YY formatted cell', function (done) {
+    dateFixt.momentFormat = "YY/MM";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid YY formatted cell', function (done) {
+    dateFixt.momentFormat = "YY/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid H formatted cell', function (done) {
+    dateFixt.momentFormat = "H";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid H formatted cell', function (done) {
+    dateFixt.momentFormat = "H";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('23', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid HH formatted cell', function (done) {
+    dateFixt.momentFormat = "HH";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid HH formatted cell', function (done) {
+    dateFixt.momentFormat = "HH";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('23', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid h formatted cell', function (done) {
+    dateFixt.momentFormat = "h";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid h formatted cell', function (done) {
+    dateFixt.momentFormat = "h";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" h formatted cell', function (done) {
+    dateFixt.momentFormat = "h/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.equal(theInput[0].value, "00");
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid hh formatted cell', function (done) {
+    dateFixt.momentFormat = "hh";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid hh formatted cell', function (done) {
+    dateFixt.momentFormat = "hh";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" hh formatted cell', function (done) {
+    dateFixt.momentFormat = "hh/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.equal(theInput[0].value, "00");
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid k formatted cell', function (done) {
+    dateFixt.momentFormat = "k";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid k formatted cell', function (done) {
+    dateFixt.momentFormat = "k";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" k formatted cell', function (done) {
+    dateFixt.momentFormat = "k/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.equal(theInput[0].value, "00");
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid kk formatted cell', function (done) {
+    dateFixt.momentFormat = "kk";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid kk formatted cell', function (done) {
+    dateFixt.momentFormat = "kk";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on "00" kk formatted cell', function (done) {
+    dateFixt.momentFormat = "kk/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.equal(theInput[0].value, "00");
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid m formatted cell', function (done) {
+    dateFixt.momentFormat = "m";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid m formatted cell', function (done) {
+    dateFixt.momentFormat = "m";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('59', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid mm formatted cell', function (done) {
+    dateFixt.momentFormat = "mm";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid mm formatted cell', function (done) {
+    dateFixt.momentFormat = "mm";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('59', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid s formatted cell', function (done) {
+    dateFixt.momentFormat = "s";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid s formatted cell', function (done) {
+    dateFixt.momentFormat = "s";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('59', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid ss formatted cell', function (done) {
+    dateFixt.momentFormat = "ss";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid ss formatted cell', function (done) {
+    dateFixt.momentFormat = "ss";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('59', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid S formatted cell', function (done) {
+    dateFixt.momentFormat = "S/MM";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid S formatted cell', function (done) {
+    dateFixt.momentFormat = "S/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('9', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid SS formatted cell', function (done) {
+    dateFixt.momentFormat = "SS/MM";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid SS formatted cell', function (done) {
+    dateFixt.momentFormat = "SS/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "00";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+    });
+  });
+
+
+  test('arrowUp on invalid SSS formatted cell', function (done) {
+    dateFixt.momentFormat = "SSS/MM";
+    flush(function () {
+    var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "999";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
+      expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
+    });
+  });
+  test('arrowDown on invalid SSS formatted cell', function (done) {
+    dateFixt.momentFormat = "SSS/MM";
+    flush(function () {
+      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "000";
+      cells[0]._handleBlur();
+
+      assert.isFalse(dateFixt.isValid);
+      MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
+      expect(theInput[0].value).to.eventuallyEqual('999', {within: 1000, every: 100}, done);
+    });
+  });
 });
 
 
