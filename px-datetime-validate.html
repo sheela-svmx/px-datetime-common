@@ -100,8 +100,8 @@ var validate = [Polymer.AppLocalizeBehavior, {
     var inputMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone),
         invalidFutureSelection    = this.dateOrTime.toLowerCase() === 'date' && this.blockFutureDates && inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone)),
         invalidPastSelection      = this.dateOrTime.toLowerCase() === 'date' && this.blockPastDates  && inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone)),
-        invalidPastMaxSelection   = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.max).length > 0 && inputMoment.isAfter(this.max),
-        invalidBeforeMinSelection = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.min).length > 0 && inputMoment.isBefore(this.min);
+        invalidPastMaxSelection   = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.maxDate).length > 0 && inputMoment.isAfter(this.maxDate),
+        invalidBeforeMinSelection = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.minDate).length > 0 && inputMoment.isBefore(this.minDate);
 
     // Validate inputStr
     if((inputMoment.isValid() && !invalidFutureSelection && !invalidPastSelection && !invalidPastMaxSelection && !invalidBeforeMinSelection)) {
@@ -170,8 +170,8 @@ var validate = [Polymer.AppLocalizeBehavior, {
     var dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone),
         invalidFutureSelection    = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone)),
         invalidPastSelection      = this.blockPastDates &&  dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone)),
-        invalidPastMaxSelection   = Object.keys(this.max).length > 0 && dateTimeMoment.isAfter(this.max),
-        invalidBeforeMinSelection = Object.keys(this.min).length > 0 && dateTimeMoment.isBefore(this.min);
+        invalidPastMaxSelection   = Object.keys(this.maxDate).length > 0 && dateTimeMoment.isAfter(this.maxDate),
+        invalidBeforeMinSelection = Object.keys(this.minDate).length > 0 && dateTimeMoment.isBefore(this.minDate);
 
     // if the component dateTimeString is valid
     if((dateTimeMoment.isValid() && !invalidFutureSelection && !invalidPastSelection && !invalidPastMaxSelection && !invalidBeforeMinSelection)) {

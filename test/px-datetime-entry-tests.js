@@ -467,8 +467,8 @@ suite('px-datetime-entry', function () {
   });
 
 
-  test('block dates before min', function (done) {
-    dateFixt.set('min', dateFixt.momentObj.clone().subtract(1, 'day'));
+  test('block dates before minDate', function (done) {
+    dateFixt.set('minDate', dateFixt.momentObj.clone().subtract(1, 'day'));
 
     flush(() => {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
@@ -486,8 +486,8 @@ suite('px-datetime-entry', function () {
   });
 
 
-  test('block dates after max', function (done) {
-    dateFixt.set('max', dateFixt.momentObj.clone().add(1, 'day'));
+  test('block dates after maxDate', function (done) {
+    dateFixt.set('maxDate', dateFixt.momentObj.clone().add(1, 'day'));
 
     flush(() => {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
