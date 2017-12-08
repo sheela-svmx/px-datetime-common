@@ -1,6 +1,6 @@
 v2.0.1
 ==================
-* Right align text in the cells
+* removed _onEnter
 
 v2.0.0
 ==================

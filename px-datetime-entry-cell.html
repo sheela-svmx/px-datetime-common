@@ -107,7 +107,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @private
      */
     keyBindings: {
-      'enter' : '_onEnter',
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack'
     },
@@ -128,13 +127,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     reset: function() {
       this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
-    },
-    /**
-     *
-     */
-    _onEnter: function() {
-      this._checkValue();
-      this._moveFocusForward();
     },
     /**
      * Set the correct type of input field based on the momentFormat
