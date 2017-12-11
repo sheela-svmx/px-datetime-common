@@ -89,7 +89,8 @@ var validate = [Polymer.AppLocalizeBehavior, {
    * @return {Boolean} passed validation
    */
   _validateInput: function(showButtons) {
-    var inputArr =  Polymer.dom(this.root).querySelectorAll('.cell');
+    var inputArr =  Polymer.dom(this.root).querySelectorAll('.cell'),
+        invalidObj = new Object();
 
     // Create a string from all of the fields put together
     inputStr = this._entryInputString(inputArr);
@@ -97,14 +98,14 @@ var validate = [Polymer.AppLocalizeBehavior, {
     inputStr = inputStr.trim();
     inputStr = inputStr.split('\xa0').join(' '); //added to be able to use Moment strict parsing
 
-    var inputMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone),
-        invalidFutureSelection    = this.dateOrTime.toLowerCase() === 'date' && this.blockFutureDates && inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone)),
-        invalidPastSelection      = this.dateOrTime.toLowerCase() === 'date' && this.blockPastDates  && inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone)),
-        invalidPastMaxSelection   = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.maxDate).length > 0 && inputMoment.isAfter(this.maxDate),
-        invalidBeforeMinSelection = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.minDate).length > 0 && inputMoment.isBefore(this.minDate);
+    inputMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone),
+    invalidObj.futureSelection    = this.dateOrTime.toLowerCase() === 'date' && this.blockFutureDates && inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone)),
+    invalidObj.pastSelection      = this.dateOrTime.toLowerCase() === 'date' && this.blockPastDates  && inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone)),
+    invalidObj.pastMaxSelection   = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.maxDate).length > 0 && inputMoment.isAfter(this.maxDate),
+    invalidObj.beforeMinSelection = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.minDate).length > 0 && inputMoment.isBefore(this.minDate);
 
     // Validate inputStr
-    if((inputMoment.isValid() && !invalidFutureSelection && !invalidPastSelection && !invalidPastMaxSelection && !invalidBeforeMinSelection)) {
+    if((inputMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
       this.toggleClass('validation-error', false, this.$.wrapper);
       /*
         The input box only has date or time.
@@ -136,11 +137,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
       return true;
 
     } else {
-      this.set('validationErrorMessage', this._determineValidationMessage(inputMoment, invalidFutureSelection, invalidPastSelection, invalidPastMaxSelection, invalidBeforeMinSelection));
-      this.toggleClass('validation-error', true, this.$.wrapper);
-      this.set('isValid', false);
-      this._submitButtonState(false);
-
+      this._invalidField(this, inputMoment, invalidObj);
       return false;
     }
 
@@ -152,31 +149,38 @@ var validate = [Polymer.AppLocalizeBehavior, {
    *
    * @return {momentObj} validated momentObj
    */
-  _validateField: function(showButtons) {
+  _validateField: function(funcOrigin) {
     var dateEntry = Polymer.dom(this.root).querySelector('#date'),
         dateArr = Polymer.dom(dateEntry.root).querySelectorAll('.cell'),
         timeEntry = Polymer.dom(this.root).querySelector('#time'),
-        timeArr = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
+        timeArr = Polymer.dom(timeEntry.root).querySelectorAll('.cell'),
+        invalidObj = new Object(),
+        dateTimeMoment;
+
 
     //Create a string from all of the entries put together
     dateString = this._entryInputString(dateArr);
     timeString = this._entryInputString(timeArr);
-    if (!dateString || !timeString){ return false; } // break if imcomplete
+    if (!dateString || !timeString) {
+      if (funcOrigin === "_momentChanged"){ return false };
+      this._invalidField(dateEntry, dateTimeMoment, invalidObj);
+      return false;
+    }
     dateTimeString = dateString.trim() + " " + timeString.trim();
     dateTimeString = dateTimeString.split('\xa0').join(' '); //added to be able to use Moment strict parsing
 
     dateTimeFormat = this.dateFormat + " " + this.timeFormat;
 
-    var dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone),
-        invalidFutureSelection    = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone)),
-        invalidPastSelection      = this.blockPastDates &&  dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone)),
-        invalidPastMaxSelection   = Object.keys(this.maxDate).length > 0 && dateTimeMoment.isAfter(this.maxDate),
-        invalidBeforeMinSelection = Object.keys(this.minDate).length > 0 && dateTimeMoment.isBefore(this.minDate);
+    dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone);
+    invalidObj.futureSelection    = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
+    invalidObj.pastSelection      = this.blockPastDates &&  dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
+    invalidObj.pastMaxSelection   = Object.keys(this.maxDate).length > 0 && dateTimeMoment.isAfter(this.maxDate);
+    invalidObj.beforeMinSelection = Object.keys(this.minDate).length > 0 && dateTimeMoment.isBefore(this.minDate);
 
     // if the component dateTimeString is valid
-    if((dateTimeMoment.isValid() && !invalidFutureSelection && !invalidPastSelection && !invalidPastMaxSelection && !invalidBeforeMinSelection)) {
+    if((dateTimeMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
       // turn off input box error outline
-      dateEntry.toggleClass('validation-error', false, this.$.wrapper);
+      dateEntry.toggleClass('validation-error', false, dateEntry.$.fieldWrapper);
       dateEntry.set('isValid', true);
 
       //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
@@ -186,15 +190,15 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
     }
     else {
-      dateEntry.set('validationErrorMessage', this._determineValidationMessage(dateTimeMoment, invalidFutureSelection, invalidPastSelection, invalidPastMaxSelection, invalidBeforeMinSelection));
-      dateEntry.toggleClass('validation-error', true, this.$.fieldWrapper);
-      dateEntry.set('isValid', false);
-      dateEntry._submitButtonState(false);
-
+      this._invalidField(dateEntry, dateTimeMoment, invalidObj);
       return false;
     }
   },
-
+  _invalidField: function(dateEntry, submittedMoment, invalidObj) {
+    dateEntry.set('validationErrorMessage', this._determineValidationMessage(submittedMoment, invalidObj));
+    (this.tagName === "PX-DATETIME-FIELD") ? dateEntry.toggleClass('validation-error', true, this.$.fieldWrapper) : dateEntry.toggleClass('validation-error', true, this.$.wrapper);
+    dateEntry.set('isValid', false);
+  },
   /**
    * loop through value of the entry cell and return a string of the value
    */
@@ -215,47 +219,50 @@ var validate = [Polymer.AppLocalizeBehavior, {
   /**
    * Returns a meaningful validation message
    */
-  _determineValidationMessage: function(inputMoment, invalidFutureSelection, invalidPastSelection, invalidPastMaxSelection, invalidBeforeMinSelection) {
-    if(invalidFutureSelection) {
+  _determineValidationMessage: function(submittedMoment, invalidObj) {
+    if(!submittedMoment) {
+      return this.localize('Incomplete');
+    }
+    if(invalidObj.futureSelection) {
       return this.localize('Future dates are not allowed');
     }
-    else if(invalidPastSelection) {
+    else if(invalidObj.pastSelection) {
       return this.localize('Past dates are not allowed');
     }
-    else if(invalidPastMaxSelection) {
-      return this.localize('Date is past max range');
+    else if(invalidObj.pastMaxSelection) {
+      return this.localize('Date is past max date');
     }
-    else if(invalidBeforeMinSelection) {
-      return this.localize('Date is before min range');
+    else if(invalidObj.beforeMinSelection) {
+      return this.localize('Date is before min date');
     }
     else {
-      var invalidAt = inputMoment.invalidAt();
+      var invalidAt = submittedMoment.invalidAt();
 
       if(invalidAt !== -1) {
         switch(invalidAt) {
           case 0:
-            return this.localize('Year') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid');
+            return this.localize('Year') + ' ' + submittedMoment._a[invalidAt] + ' ' + this.localize('is not valid');
             break;
           case 1:
-            return this.localize('Month') + ' ' + (inputMoment._a[invalidAt] + 1) + ' ' + this.localize('is not valid');
+            return this.localize('Month') + ' ' + (submittedMoment._a[invalidAt] + 1) + ' ' + this.localize('is not valid');
             break;
           case 2:
-            return this.localize('Day') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid');
+            return this.localize('Day') + ' ' + submittedMoment._a[invalidAt] + ' ' + this.localize('is not valid');
             break;
           case 3:
-            return this.localize('Hour') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid');
+            return this.localize('Hour') + ' ' + submittedMoment._a[invalidAt] + ' ' + this.localize('is not valid');
             break;
           case 4:
-            return this.localize('Minute') + ' ' + inputMoment._a[invalidAt]  + ' ' + this.localize('is not valid');
+            return this.localize('Minute') + ' ' + submittedMoment._a[invalidAt]  + ' ' + this.localize('is not valid');
             break;
           case 5:
-            return this.localize('Second') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid');
+            return this.localize('Second') + ' ' + submittedMoment._a[invalidAt] + ' ' + this.localize('is not valid');
             break;
           case 6:
-            return this.localize('Millisecond') + ' ' + inputMoment._a[invalidAt] + ' ' + this.localize('is not valid');
+            return this.localize('Millisecond') + ' ' + submittedMoment._a[invalidAt] + ' ' + this.localize('is not valid');
             break;
         }
-      } else if(inputMoment.parsingFlags().bigHour === true) {
+      } else if(submittedMoment.parsingFlags().bigHour === true) {
         return this.localize('This hour is not within a 12 hour clock');
       }
     }

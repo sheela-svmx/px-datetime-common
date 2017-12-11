@@ -505,25 +505,6 @@ suite('px-datetime-entry', function () {
   });
 
 
-  test('enter fires event', function (done) {
-    flush(() => {
-      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          secondInput = Polymer.dom(cells[1].root).querySelector('input');
-
-      secondInput.value = "0";
-
-      var listener = function (evt) {
-        assert.equal(evt.detail.dir, 1);
-        cells[1].removeEventListener('px-entry-cell-move', listener);
-        done();
-      };
-
-      cells[1].addEventListener('px-entry-cell-move', listener);
-      MockInteractions.pressAndReleaseKeyOn(cells[1], 13, [], 'Enter');
-    });
-  });
-
-
   test('_preserveTime', function () {
     var moment = Px.moment.tz(Px.moment("2016-04-03T00:00:00Z", Px.moment.ISO_8601), this.timeZone),
         moment2 = Px.moment.tz(Px.moment("2009-06-07T10:32:06Z", Px.moment.ISO_8601), this.timeZone);
