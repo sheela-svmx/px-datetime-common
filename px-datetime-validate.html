@@ -302,7 +302,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
    */
    _handleIncompleteEntries: function(funcOrigin, dateEntry, fieldNodes) {
     if (funcOrigin === "_momentChanged") { return false };
-    if (!dateEntry.required) {
+    if (!this.required) {
           dateEntryBlank = this._loopOverCellValues(fieldNodes.dateCells);
           timeEntryBlank = this._loopOverCellValues(fieldNodes.timeCells);
       if(dateEntryBlank && timeEntryBlank) {
