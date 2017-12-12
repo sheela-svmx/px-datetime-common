@@ -48,7 +48,6 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
   width: 0;
   font-family: inherit;
   font-size: var(--px-datetime-entry-font-size, inherit);
-  text-transform: uppercase;
   -moz-appearance: textfield;
 }
 
@@ -60,6 +59,12 @@ Predix branding rules go in px-datetime-entry-predix.scss, not in this file.
 .text-input--bare:focus {
   background-color: var(--px-datetime-entry-selected, lightskyblue);
   outline: none;
+}
+.text-input--bare::placeholder {
+  color: var(--px-datetime-text-color--placeholder, #748b99);
+}
+.text-input--bare:focus::placeholder {
+  color: var(--px-datetime-text-color--placeholder--focused, #748b99);
 }
 
 input:invalid {
