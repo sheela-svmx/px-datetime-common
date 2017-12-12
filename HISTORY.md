@@ -1,3 +1,7 @@
+v2.0.2
+==================
+* added validation for blank state
+
 v2.0.1
 ==================
 * removed _onEnter
