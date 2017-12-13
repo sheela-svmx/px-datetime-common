@@ -93,6 +93,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
       var inputMoment = Px.moment.tz(inputStr, format, tz);
       if (inputMoment.isValid()) {
         this.set('isValid', true);
+        this.toggleClass('validation-error', false, this.$.wrapper);
         this.fire('px-moment-valid', {"element":this});
       }
       else {
