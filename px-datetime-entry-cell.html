@@ -38,7 +38,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(momentFormat)]]"
-      placeholder="[[_placeholderText(momentFormat)]]" />
+      placeholder="[[_placeholderText(momentFormat)]]"
+      max="[[_max]]"
+      min="[[_min]]"
+      step="1" />
     </template>
 </dom-module>
 
@@ -92,6 +95,20 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         readOnly: true,
         notify: true,
         value: false
+      },
+      /**
+       * Maximum numeric value for given field type.
+       */
+      _max: {
+        type: Number,
+        computed: '_getMax(momentFormat)'
+      },
+      /**
+       * Minimum numeric value for given field type.
+       */
+      _min: {
+        type: Number,
+        computed: '_getMin(momentFormat)'
       }
     },
 
@@ -254,29 +271,29 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       var key = evt.detail.combo;
           dtEntryValue = this.$.dtEntry.value;
       //If cell is empty, invalid, or equal to the max value loop around to the min value
-      if(key === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._getMax(this.momentFormat))) {
+      if(key === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._max)) {
         evt.preventDefault();
-        this.$.dtEntry.value = this._getMin(this.momentFormat);
+        this.$.dtEntry.value = this._min;
       }
       //If cell is empty or equal to the min value loop around to the max value
-      else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._getMin(this.momentFormat))) {
+      else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._min)) {
         evt.preventDefault();
-        this.$.dtEntry.value = this._getMax(this.momentFormat);
+        this.$.dtEntry.value = this._max;
       }
       // Moment says its valid for k, kk, h, hh to have a value of 0.  -_-
       // Prevent field from going negative
       else if (key === 'down' && /^(?:k|kk|h|hh)$/.test(this.momentFormat) && (dtEntryValue === "0" || dtEntryValue === "00")) {
         evt.preventDefault();
-        this.$.dtEntry.value = this._getMax(this.momentFormat);
+        this.$.dtEntry.value = this._max;
       }
       // Invalid Field
       // If the entry is invalid jump to the min value
       else if (key === 'up' && this.isValid === false) {
         numberValue = parseInt(dtEntryValue);
-        maxNumberValue = this._getMax(this.momentFormat);
+        maxNumberValue = this._max;
         if(numberValue > maxNumberValue){
           evt.preventDefault();
-          this.$.dtEntry.value = this._getMin(this.momentFormat);
+          this.$.dtEntry.value = this._min;
         }
       }
       // Invalid Field
@@ -284,11 +301,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       // Need to take inconsideration not all months and 31 days
       else if (key === 'down' && this.isValid === false) {
         numberValue = parseInt(dtEntryValue);
-        maxNumberValue = this._getMax(this.momentFormat);
+        maxNumberValue = this._max;
         //If 0 is invalid prevent field from going negative
-        if(numberValue === 0 && this._getMin(this.momentFormat) === 1){
+        if(numberValue === 0 && this._min === 1){
           evt.preventDefault();
-          this.$.dtEntry.value = this._getMax(this.momentFormat);
+          this.$.dtEntry.value = this._max;
         }
         if(numberValue > maxNumberValue){
           evt.preventDefault();
@@ -299,7 +316,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
               return;
             }
           }
-          this.$.dtEntry.value = this._getMax(this.momentFormat);
+          this.$.dtEntry.value = this._max;
         }
       }
     },
@@ -334,7 +351,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       var ne = Polymer.dom(evt);
       this._setIsSelected(false);
       this._checkValue();
-
       this.fire('px-cell-blurred');
     },
     /**
@@ -501,7 +517,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         return 999;
       }
       if( /^(?:YY|YYYY)$/.test(momentFormat) ) {
-        return 99;
+        return 9999;
       }
     },
     /**

@@ -57,7 +57,6 @@ Custom property | Description
               moment-obj="[[momentObj]]"
               moment-format='[[item]]'
               symbol=[[_returnSymbol(index,_symbolCharArray)]]
-              is-valid$={{isValid}}
               time-zone="[[timeZone]]"
               is-selected="{{isSelected}}"
               resources="[[resources]]"
@@ -199,7 +198,7 @@ Custom property | Description
       cells.forEach(function(cell) {
         cell.reset();
       });
-      this._validateInput();
+      // this._validateInput();
     },
     /**
      * runs when `momentFormat` is changed
@@ -317,7 +316,7 @@ Custom property | Description
      * when `px-cell-blurred` is fired run `_validateInput`
      */
     _handleBlur: function(){
-      this._validateInput();
+      this._validateInput(this.momentFormat, this.timeZone);
     },
     /**
      * Catches the `on-focus-changed` from `px-dropdown` and fires this up for `px-datetime-field`

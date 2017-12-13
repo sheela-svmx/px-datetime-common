@@ -85,63 +85,23 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
   /**
    * Validation function for 'px-datetime-entry'
-   *
-   * @return {Boolean} passed validation
    */
-  _validateInput: function(showButtons) {
+  _validateInput: function(format, tz) {
     var inputArr =  Polymer.dom(this.root).querySelectorAll('.cell'),
-        invalidObj = new Object();
-
-    // Create a string from all of the fields put together
-    inputStr = this._entryInputString(inputArr);
-    if (!inputStr){ return false; } // break if incomplete
-    inputStr = inputStr.trim();
-    inputStr = inputStr.split('\xa0').join(' '); //added to be able to use Moment strict parsing
-
-    inputMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone),
-    invalidObj.futureSelection    = this.dateOrTime.toLowerCase() === 'date' && this.blockFutureDates && inputMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone)),
-    invalidObj.pastSelection      = this.dateOrTime.toLowerCase() === 'date' && this.blockPastDates  && inputMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone)),
-    invalidObj.pastMaxSelection   = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.maxDate).length > 0 && inputMoment.isAfter(this.maxDate),
-    invalidObj.beforeMinSelection = this.dateOrTime.toLowerCase() === 'date' && Object.keys(this.minDate).length > 0 && inputMoment.isBefore(this.minDate);
-
-    // Validate inputStr
-    if((inputMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
-      this.toggleClass('validation-error', false, this.$.wrapper);
-      /*
-        The input box only has date or time.
-        Clone the moment object so we have a full date-time.
-        We want to use clone so it stays in utc or local time
-      */
-      var newMoment = (this.momentObj === undefined) ? Px.moment().tz(this.timeZone) : this.momentObj.clone().tz(this.timeZone);
-      // just use the relevant fields, so ok if not in utc timemoment
-      var typedInMoment = Px.moment.tz(inputStr, this.momentFormat, this.timeZone);
-
-      // since the input box only has date or time, just reset that portion of the moment object
-      if (this.dateOrTime.toLowerCase() === 'date') { // if i'm typing in a date field, set the new date
-        newMoment.date(1); // first, 'zero' the date back to the first of the month to prevent any rolling effects (if a month doesn't have 30/31 days)
-        newMoment.year(typedInMoment.year()); // set the year
-        newMoment.month(typedInMoment.month()); // then the month
-        newMoment.date(typedInMoment.date()); // and finally the date, to make sure we don't have any rolling effects
-      } else {
-        newMoment.hour(typedInMoment.hour());
-        newMoment.minute(typedInMoment.minute());
-        newMoment.second(typedInMoment.second());
-        newMoment.millisecond(typedInMoment.millisecond());
+        inputStr = this._entryInputString(inputArr);
+    if (inputStr) {
+      var inputMoment = Px.moment.tz(inputStr, format, tz);
+      if (inputMoment.isValid()) {
+        this.set('isValid', true);
+        this.fire('px-moment-valid', {"element":this});
       }
-
-      this.set('isValid', true);
-      // if the neighbor is also valid, then we can set our moment object
-      if(this.neighborValid && (!this.momentObj || (this.momentObj && !this.momentObj.isSame(newMoment)))) {
-        this.fire('px-moment-valid',{'momentObj':newMoment})
+      else {
+        this._invalidField(this, inputMoment, new Object());
       }
-      return true;
-
-    } else {
-      this._invalidField(this, inputMoment, invalidObj);
-      return false;
     }
 
   },
+
   /**
    * Validate a complete field
    * called in px-datetime-field and px-datetime-range-field
@@ -179,13 +139,18 @@ var validate = [Polymer.AppLocalizeBehavior, {
       dateEntry.set('isValid', true);
 
       //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
-      if(this.neighborValid && (!this.momentObj || (this.momentObj && !this.momentObj.isSame(dateTimeMoment)))) {
-        return dateTimeMoment;
+      if(this.neighborValid) {
+        if(!this.momentObj || (this.momentObj && !this.momentObj.isSame(dateTimeMoment))){
+          return dateTimeMoment;
+        }
+        else {
+          return 'FieldSame';
+        }
       }
 
     }
     else {
-      this._invalidField(dateEntry, dateTimeMoment, invalidObj);
+      this._invalidField(this, dateTimeMoment, invalidObj);
       return false;
     }
   },
@@ -196,10 +161,10 @@ var validate = [Polymer.AppLocalizeBehavior, {
    * @param {Object} submittedMoment - Invalid momentObj
    * @param {Object} invalidObj - Stores the different invalid
    */
-  _invalidField: function(dateEntry, submittedMoment, invalidObj) {
-    dateEntry.set('validationErrorMessage', this._determineValidationMessage(submittedMoment, invalidObj));
-    (this.tagName === "PX-DATETIME-FIELD") ? dateEntry.toggleClass('validation-error', true, this.$.fieldWrapper) : dateEntry.toggleClass('validation-error', true, this.$.wrapper);
-    dateEntry.set('isValid', false);
+  _invalidField: function(element, submittedMoment, invalidObj) {
+    element.set('validationErrorMessage', this._determineValidationMessage(submittedMoment, invalidObj));
+    (this.tagName === "PX-DATETIME-FIELD") ? element.toggleClass('validation-error', true, this.$.fieldWrapper) : element.toggleClass('validation-error', true, this.$.wrapper);
+    element.fire('px-moment-invalid', {"element":element});
   },
   /**
    * loop through array of the entry cells and return a string of the value
