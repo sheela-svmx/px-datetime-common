@@ -140,10 +140,16 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this.$.dtEntry.value = '';
     },
     /**
-     * resets the cell to the last momentObj
+     * Sets the value of the cell to the current moment obj
      */
-    reset: function() {
-      this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
+    setValueFromMoment: function() {
+
+      //if moment is null (or somehow undefined) => clear
+      if(!this.momentObj) {
+        this.clear();
+      } else {
+        this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
+      }
     },
     /**
      * Set the correct type of input field based on the momentFormat
@@ -222,14 +228,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _updateInputValue: function() {
       if(this.momentObj !== undefined && this.timeZone !== undefined) {
-        this.reset();
+        this.setValueFromMoment();
 
         if(this.momentFormat === 'MMM' || this.momentFormat === 'MMMM') {
           this._sizeInputs();
         }
-      }
-      else {
-        this.$.dtEntry.value = '';
       }
     },
     /**

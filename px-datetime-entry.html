@@ -37,11 +37,11 @@ Custom property | Description
   <template>
     <style include="px-datetime-entry-styles"></style>
 
-    <div id='wrapper' class="flex flex--middle">
+    <div id="wrapper" class="flex flex--middle">
       <div class="flex flex--middle dt-flex--no-shrink">
           <div class$="{{_getIconClass(hideIcon)}}" on-tap="_iconClicked">
               <span class="a11y">{{dateOrTime}}</span>
-              <template is="dom-if" if={{!hideIcon}}>
+              <template is="dom-if" if="{{!hideIcon}}">
                 <px-icon
                   id="icon"
                   class="dt-icon"
@@ -193,10 +193,10 @@ Custom property | Description
     /**
      * Resets the input value for each entry-cell input field to the current momentObj.
      */
-    reset: function() {
+     setValueFromMoment: function() {
       var cells = Polymer.dom(this.root).querySelectorAll('.cell');
       cells.forEach(function(cell) {
-        cell.reset();
+        cell.setValueFromMoment();
       });
       // this._validateInput();
     },
