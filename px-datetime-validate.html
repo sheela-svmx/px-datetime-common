@@ -137,7 +137,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
     if((dateTimeMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
       // turn off input box error outline
       dateEntry.toggleClass('validation-error', false, dateEntry.$.fieldWrapper);
-      this.set('fieldIsInvalid', false);
+      this.set('fieldIsValid', true);
 
       //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
       if(this.neighborValid) {
@@ -152,7 +152,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
     }
     else {
       this._invalidField(this, dateTimeMoment, invalidObj);
-      this.set('fieldIsInvalid', true);
+      this.set('fieldIsValid', false);
       return false;
     }
   },
