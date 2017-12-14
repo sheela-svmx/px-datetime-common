@@ -165,7 +165,13 @@ var validate = [Polymer.AppLocalizeBehavior, {
    */
   _invalidField: function(element, submittedMoment, invalidObj) {
     element.set('validationErrorMessage', this._determineValidationMessage(submittedMoment, invalidObj));
-    (this.tagName === "PX-DATETIME-FIELD") ? element.toggleClass('validation-error', true, this.$.fieldWrapper) : element.toggleClass('validation-error', true, this.$.wrapper);
+    if (this.tagName === "PX-DATETIME-ENTRY") {
+      element.toggleClass('validation-error', true, this.$.wrapper);
+      this.set('isValid', false);
+    }
+    else {
+      element.toggleClass('validation-error', true, this.$.fieldWrapper)
+    }
     element.fire('px-moment-invalid', {"element":element});
   },
   /**
