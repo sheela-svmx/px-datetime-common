@@ -18,9 +18,7 @@
 <!-- Demo DOM module -->
 <dom-module id="local-element-demo">
   <template>
-    <custom-style>
-      <style include="px-demo-styles" is="custom-style"></style>
-    </custom-style>
+      <style include="px-demo-styles"></style>
 
     <!-- Header -->
     <px-demo-header
@@ -51,8 +49,8 @@
             show-time-zone="{{props.showTimeZone.value}}"
             time-zone="{{props.timeZone.value}}"
             moment-format="{{props.momentFormat.value}}"
-            min="{{props.min.value}}"
-            max="{{props.max.value}}">
+            min-date="{{props.minDate.value}}"
+            max-date="{{props.maxDate.value}}">
         </px-datetime-entry>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -161,13 +159,13 @@
         inputPlaceholder: 'UTC'
       },
 
-      min: {
+      minDate: {
         type: Object,
-        defaultValue: "2017-08-14T21:59:48.672Z",
+        defaultValue: "2016-08-14T21:59:48.672Z",
         inputType: 'code:JSON'
       },
 
-      max: {
+      maxDate: {
         type: Object,
         defaultValue: "2017-08-28T21:59:48.674Z",
         inputType: 'code:JSON'

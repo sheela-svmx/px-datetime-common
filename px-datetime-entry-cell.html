@@ -14,7 +14,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     class="cell"
     order='{{index}}'
     moment-obj="[[momentObj]]"
-    moment-format='[[item]]'>
+    moment-format='[[item]]'
+    time-zone="[[timeZone]]">
   </px-datetime-entry-cell>
 
 
@@ -37,10 +38,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(momentFormat)]]"
-      min="[[_getMin(momentFormat)]]"
-      max="[[_getMax(momentFormat)]]"
-      step="1"
-      placeholder="[[_placeholderText(momentFormat)]]" />
+      placeholder="[[_placeholderText(momentFormat)]]"
+      max="[[_max]]"
+      min="[[_min]]"
+      step="1" />
     </template>
 </dom-module>
 
@@ -94,6 +95,20 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         readOnly: true,
         notify: true,
         value: false
+      },
+      /**
+       * Maximum numeric value for given field type.
+       */
+      _max: {
+        type: Number,
+        computed: '_getMax(momentFormat)'
+      },
+      /**
+       * Minimum numeric value for given field type.
+       */
+      _min: {
+        type: Number,
+        computed: '_getMin(momentFormat)'
       }
     },
 
@@ -109,7 +124,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * @private
      */
     keyBindings: {
-      'enter' : '_onEnter',
       'right' : '_moveFocusForward',
       'left' : '_moveFocusBack'
     },
@@ -125,16 +139,15 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     clear: function() {
       this.$.dtEntry.value = '';
     },
+    /**
+     * resets the cell to the last momentObj
+     */
     reset: function() {
       this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
     },
     /**
-     *
+     * Set the correct type of input field based on the momentFormat
      */
-    _onEnter: function() {
-      this._checkValue();
-      this._moveFocusForward();
-    },
     _getType: function(momentFormat) {
       return (/^(?:a|A|MMM|MMMM|Do|ddd|dddd|Z|ZZ)$/.test(momentFormat)) ? 'text' : 'number';
     },
@@ -179,7 +192,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         length = ctx.measureText(this.$.dtEntry.value.toUpperCase()).width;
       }
       else {
-        length = ctx.measureText(this.$.dtEntry.placeholder.toUpperCase()).width;
+        length = ctx.measureText(this.$.dtEntry.placeholder).width;
       }
       length = Math.ceil(length);
       this.$.dtEntry.style['width'] = length + 'px';
@@ -250,15 +263,61 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       this.fire('px-cell-focused');
     },
+    /**
+     * Allow the user to loop through valid cell values
+     * ex If the momentFormat is MM the cell value can go from 12 to 1 by hitting the up arrow
+     */
     _wraparound: function(evt) {
       var key = evt.detail.combo;
-      if(key === 'up' && parseInt(this.$.dtEntry.value) === this._getMax(this.momentFormat)) {
+          dtEntryValue = this.$.dtEntry.value;
+      //If cell is empty, invalid, or equal to the max value loop around to the min value
+      if(key === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._max)) {
         evt.preventDefault();
-        this.$.dtEntry.value = this._getMin(this.momentFormat);
+        this.$.dtEntry.value = this._min;
       }
-      else if (key === 'down' && parseInt(this.$.dtEntry.value) === this._getMin(this.momentFormat)) {
+      //If cell is empty or equal to the min value loop around to the max value
+      else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._min)) {
         evt.preventDefault();
-        this.$.dtEntry.value = this._getMax(this.momentFormat);
+        this.$.dtEntry.value = this._max;
+      }
+      // Moment says its valid for k, kk, h, hh to have a value of 0.  -_-
+      // Prevent field from going negative
+      else if (key === 'down' && /^(?:k|kk|h|hh)$/.test(this.momentFormat) && (dtEntryValue === "0" || dtEntryValue === "00")) {
+        evt.preventDefault();
+        this.$.dtEntry.value = this._max;
+      }
+      // Invalid Field
+      // If the entry is invalid jump to the min value
+      else if (key === 'up' && this.isValid === false) {
+        numberValue = parseInt(dtEntryValue);
+        maxNumberValue = this._max;
+        if(numberValue > maxNumberValue){
+          evt.preventDefault();
+          this.$.dtEntry.value = this._min;
+        }
+      }
+      // Invalid Field
+      // If the entry is invalid jump to the max value
+      // Need to take inconsideration not all months and 31 days
+      else if (key === 'down' && this.isValid === false) {
+        numberValue = parseInt(dtEntryValue);
+        maxNumberValue = this._max;
+        //If 0 is invalid prevent field from going negative
+        if(numberValue === 0 && this._min === 1){
+          evt.preventDefault();
+          this.$.dtEntry.value = this._max;
+        }
+        if(numberValue > maxNumberValue){
+          evt.preventDefault();
+          //not all months have 31 days
+          if (this.momentFormat === "D" || this.momentFormat === "DD") {
+            if(numberValue <= 31){
+              this.$.dtEntry.value = (numberValue - 1);
+              return;
+            }
+          }
+          this.$.dtEntry.value = this._max;
+        }
       }
     },
     /**
@@ -292,7 +351,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       var ne = Polymer.dom(evt);
       this._setIsSelected(false);
       this._checkValue();
-
       this.fire('px-cell-blurred');
     },
     /**
@@ -430,6 +488,9 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       // take the first char of the moment format and convert it to the other format
       return momentTypeConversion[this.momentFormat[0]]
     },
+    /**
+     * Set the max value a token can be
+     */
     _getMax: function(momentFormat) {
       if( /^(?:M|MM|h|hh)$/.test(momentFormat) ) {
         return 12;
@@ -440,19 +501,28 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if( /^(?:H|HH)$/.test(momentFormat) ) {
         return 23;
       }
+      if( /^(?:k|kk)$/.test(momentFormat) ) {
+        return 24;
+      }
       if( /^(?:m|mm|ss|s)$/.test(momentFormat) ) {
         return 59;
       }
-      if( /^(?:S|SS|SSS)$/.test(momentFormat) ) {
-        return 999;
+      if(momentFormat === "S") {
+        return 9;
       }
-      if(momentFormat === "YY") {
+      if(momentFormat === "SS") {
         return 99;
       }
-      if(momentFormat === "YYYY") {
+      if(momentFormat === "SSS") {
+        return 999;
+      }
+      if( /^(?:YY|YYYY)$/.test(momentFormat) ) {
         return 9999;
       }
     },
+    /**
+     * Set the min value a token can be
+     */
     _getMin: function(momentFormat) {
       if( /^(?:YY|YYYY|X|x|H|HH|m|mm|s|ss|S|SS|SSS)$/.test(momentFormat) ) {
         return 0;

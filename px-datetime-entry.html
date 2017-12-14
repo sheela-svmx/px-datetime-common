@@ -14,7 +14,7 @@ Range field component which displays a time or date and font awesome icon.
 ### Usage
 
     <px-datetime-entry
-      moment="{{...}}"??
+      moment="{{...}}"
       date-or-time="Date"
       moment-format="MM/DD/YYYY">
     </px-datetime-entry>
@@ -27,6 +27,7 @@ Custom property | Description
 `--px-datetime-read-only-text-color` | Text color for the text timezones
 `--px-datetime-entry-selected` | Text highlight color when a cell is selected
 `--px-datetime-icon-color` | Color of the icons
+`--px-validation-error-text-color` | Color of invalid text
 
 @element px-datetime-entry
 @homepage index.html
@@ -56,7 +57,6 @@ Custom property | Description
               moment-obj="[[momentObj]]"
               moment-format='[[item]]'
               symbol=[[_returnSymbol(index,_symbolCharArray)]]
-              is-valid$={{isValid}}
               time-zone="[[timeZone]]"
               is-selected="{{isSelected}}"
               resources="[[resources]]"
@@ -198,7 +198,7 @@ Custom property | Description
       cells.forEach(function(cell) {
         cell.reset();
       });
-      this._validateInput();
+      // this._validateInput();
     },
     /**
      * runs when `momentFormat` is changed
@@ -316,7 +316,7 @@ Custom property | Description
      * when `px-cell-blurred` is fired run `_validateInput`
      */
     _handleBlur: function(){
-      this._validateInput();
+      this._validateInput(this.momentFormat, this.timeZone);
     },
     /**
      * Catches the `on-focus-changed` from `px-dropdown` and fires this up for `px-datetime-field`

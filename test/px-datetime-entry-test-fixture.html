@@ -13,6 +13,7 @@
   <link rel="import" href="../px-datetime-presets.html" />
   <link rel="import" href="../../px-theme/px-theme-styles.html">
   <script src="px-datetime-entry-tests.js"></script>
+  <script src="chai-expect-eventually.js"></script>
 </head>
 
 <body>
@@ -53,9 +54,10 @@
     </template>
   </test-fixture>
 
-  <test-fixture id="timeEntryAbbText">
+  <test-fixture id="dateEntryAbbText">
     <template>
       <px-datetime-entry
+        block-past-dates
         show-time-zone="abbreviatedText">
       </px-datetime-entry>
     </template>

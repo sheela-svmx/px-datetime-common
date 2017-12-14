@@ -1,3 +1,20 @@
+v2.0.2
+==================
+* added validation for blank state
+
+v2.0.1
+==================
+* removed _onEnter
+
+v2.0.0
+==================
+* Removed `datetime` property
+* Removed `range` property
+* `momentObj` is new source of true
+* Allows a blank/empty state
+* Cell is no longer readonly
+* Added validate for field
+
 v1.1.2
 ==================
 * Added validation error message for min and max
