@@ -117,6 +117,17 @@ var validate = [Polymer.AppLocalizeBehavior, {
         dateString = '',
         timeEntry,
         timeString = '';
+    if(!this.hideDate && !this.hideTime) {
+      dateEntry = Polymer.dom(this.root).querySelector('#date');
+      timeEntry = Polymer.dom(this.root).querySelector('#time');
+      fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
+      fieldNodes.timeCells = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
+      dateString = this._entryInputString(fieldNodes.dateCells);
+      timeString = this._entryInputString(fieldNodes.timeCells);
+      if(!dateString || !timeString) {
+        return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
+      }
+    }
     if(!this.hideDate) {
       dateEntry = Polymer.dom(this.root).querySelector('#date');
       fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
