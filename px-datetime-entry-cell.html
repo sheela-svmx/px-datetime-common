@@ -229,10 +229,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _updateInputValue: function() {
       if(this.momentObj !== undefined && this.timeZone !== undefined) {
         this.setValueFromMoment();
-
-        if(this.momentFormat === 'MMM' || this.momentFormat === 'MMMM') {
-          this._sizeInputs();
-        }
+        this._sizeInputs();
       }
     },
     /**
