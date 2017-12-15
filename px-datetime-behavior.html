@@ -11,20 +11,19 @@
 
   @polymerBehavior pxDatetimeBehavior
 */
-
 var pxDatetimeBehavior = [{
 
   properties: {
     /**
      * Moment value with the date or time to display.  Will be parsed according to the moment format. (See momentFormat property.)
      * Defaults to now.
-     *
-     * @private
      */
     momentObj: {
       type: Object,
       notify: true,
-      value: null
+      value: function() {
+        return null;
+      }
     }
   },
 
@@ -49,5 +48,68 @@ var pxDatetimeBehavior = [{
     }
   }
 }, pxDatetimeSharedBehavior];
+
+/**
+  ```pxDatetimeBehavior```
+
+  This behavior adds a temp moment object that can be applied or used to rollback
+
+  Dependencies: momentjs
+
+  @polymerBehavior pxDatetimeBehavior
+*/
+var pxDatetimeTempMomentBehavior = [{
+
+  properties: {
+    /**
+     * temporary moment object used for validation and display. This
+     * object should be used by subcomponents when we want to "try"
+     * a value and see the result of validation AND/OR give us the
+     * ability to rollback (cancel) or apply
+     */
+    _tempMomentObj: {
+      type: Object,
+      notify: true
+    }
+  },
+
+  observers: ['_localeChangedTemp(language)',
+              '_timeZoneChangedTemp(timeZone)',
+              //momentObj is the source of truth and should always
+              //trump temp if changed
+              '_rollbackTempMoment(momentObj)'],
+
+  /**
+   * Applies value of temp moment to public momentObj
+   */
+  _applyTempMoment: function() {
+    if(this.momentObj === null || this._tempMomentObj === null || this.momentObj.toISOString() !== this._tempMomentObj.toISOString()) {
+      this.set('momentObj', this._tempMomentObj);
+    }
+  },
+  /**
+   * Rollback value of temp moment to use public momentObj
+   */
+   _rollbackTempMoment: function() {
+    this.set('_tempMomentObj', this.momentObj);
+  },
+  /**
+   * Make sure the moment obj pick up the possibly new moment locale
+   */
+   _localeChangedTemp: function() {
+    if(this.language !== undefined && this.momentObj) {
+      this.set('_tempMomentObj', this._tempMomentObj.locale(Px.moment.locale()));
+    }
+  },
+  /**
+   * Makes sure the moment object reflects the right timezone.
+   */
+   _timeZoneChangedTemp: function() {
+    if(this.timeZone !== undefined && this.momentObj) {
+      var newMom = this._tempMomentObj.clone().tz(this.timeZone);
+      this.set('_tempMomentObj', newMom);
+    }
+  }
+}, pxDatetimeBehavior];
 
 </script>

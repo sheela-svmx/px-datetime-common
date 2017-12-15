@@ -15,7 +15,6 @@ PxDatetimeBehavior.rangeMoments = {
     /**
      * Moment object start date & time
      *
-     * @private
      */
     fromMoment: {
       type: Object,
@@ -24,7 +23,6 @@ PxDatetimeBehavior.rangeMoments = {
     /**
      * Moment object end date & time
      *
-     * @private
      */
     toMoment: {
       type: Object,
@@ -68,7 +66,9 @@ var pxDatetimeRangeBehavior = [{
      *
      * @default no presetRanges
      */
-    presetRanges: Object, //may be useless
+    presetRanges: {
+     type: Object, //may be useless
+    }
 
   },
   observers: [
