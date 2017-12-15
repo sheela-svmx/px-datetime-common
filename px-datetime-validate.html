@@ -140,7 +140,15 @@ var validate = [Polymer.AppLocalizeBehavior, {
     var dateFormat = this.hideDate ? '' : this.dateFormat,
         timeFormat = this.hideTime ? '' : this.timeFormat,
         dateTimeFormat = dateFormat + " " + timeFormat,
-        dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone);
+        dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone),
+        currentMomentObj = (this.momentObj === null) ? Px.moment().tz(this.timeZone) : this.momentObj.clone().tz(this.timeZone)
+
+    //If the moment format doesn't have hour, minute, second, or millisecond defined then preserve from the set momentObj
+    if (!/(?:H)/.test(dateTimeFormat)){ dateTimeMoment.hour(currentMomentObj.hour())}
+    if (!/(?:m)/.test(dateTimeFormat)){ dateTimeMoment.minute(currentMomentObj.minute())}
+    if (!/(?:s)/.test(dateTimeFormat)){ dateTimeMoment.second(currentMomentObj.second())}
+    if (!/(?:S)/.test(dateTimeFormat)){ dateTimeMoment.millisecond(currentMomentObj.millisecond())}
+
     invalidObj.futureSelection    = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
     invalidObj.pastSelection      = this.blockPastDates &&  dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
     invalidObj.pastMaxSelection   = Object.keys(this.maxDate).length > 0 && dateTimeMoment.isAfter(this.maxDate);
@@ -161,9 +169,7 @@ var validate = [Polymer.AppLocalizeBehavior, {
         if(!this.momentObj || (this.momentObj && !this.momentObj.isSame(dateTimeMoment))){
           return dateTimeMoment;
         }
-        else {
-          return 'FieldSame';
-        }
+        else { return 'FieldSame'; }
       }
 
     }
