@@ -321,15 +321,14 @@ suite('px-datetime-entry', function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
           secondInput = Polymer.dom(cells[1].root).querySelector('input');
 
+      var listener = function (evt) {
+        assert.equal(evt.detail.element, dateFixt);
+        done();
+      };
+
+      dateFixt.addEventListener('px-moment-invalid', listener);
       secondInput.value = "99";
       cells[1]._handleBlur();
-
-      //wait for validation to kick in
-      setTimeout(function () {
-        cells[1];
-        assert.isFalse(dateFixt.isValid);
-        done();
-      }, 500);
     });
   });
 
@@ -424,83 +423,6 @@ suite('px-datetime-entry', function () {
       timeFixt.addEventListener('px-validation-message', listener);
       secondInput.value = "99";
       cells[2]._handleBlur();
-    });
-  });
-
-
-  test('Block future dates', function (done) {
-    dateExFixt = fixture('dateEntryExtDropdown');
-    dateExFixt.momentObj = now;
-
-    flush(() => {
-      var cells = Polymer.dom(dateExFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          firstInput = Polymer.dom(cells[0].root).querySelector('input');
-
-      firstInput.value = "18";
-      cells[0]._handleBlur();
-
-      //wait for validation to kick in
-      setTimeout(function () {
-        assert.isFalse(dateExFixt.isValid);
-        done();
-      }, 200);
-    });
-  });
-
-  test('Block past dates', function (done) {
-    dateAbbTextFixt = fixture('dateEntryAbbText');
-    dateAbbTextFixt.momentObj = now;
-
-    flush(() => {
-      var cells = Polymer.dom(dateAbbTextFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          firstInput = Polymer.dom(cells[0].root).querySelector('input');
-
-      firstInput.value = "16";
-      cells[0]._handleBlur();
-
-      //wait for validation to kick in
-      setTimeout(function () {
-        assert.isFalse(dateAbbTextFixt.isValid);
-        done();
-      }, 200);
-    });
-  });
-
-
-  test('block dates before minDate', function (done) {
-    dateFixt.set('minDate', dateFixt.momentObj.clone().subtract(1, 'day'));
-
-    flush(() => {
-      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          firstInput = Polymer.dom(cells[0].root).querySelector('input');
-
-      firstInput.value = "16";
-      cells[0]._handleBlur();
-
-      //wait for validation to kick in
-      setTimeout(function () {
-        assert.isFalse(dateFixt.isValid);
-        done();
-      }, 200);
-    });
-  });
-
-
-  test('block dates after maxDate', function (done) {
-    dateFixt.set('maxDate', dateFixt.momentObj.clone().add(1, 'day'));
-
-    flush(() => {
-      var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          firstInput = Polymer.dom(cells[0].root).querySelector('input');
-
-      firstInput.value = "18";
-      cells[0]._handleBlur();
-
-      //wait for validation to kick in
-      setTimeout(function () {
-        assert.isFalse(dateFixt.isValid);
-        done();
-      }, 200);
     });
   });
 
@@ -829,7 +751,7 @@ suite('px-datetime-entry-cell empty', function () {
         theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
-    expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+    expect(theInput[0].value).to.eventuallyEqual('9999', {within: 1000, every: 100}, done);
     });
   });
 
@@ -1295,7 +1217,6 @@ suite('px-datetime-entry-cell invalid', function () {
 
       flush(()=>{
         var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-            theYearInput = Polymer.dom(cells[1].root).querySelectorAll('#dtEntry'),
             theMonthInput = Polymer.dom(cells[1].root).querySelectorAll('#dtEntry');
 
         theMonthInput[0].value = "99";
@@ -1321,6 +1242,9 @@ suite('px-datetime-entry-cell invalid', function () {
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
           theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
 
       assert.isFalse(dateFixt.isValid);
       MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
@@ -1359,6 +1283,9 @@ suite('px-datetime-entry-cell invalid', function () {
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
           theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
 
       assert.isFalse(dateFixt.isValid);
       MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
@@ -1407,7 +1334,7 @@ suite('px-datetime-entry-cell invalid', function () {
 
       assert.isFalse(dateFixt.isValid);
       MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
-      expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+      expect(theInput[0].value).to.eventuallyEqual('1999', {within: 1000, every: 100}, done);
     });
   });
 
