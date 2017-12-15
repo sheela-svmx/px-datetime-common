@@ -113,22 +113,34 @@ var validate = [Polymer.AppLocalizeBehavior, {
   _validateField: function(funcOrigin) {
     var fieldNodes = new Object(),
         invalidObj = new Object(),
-        dateEntry = Polymer.dom(this.root).querySelector('#date'),
-        timeEntry = Polymer.dom(this.root).querySelector('#time');
-        fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
-        fieldNodes.timeCells = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
-
-    //Create a string from all of the entries put together
-    dateString = this._entryInputString(fieldNodes.dateCells);
-    timeString = this._entryInputString(fieldNodes.timeCells);
-    if (!dateString || !timeString) {
-      return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
+        dateEntry,
+        dateString = '',
+        timeEntry,
+        timeString = '';
+    if(!this.hideDate) {
+      dateEntry = Polymer.dom(this.root).querySelector('#date');
+      fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
+      dateString = this._entryInputString(fieldNodes.dateCells);
+      if(!dateString) {
+        return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
+      }
     }
-    dateTimeString = dateString.trim() + " " + timeString.trim();
+    if(!this.hideTime) {
+      timeEntry = Polymer.dom(this.root).querySelector('#time');
+      fieldNodes.timeCells = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
+      timeString = this._entryInputString(fieldNodes.timeCells);
+      if(!timeString) {
+        return this._handleIncompleteEntries(funcOrigin, timeEntry, fieldNodes);
+      }
+    }
+    //Create a string from all of the entries put together
+    var dateTimeString = dateString.trim() + " " + timeString.trim();
     dateTimeString = dateTimeString.split('\xa0').join(' '); //added to be able to use Moment strict parsing
-    dateTimeFormat = this.dateFormat + " " + this.timeFormat;
 
-    var dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone);
+    var dateFormat = this.hideDate ? '' : this.dateFormat,
+        timeFormat = this.hideTime ? '' : this.timeFormat,
+        dateTimeFormat = dateFormat + " " + timeFormat,
+        dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone);
     invalidObj.futureSelection    = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
     invalidObj.pastSelection      = this.blockPastDates &&  dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
     invalidObj.pastMaxSelection   = Object.keys(this.maxDate).length > 0 && dateTimeMoment.isAfter(this.maxDate);
@@ -136,7 +148,12 @@ var validate = [Polymer.AppLocalizeBehavior, {
 
     if((dateTimeMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
       // turn off input box error outline
-      dateEntry.toggleClass('validation-error', false, dateEntry.$.fieldWrapper);
+      if(!this.hideDate) {
+        dateEntry.toggleClass('validation-error', false, dateEntry.$.fieldWrapper);
+      }
+      else if(!this.hideTime) {
+        timeEntry.toggleClass('validation-error', false, timeEntry.$.fieldWrapper);
+      }
       this.set('fieldIsValid', true);
 
       //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
@@ -270,8 +287,8 @@ var validate = [Polymer.AppLocalizeBehavior, {
    _handleIncompleteEntries: function(funcOrigin, dateEntry, fieldNodes) {
     if (funcOrigin === "_momentChanged") { return false };
     if (!this.required) {
-          dateEntryBlank = this._loopOverCellValues(fieldNodes.dateCells);
-          timeEntryBlank = this._loopOverCellValues(fieldNodes.timeCells);
+      var dateEntryBlank = this.hideDate ? true : this._loopOverCellValues(fieldNodes.dateCells),
+          timeEntryBlank = this.hideTime ? true : this._loopOverCellValues(fieldNodes.timeCells);
       if(dateEntryBlank && timeEntryBlank) {
         dateEntry.toggleClass('validation-error', false, dateEntry.$.fieldWrapper);
         dateEntry.set('isValid', true);
