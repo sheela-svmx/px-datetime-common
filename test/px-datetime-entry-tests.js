@@ -1243,6 +1243,9 @@ suite('px-datetime-entry-cell invalid', function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
           theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
 
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
       assert.isFalse(dateFixt.isValid);
       MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
       expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
@@ -1280,9 +1283,12 @@ suite('px-datetime-entry-cell invalid', function () {
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
           theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+
+      theInput[0].value = "99";
+      cells[0]._handleBlur();
+
       assert.isFalse(dateFixt.isValid);
       MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
-      debugger
       expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
     });
   });
@@ -1328,7 +1334,7 @@ suite('px-datetime-entry-cell invalid', function () {
 
       assert.isFalse(dateFixt.isValid);
       MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowDown');
-      expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
+      expect(theInput[0].value).to.eventuallyEqual('1999', {within: 1000, every: 100}, done);
     });
   });
 

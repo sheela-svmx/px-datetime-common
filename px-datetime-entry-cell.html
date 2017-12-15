@@ -273,9 +273,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _wraparound: function(evt) {
       var key = evt.detail.combo;
           dtEntryValue = this.$.dtEntry.value,
-          currentVal = dtEntryValue ? parseInt(dtEntryValue) : 0,
+          currentVal = dtEntryValue ? parseInt(dtEntryValue) : (this._min - 1),
           isUpDown = false;
-
 
       if(key === 'up') {
         currentVal++;
@@ -291,64 +290,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.$.dtEntry.value = currentVal;
         evt.preventDefault();
       }
-
-      //If cell is empty, invalid, or equal to the max value loop around to the min value
-      // if(key === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._max)) {
-      //   evt.preventDefault();
-      //   this.$.dtEntry.value = this._min;
-      // }
-      // //If cell is empty or equal to the min value loop around to the max value
-      // else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._min)) {
-      //   evt.preventDefault();
-      //   this.$.dtEntry.value = this._max;
-      // } === 'up' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._max)) {
-      //   evt.preventDefault();
-      //   this.$.dtEntry.value = this._min;
-      // }
-      // //If cell is empty or equal to the min value loop around to the max value
-      // else if (key === 'down' && (dtEntryValue === "" || parseInt(dtEntryValue) === this._min)) {
-      //   evt.preventDefault();
-      //   this.$.dtEntry.value = this._max;
-      // }
-      // Moment says its valid for k, kk, h, hh to have a value of 0.  -_-
-      // Prevent field from going negative
-      // else if (key === 'down' && /^(?:k|kk|h|hh)$/.test(this.momentFormat) && (dtEntryValue === "0" || dtEntryValue === "00")) {
-      //   evt.preventDefault();
-      //   this.$.dtEntry.value = this._max;
-      // }
-      // Invalid Field
-      // If the entry is invalid jump to the min value
-      // else if (key === 'up' && this.isValid === false) {
-      //   numberValue = parseInt(dtEntryValue);
-      //   maxNumberValue = this._max;
-      //   if(numberValue > maxNumberValue){
-      //     evt.preventDefault();
-      //     this.$.dtEntry.value = this._min;
-      //   }
-      // }
-      // // Invalid Field
-      // // If the entry is invalid jump to the max value
-      // // Need to take inconsideration not all months and 31 days
-      // else if (key === 'down' && this.isValid === false) {
-      //   numberValue = parseInt(dtEntryValue);
-      //   maxNumberValue = this._max;
-      //   //If 0 is invalid prevent field from going negative
-      //   if(numberValue === 0 && this._min === 1){
-      //     evt.preventDefault();
-      //     this.$.dtEntry.value = this._max;
-      //   }
-      //   if(numberValue > maxNumberValue){
-      //     evt.preventDefault();
-      //     //not all months have 31 days
-      //     if (this.momentFormat === "D" || this.momentFormat === "DD") {
-      //       if(numberValue <= 31){
-      //         this.$.dtEntry.value = (numberValue - 1);
-      //         return;
-      //       }
-      //     }
-      //     this.$.dtEntry.value = this._max;
-      //   }
-      // }
     },
     /**
      * Checks that the value has the correct number of digits for our format
@@ -546,7 +487,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(momentFormat === "SSS") {
         return 999;
       }
-      if( /^(?:YY|YYYY)$/.test(momentFormat) ) {
+      if(momentFormat === "YY") {
+        return 99;
+      }
+      if(momentFormat === "YYYY") {
         return 9999;
       }
     },
