@@ -315,13 +315,15 @@ var validate = [Polymer.AppLocalizeBehavior, {
    */
    _loopOverCellValues: function(cells) {
     var isBlank = true;
-    for (i = 0; i < cells.length; i++){
-      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
-      if (cellInput[0].value !== "") {
-        isBlank = false;
-        break;
-      }
-    };
+    if(cells && cells.length) {
+      for (i = 0; i < cells.length; i++){
+        var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
+        if (cellInput[0].value !== "") {
+          isBlank = false;
+          break;
+        }
+      };
+    }
     return isBlank;
   }
 }];
