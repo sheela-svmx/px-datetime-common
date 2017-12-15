@@ -143,7 +143,10 @@ var validate = [Polymer.AppLocalizeBehavior, {
         dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone),
         currentMomentObj = (this.momentObj === null) ? Px.moment().tz(this.timeZone) : this.momentObj.clone().tz(this.timeZone)
 
-    //If the moment format doesn't have hour, minute, second, or millisecond defined then preserve from the set momentObj
+    //If the moment format doesn't have something defined then preserve from the set momentObj
+    if (!/(?:Y)/.test(dateTimeFormat)){ dateTimeMoment.year(currentMomentObj.year())}
+    if (!/(?:M)/.test(dateTimeFormat)){ dateTimeMoment.month(currentMomentObj.month())}
+    if (!/(?:D)/.test(dateTimeFormat)){ dateTimeMoment.day(currentMomentObj.day())}
     if (!/(?:H)/.test(dateTimeFormat)){ dateTimeMoment.hour(currentMomentObj.hour())}
     if (!/(?:m)/.test(dateTimeFormat)){ dateTimeMoment.minute(currentMomentObj.minute())}
     if (!/(?:s)/.test(dateTimeFormat)){ dateTimeMoment.second(currentMomentObj.second())}
