@@ -113,33 +113,25 @@ var validate = [Polymer.AppLocalizeBehavior, {
   _validateField: function(funcOrigin) {
     var fieldNodes = new Object(),
         invalidObj = new Object(),
-        dateEntry,
-        dateString = '',
-        timeEntry,
-        timeString = '';
-    if(!this.hideDate && !this.hideTime) {
-      dateEntry = Polymer.dom(this.root).querySelector('#date');
-      timeEntry = Polymer.dom(this.root).querySelector('#time');
-      fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
-      fieldNodes.timeCells = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
-      dateString = this._entryInputString(fieldNodes.dateCells);
-      timeString = this._entryInputString(fieldNodes.timeCells);
-      if(!dateString || !timeString) {
-        return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
-      }
+        dateEntry = Polymer.dom(this.root).querySelector('#date'),
+        timeEntry = Polymer.dom(this.root).querySelector('#time');
+
+        fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
+        fieldNodes.timeCells = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
+    var dateString = this._entryInputString(fieldNodes.dateCells),
+        timeString = this._entryInputString(fieldNodes.timeCells);
+
+    if((!this.hideDate && !this.hideTime) && (!dateString || !timeString)) {
+      return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
     }
-    if(!this.hideDate) {
-      dateEntry = Polymer.dom(this.root).querySelector('#date');
-      fieldNodes.dateCells = Polymer.dom(dateEntry.root).querySelectorAll('.cell');
-      dateString = this._entryInputString(fieldNodes.dateCells);
+    else if(!this.hideDate) {
+      timeEntry = '';
       if(!dateString) {
         return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
       }
     }
-    if(!this.hideTime) {
-      timeEntry = Polymer.dom(this.root).querySelector('#time');
-      fieldNodes.timeCells = Polymer.dom(timeEntry.root).querySelectorAll('.cell');
-      timeString = this._entryInputString(fieldNodes.timeCells);
+    else if(!this.hideTime) {
+      dateEntry = '';
       if(!timeString) {
         return this._handleIncompleteEntries(funcOrigin, timeEntry, fieldNodes);
       }
