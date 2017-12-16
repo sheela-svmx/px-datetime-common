@@ -124,7 +124,8 @@
       var dateString = (dateEntry !== null) ? this._entryInputString(fieldNodes.dateCells) : '',
           timeString = (timeEntry !== null) ? this._entryInputString(fieldNodes.timeCells) : '';
 
-      if ((this.hideDate && !timeString) || (this.hideTime && !dateString) || (!dateString || !timeString)) {
+      if ((this.hideDate && !timeString) || (this.hideTime && !dateString) ||
+         ((!this.hideTime && !this.hideTime) && (!dateString || !timeString))) {
         return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
       }
 
