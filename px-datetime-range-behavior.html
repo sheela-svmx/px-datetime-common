@@ -116,9 +116,11 @@ var pxDatetimeRangeBehavior = [{
    */
   _validateRangeOrder: function(fromMoment, toMoment) {
     // if the from date is before the to date, everything is ok
-    if(fromMoment && toMoment) {
+    if(fromMoment === null && toMoment === null) {
+      return true;
+    } if(fromMoment && toMoment) {
       return fromMoment.isBefore(toMoment);
-    }else {
+    } else {
       return false;
     }
   },
@@ -172,6 +174,9 @@ var pxDatetimeTempRangeBehavior = [{
     if((this.fromMoment !== this._tempFromMomentObj) && (this.toMoment !== this._tempToMomentObj)) {
       this.set('fromMoment', this._tempFromMomentObj);
       this.set('toMoment', this._tempToMomentObj);
+      return true;
+    } else {
+      return false;
     }
   },
   /**

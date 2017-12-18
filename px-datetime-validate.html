@@ -146,14 +146,16 @@
           dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone),
           currentMomentObj = (this.momentObj === null) ? Px.moment().tz(this.timeZone) : this.momentObj.clone().tz(this.timeZone);
 
-      //preserve parts of the momentObj that are not displayed
-      if (!/(?:Y)/.test(dateTimeFormat)) { dateTimeMoment.year(currentMomentObj.year()); }
-      if (!/(?:M)/.test(dateTimeFormat)) { dateTimeMoment.month(currentMomentObj.month()); }
-      if (!/(?:D)/.test(dateTimeFormat)) { dateTimeMoment.date(currentMomentObj.date()); }
-      if (!/(?:H)/.test(dateTimeFormat)) { dateTimeMoment.hour(currentMomentObj.hour()); }
-      if (!/(?:m)/.test(dateTimeFormat)) { dateTimeMoment.minute(currentMomentObj.minute()); }
-      if (!/(?:s)/.test(dateTimeFormat)) { dateTimeMoment.second(currentMomentObj.second()); }
-      if (!/(?:S)/.test(dateTimeFormat)) { dateTimeMoment.millisecond(currentMomentObj.millisecond()); }
+      if(this.momentObj) {
+        //preserve parts of the momentObj that are not displayed
+        if (!/Y/.test(dateTimeFormat)) { dateTimeMoment.year(this.momentObj.year()); }
+        if (!/M/.test(dateTimeFormat)) { dateTimeMoment.month(this.momentObj.month()); }
+        if (!/D/.test(dateTimeFormat)) { dateTimeMoment.date(this.momentObj.date()); }
+        if (!/[Hhk]/.test(dateTimeFormat)) { dateTimeMoment.hour(this.momentObj.hour()); }
+        if (!/m/.test(dateTimeFormat)) { dateTimeMoment.minute(this.momentObj.minute()); }
+        if (!/s/.test(dateTimeFormat)) { dateTimeMoment.second(this.momentObj.second()); }
+        if (!/S/.test(dateTimeFormat)) { dateTimeMoment.millisecond(this.momentObj.millisecond()); }
+      }
 
       invalidObj.futureSelection = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
       invalidObj.pastSelection   = this.blockPastDates && dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
