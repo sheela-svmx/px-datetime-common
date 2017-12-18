@@ -18,7 +18,10 @@ PxDatetimeBehavior.rangeMoments = {
      */
     fromMoment: {
       type: Object,
-      notify: true
+      notify: true,
+      value: function() {
+        return null;
+      }
     },
     /**
      * Moment object end date & time
@@ -26,7 +29,10 @@ PxDatetimeBehavior.rangeMoments = {
      */
     toMoment: {
       type: Object,
-      notify: true
+      notify: true,
+      value: function() {
+        return null;
+      }
     }
   }
 }
@@ -76,10 +82,10 @@ var pxDatetimeRangeBehavior = [{
     '_timeZoneChanged(timeZone)'
   ],
   /**
+   * make sure the moment obj pick up the possibly new moment locale
    */
   _localeChanged: function() {
     if(this.language !== undefined) {
-      //make sure the moment obj pick up the possibly new moment locale
       if(this.fromMoment) {
         this.set('fromMoment', this.fromMoment.locale(Px.moment.locale()));
       }
@@ -118,5 +124,96 @@ var pxDatetimeRangeBehavior = [{
   },
 }, pxDatetimeSharedBehavior, PxDatetimeBehavior.rangeMoments];
 
+/**
+  ```pxDatetimeBehavior```
+
+  This behavior adds a temp moment object that can be applied or used to rollback
+
+  Dependencies: momentjs
+
+  @polymerBehavior pxDatetimeBehavior
+*/
+var pxDatetimeTempRangeBehavior = [{
+
+  properties: {
+    /**
+     * Temporary from moment object used for validation and displaying.
+     * This object should be used by subcomponents when we want to "try"
+     * a value and see the result of validation AND/OR give us the ability
+     * to rollback (cancel) or apply
+     */
+    _tempFromMomentObj: {
+      type: Object,
+      notify: true
+    },
+    /**
+     * Temporary to moment object used for validation and displaying.
+     * This object should be used by subcomponents when we want to "try"
+     * a value and see the result of validation AND/OR give us the ability
+     * to rollback (cancel) or apply
+     */
+    _tempToMomentObj: {
+      type: Object,
+      notify: true
+    }
+  },
+
+  observers: ['_localeChangedTemp(language)',
+              '_timeZoneChangedTemp(timeZone)',
+              //momentObj is the source of truth and should always
+              //trump temp if changed
+              '_rollbackTempFromMoment(fromMoment)',
+              '_rollbackTempToMoment(toMoment)'],
+
+  /**
+   * Applies value of temp moment to public momentObj
+   */
+  _applyTempRangeMoment: function() {
+    if((this.fromMoment !== this._tempFromMomentObj) && (this.toMoment !== this._tempToMomentObj)) {
+      this.set('fromMoment', this._tempFromMomentObj);
+      this.set('toMoment', this._tempToMomentObj);
+    }
+  },
+  /**
+   * Rollback value of temp moment to use public momentObj
+   */
+   _rollbackTempFromMoment: function(fromMoment) {
+    this.set('_tempFromMomentObj', this.fromMoment);
+  },
+  /**
+   * Rollback value of temp moment to use public momentObj
+   */
+   _rollbackTempToMoment: function(toMoment) {
+    this.set('_tempToMomentObj', this.toMoment);
+  },
+  /**
+   * make sure the moment obj pick up the possibly new moment locale
+   */
+   _localeChangedTemp: function() {
+    if(this.language !== undefined) {
+      if(this.fromMoment) {
+        this.set('_tempFromMomentObj', this._tempFromMomentObj.locale(Px.moment.locale()));
+      }
+      if(this.toMoment) {
+        this.set('_tempToMomentObj', this._tempToMomentObj.locale(Px.moment.locale()));
+      }
+    }
+  },
+  /**
+   * makes sure the moment objects reflect the timezone
+   */
+   _timeZoneChangedTemp: function() {
+    if(this.timeZone !== undefined) {
+      if(this.fromMoment) {
+        var newMom = this._tempFromMomentObj.clone().tz(this.timeZone);
+        this.set('_tempFromMomentObj', newMom);
+      }
+      if(this.toMoment) {
+        newMom = this._tempToMomentObj.clone().tz(this.timeZone);
+        this.set('_tempToMomentObj', newMom);
+      }
+    }
+  },
+}, pxDatetimeRangeBehavior];
 
 </script>
