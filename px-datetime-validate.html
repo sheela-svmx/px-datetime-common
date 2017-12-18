@@ -161,10 +161,7 @@
       invalidObj.beforeMinSelection = Object.keys(this.minDate).length > 0 && dateTimeMoment.isBefore(this.minDate);
 
       if ((dateTimeMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
-        // turn off input box error outline
-        if (!this.hideDate) { dateEntry.toggleClass('validation-error', false, dateEntry.$.fieldWrapper); }
-        else if (!this.hideTime) { timeEntry.toggleClass('validation-error', false, timeEntry.$.fieldWrapper); }
-        this.set('fieldIsValid', true);
+        this._validField(dateTimeMoment);
 
         //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
         if (this.neighborValid) {
@@ -181,9 +178,25 @@
       }
     },
     /**
-     * Set validation Error Message, turn on validation error, and set isValid to false.
+     * Turn off validation error, set isValid to true, and fire event.
      *
-     * @param {Object} dateEntry - px-datetime-entry date
+     * @param {Object} submittedMoment - valid momentObj
+     */
+    _validField: function (submittedMoment) {
+      if (!this.hideDate) {
+        var dateEntry = Polymer.dom(this.root).querySelector('#date');
+        dateEntry.toggleClass('validation-error', false, dateEntry.$.wrapper);
+      }
+      if (!this.hideTime) {
+        var timeEntry = Polymer.dom(this.root).querySelector('#time');
+        timeEntry.toggleClass('validation-error', false, timeEntry.$.wrapper);
+      }
+      this.set('fieldIsValid', true);
+      this.fire('px-moment-valid', { "element": this });
+    },
+    /**
+     * Set validation Error Message, turn on validation error, set isValid to false, and fire event.
+     *
      * @param {Object} submittedMoment - Invalid momentObj
      * @param {Object} invalidObj - Stores the different invalid
      */
