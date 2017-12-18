@@ -143,8 +143,7 @@
       var dateFormat = this.hideDate ? '' : this.dateFormat,
           timeFormat = this.hideTime ? '' : this.timeFormat,
           dateTimeFormat = dateFormat + " " + timeFormat,
-          dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone),
-          currentMomentObj = (this.momentObj === null) ? Px.moment().tz(this.timeZone) : this.momentObj.clone().tz(this.timeZone);
+          dateTimeMoment = Px.moment.tz(dateTimeString, dateTimeFormat, this.timeZone);
 
       if(this.momentObj) {
         //preserve parts of the momentObj that are not displayed

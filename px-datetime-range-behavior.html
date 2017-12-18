@@ -171,13 +171,19 @@ var pxDatetimeTempRangeBehavior = [{
    * Applies value of temp moment to public momentObj
    */
   _applyTempRangeMoment: function() {
-    if((this.fromMoment !== this._tempFromMomentObj) && (this.toMoment !== this._tempToMomentObj)) {
+
+    var changed = false;
+    if((this.fromMoment.toISOString() !== this._tempFromMomentObj.toISOString())) {
       this.set('fromMoment', this._tempFromMomentObj);
-      this.set('toMoment', this._tempToMomentObj);
-      return true;
-    } else {
-      return false;
+      changed = true;
     }
+
+    if((this.toMoment.toISOString() !== this._tempToMomentObj.toISOString())) {
+      this.set('toMoment', this._tempToMomentObj);
+      changed = true;
+    }
+
+    return changed;
   },
   /**
    * Rollback value of temp moment to use public momentObj
