@@ -37,8 +37,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-beforecopy="_beforeCopy"
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
-      type="[[_getType(momentFormat)]]"
+      type="[[_getType(_isNumber)]]"
+      pattern="[[_getPattern(_isNumber)]]"
       placeholder="[[_placeholderText(momentFormat)]]"
+      on-keypress="_keyPress"
       max="[[_max]]"
       min="[[_min]]"
       step="1" />
@@ -109,6 +111,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       _min: {
         type: Number,
         computed: '_getMin(momentFormat)'
+      },
+      _isNumber: {
+        type: Boolean,
+        computed: '_computeIsNumber(momentFormat)'
+      },
+      _cellLength: {
+        type: Number,
+        value: 0
       }
     },
 
@@ -151,11 +161,32 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
       }
     },
+    _computeIsNumber: function(momentFormat) {
+      return !(/^(?:a|A|MMM|MMMM|Do|ddd|dddd|Z|ZZ)$/.test(momentFormat));
+    },
+    _getPattern: function() {
+
+      if(this._isNumber === undefined) {
+        return;
+      }
+
+      if(this._isNumber) {
+
+        //should help with mobile keyboard (i.e get the number keyboard rather than the phone one)
+        return '[0-9]*';
+      } else {
+        return '';
+      }
+    },
     /**
      * Set the correct type of input field based on the momentFormat
      */
-    _getType: function(momentFormat) {
-      return (/^(?:a|A|MMM|MMMM|Do|ddd|dddd|Z|ZZ)$/.test(momentFormat)) ? 'text' : 'number';
+    _getType: function() {
+      if(this._isNumber === undefined) {
+        return;
+      }
+
+      return this._isNumber ? 'tel' : 'text';
     },
     /**
      * Disables the input field for time zone entry cells.
@@ -167,11 +198,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(this.momentFormat !== undefined) {
         this._updateInputValue();
         this._sizeInputs();
-        if(this.$.dtEntry.value) {
-          this.cellLength = this.$.dtEntry.value.length;
-        }
-        else {
-          this.cellLength = this.$.dtEntry.placeholder.length;
+
+        if(this.momentFormat === 'A' || this.momentFormat === 'a'){
+          this._cellLength = 2;
+        } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
+          this._cellLength = this.momentFormat.length;
+        } else {
+          //don't prevent timezone size
+          this._cellLength = -1;
         }
       }
     },
@@ -212,7 +246,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this.addOwnKeyBinding('down up', '_toggleAMPM');
         this.addOwnKeyBinding('backspace del','_preventDeleteDefault');
       } else if(this.momentFormat !== 'Z' && this.momentFormat !== 'ZZ') {
-        this.addOwnKeyBinding('1 2 3 4 5 6 7 8 9 0','_digit');
         this.addOwnKeyBinding('down up', '_wraparound');
       }
     },
@@ -320,20 +353,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this._setIsSelected(false);
       this._checkValue();
       this.fire('px-cell-blurred');
-    },
-    /**
-     * get the key that was clicked and add it to the dtWorkingCopy (string displayed in the input)
-     */
-    _digit: function(evt){
-      // if already at full length, we just entered the input, so delete it
-      if(this.$.dtEntry.value.length === this.cellLength){
-        this.$.dtEntry.value = '';
-        this._addSeparatorKeyBinding();
-      }
-      // if it is full, we're done with this cell, go to the next
-      if(this.$.dtEntry.value.length === this.cellLength - 1) {
-        this._moveFocusForward();
-      }
     },
     /**
      * Toggles AM & PM when up/down or A/P keys are pressed.
@@ -500,6 +519,26 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       if( /^(?:M|MM|D|DD|h|hh|k|kk)$/.test(momentFormat) ) {
         return 1;
+      }
+    },
+
+    _keyPress: function(evt) {
+
+      //ensure for numbers we only accept digits
+      if(this._isNumber && !/[0-9]/.test(evt.key)) {
+        evt.preventDefault();
+        return;
+      }
+
+      //already at full length, delete current value and let this new value be applied
+      if(this._cellLength !== -1 && this.$.dtEntry.value.length === this._cellLength) {
+        this.$.dtEntry.value = '';
+        this._addSeparatorKeyBinding();
+      }
+
+      // if it is full, we're done with this cell, go to the next
+      if(this.$.dtEntry.value.length === this._cellLength - 1) {
+        this._moveFocusForward();
       }
     }
   });
