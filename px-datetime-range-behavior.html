@@ -173,12 +173,12 @@ var pxDatetimeTempRangeBehavior = [{
   _applyTempRangeMoment: function() {
 
     var changed = false;
-    if((this.fromMoment.toISOString() !== this._tempFromMomentObj.toISOString())) {
+    if(this.fromMoment === null || this._tempFromMomentObj === null || this.fromMoment.toISOString() !== this._tempFromMomentObj.toISOString()) {
       this.set('fromMoment', this._tempFromMomentObj);
       changed = true;
     }
 
-    if((this.toMoment.toISOString() !== this._tempToMomentObj.toISOString())) {
+    if(this.toMoment === null || this._tempToMomentObj === null || this.toMoment.toISOString() !== this._tempToMomentObj.toISOString()) {
       this.set('toMoment', this._tempToMomentObj);
       changed = true;
     }
