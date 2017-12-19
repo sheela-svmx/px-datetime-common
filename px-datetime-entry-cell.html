@@ -524,21 +524,23 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
 
     _keyPress: function(evt) {
 
-      //ensure for numbers we only accept digits
-      if(this._isNumber && !/[0-9]/.test(evt.key)) {
-        evt.preventDefault();
-        return;
-      }
+      if(evt.key !== 'Backspace' && evt.key !== 'Delete' && evt.key !== 'Cut' && evt.key !== 'Copy' && evt.key !== 'ArrowLeft' && evt.key !== 'ArrowRight') {
+        //ensure for numbers we only accept digits
+        if(this._isNumber && !/[0-9]/.test(evt.key)) {
+          evt.preventDefault();
+          return;
+        }
 
-      //already at full length, delete current value and let this new value be applied
-      if(this._cellLength !== -1 && this.$.dtEntry.value.length === this._cellLength) {
-        this.$.dtEntry.value = '';
-        this._addSeparatorKeyBinding();
-      }
+        //already at full length, delete current value and let this new value be applied
+        if(this._cellLength !== -1 && this.$.dtEntry.value.length === this._cellLength) {
+          this.$.dtEntry.value = '';
+          this._addSeparatorKeyBinding();
+        }
 
-      // if it is full, we're done with this cell, go to the next
-      if(this.$.dtEntry.value.length === this._cellLength - 1) {
-        this._moveFocusForward();
+        // if it is full, we're done with this cell, go to the next
+        if(this.$.dtEntry.value.length === this._cellLength - 1) {
+          this._moveFocusForward();
+        }
       }
     }
   });
