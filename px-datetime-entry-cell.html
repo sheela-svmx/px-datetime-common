@@ -525,6 +525,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _keyPress: function(evt) {
 
       if(evt.key !== 'Backspace' && evt.key !== 'Delete' && evt.key !== 'Cut' && evt.key !== 'Copy' && evt.key !== 'ArrowLeft' && evt.key !== 'ArrowRight') {
+
+        //AM PM, only accept A and P
+        if((this.momentFormat === 'A' || this.momentFormat === 'a') && !/[aApP]/.test(evt.key)) {
+          evt.preventDefault();
+          return;
+        }
+
         //ensure for numbers we only accept digits
         if(this._isNumber && !/[0-9]/.test(evt.key)) {
           evt.preventDefault();
