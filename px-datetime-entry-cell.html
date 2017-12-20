@@ -38,11 +38,11 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       on-copy="_handleCopy"
       disabled="[[_getDisabled(momentFormat)]]"
       type="[[_getType(_isNumber)]]"
-      pattern="[[_getPattern(_isNumber)]]"
+      pattern$="[[_getPattern(_isNumber)]]"
       placeholder="[[_placeholderText(momentFormat)]]"
       on-keypress="_keyPress"
-      max="[[_max]]"
-      min="[[_min]]"
+      max$="[[_max]]"
+      min$="[[_min]]"
       step="1" />
     </template>
 </dom-module>
@@ -167,7 +167,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _getPattern: function() {
 
       if(this._isNumber === undefined) {
-        return;
+        return null;
       }
 
       if(this._isNumber) {
@@ -175,7 +175,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         //should help with mobile keyboard (i.e get the number keyboard rather than the phone one)
         return '[0-9]*';
       } else {
-        return '';
+        return null;
       }
     },
     /**
@@ -509,6 +509,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(momentFormat === "YYYY") {
         return 9999;
       }
+      return '';
     },
     /**
      * Set the min value a token can be
@@ -520,6 +521,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if( /^(?:M|MM|D|DD|h|hh|k|kk)$/.test(momentFormat) ) {
         return 1;
       }
+      return '';
     },
 
     _keyPress: function(evt) {

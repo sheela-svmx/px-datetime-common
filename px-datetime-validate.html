@@ -158,8 +158,8 @@
 
       invalidObj.futureSelection = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
       invalidObj.pastSelection   = this.blockPastDates && dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
-      invalidObj.pastMaxSelection   = Object.keys(this.maxDate).length > 0 && dateTimeMoment.isAfter(this.maxDate);
-      invalidObj.beforeMinSelection = Object.keys(this.minDate).length > 0 && dateTimeMoment.isBefore(this.minDate);
+      invalidObj.pastMaxSelection   = this.maxDate && dateTimeMoment.isAfter(this.maxDate);
+      invalidObj.beforeMinSelection = this.minDate && dateTimeMoment.isBefore(this.minDate);
 
       if ((dateTimeMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
         this._validField(dateTimeMoment);
