@@ -100,10 +100,10 @@ var pxDatetimeSharedBehavior = [{
   ],
   _updateMinMaxTz: function() {
     if(this.timeZone !== undefined) {
-      if(this.minDate) {
+      if(this.minDate && this.minDate.tz) {
         this.minDate.tz(this.timeZone);
       }
-      if(this.maxDate) {
+      if(this.maxDate && this.maxDate.tz) {
         this.maxDate.tz(this.timeZone);
       }
     }
