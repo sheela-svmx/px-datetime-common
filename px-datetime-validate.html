@@ -217,7 +217,7 @@
       for (var i = 0; i < cells.length; i++) {
         var value = Polymer.dom(cells[i].root).querySelector('#dtEntry').value;
         if (value === '') {
-          return false;
+          return '';
         }
         if (cells[i].momentFormat !== "Z") {
           outputStr = outputStr + value + cells[i].symbol;

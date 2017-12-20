@@ -160,16 +160,18 @@
       },
 
       minDate: {
-        type: Object,
-        defaultValue: "2016-08-14T21:59:48.672Z",
-        inputType: 'code:JSON'
+        type: String,
+        defaultValue: Px.moment().subtract(3, 'month').toISOString(),
+        inputType: 'text',
+        inputPlaceholder: 'ISOString'
       },
 
       maxDate: {
-        type: Object,
-        defaultValue: "2017-08-28T21:59:48.674Z",
-        inputType: 'code:JSON'
-      }
+        type: String,
+        defaultValue: Px.moment().add(3, 'month').toISOString(),
+        inputType: 'text',
+        inputPlaceholder: 'ISOString'
+      },
 
     }
 
