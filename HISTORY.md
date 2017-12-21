@@ -1,6 +1,6 @@
 v2.0.2
 ==================
-* added validation for blank state
+* fixed bugs around minDate and MaxDate
 
 v2.0.1
 ==================
