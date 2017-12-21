@@ -27,36 +27,6 @@ PxDatetimeBehavior.blockDates = {
       type: Boolean,
       value: false
     },
-    /**
-     * The minimum / earliest allowed date, as a a Moment object or an ISO 8601 String (dates before this will be disabled and unclickable).
-     */
-    minDate: {
-      type: Object,
-      value: function() {
-        return {};
-      },
-      observer: '_minDateChanged'
-    },
-    /**
-     * The maximum / latest allowed date, as a a Moment object or an ISO 8601 String (dates after this will be disabled and unclickable).
-     */
-    maxDate: {
-      type: Object,
-      value: function() {
-        return {};
-      },
-      observer: '_maxDateChanged'
-    }
-  },
-  _minDateChanged: function() {
-    if(typeof this.minDate === 'string') {
-      this.minDate = Px.moment(this.minDate);
-    }
-  },
-  _maxDateChanged: function() {
-    if(typeof this.maxDate === 'string') {
-      this.maxDate = Px.moment(this.maxDate);
-    }
   }
 }
 
@@ -103,7 +73,52 @@ var pxDatetimeSharedBehavior = [{
      useKeyIfMissing: {
        type: Boolean,
        value: true
-     }
+     },
+     /**
+     * The minimum / earliest allowed date, as a a Moment object or an ISO 8601 String (dates before this will be disabled and unclickable).
+     */
+    minDate: {
+      type: Object,
+      observer: '_minDateChanged'
+    },
+    /**
+     * The maximum / latest allowed date, as a a Moment object or an ISO 8601 String (dates after this will be disabled and unclickable).
+     */
+    maxDate: {
+      type: Object,
+      observer: '_maxDateChanged'
+    }
+  },
+  observers: [
+    '_updateMinMaxTz(timeZone)'
+  ],
+  _updateMinMaxTz: function() {
+    if(this.timeZone !== undefined) {
+      if(this.minDate && this.minDate.tz) {
+        this.minDate.tz(this.timeZone);
+      }
+      if(this.maxDate && this.maxDate.tz) {
+        this.maxDate.tz(this.timeZone);
+      }
+    }
+  },
+  _minDateChanged: function() {
+    if(typeof this.minDate === 'string') {
+      if(this.timeZone) {
+        this.minDate = Px.moment.tz(this.minDate, this.timeZone);
+      } else {
+        this.minDate = Px.moment(this.minDate);
+      }
+    }
+  },
+  _maxDateChanged: function() {
+    if(typeof this.maxDate === 'string') {
+      if(this.timeZone) {
+        this.maxDate = Px.moment.tz(this.maxDate, this.timeZone);
+      } else {
+        this.maxDate = Px.moment(this.maxDate);
+      }
+    }
   },
   /**
    * Copies the time in toPreserve to dest and returns dest.
