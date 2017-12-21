@@ -1,3 +1,7 @@
+v2.0.3
+==================
+* various fixes around cells and validation
+
 v2.0.2
 ==================
 * fixed bugs around minDate and MaxDate
