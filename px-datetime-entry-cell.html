@@ -112,10 +112,17 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         type: Number,
         computed: '_getMin(momentFormat)'
       },
+      /**
+       * Determine is the cell is a number
+       * based off the `momentFormat`
+       */
       _isNumber: {
         type: Boolean,
         computed: '_computeIsNumber(momentFormat)'
       },
+      /**
+       * Number of characters the cell is allow to be
+       */
       _cellLength: {
         type: Number,
         value: 0
@@ -153,7 +160,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * Sets the value of the cell to the current moment obj
      */
     setValueFromMoment: function() {
-
       //if moment is null (or somehow undefined) => clear
       if(!this.momentObj) {
         this.clear();
@@ -165,13 +171,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       return !(/^(?:a|A|MMM|MMMM|Do|ddd|dddd|Z|ZZ)$/.test(momentFormat));
     },
     _getPattern: function() {
-
       if(this._isNumber === undefined) {
         return null;
       }
-
       if(this._isNumber) {
-
         //should help with mobile keyboard (i.e get the number keyboard rather than the phone one)
         return '[0-9]*';
       } else {
@@ -185,7 +188,6 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(this._isNumber === undefined) {
         return;
       }
-
       return this._isNumber ? 'tel' : 'text';
     },
     /**
@@ -210,7 +212,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
     },
     /**
-     * Size the input fields based on the number of characters in dtWorkingCopy
+     * Size the input fields based on the value or placeholder text
      */
     _sizeInputs: function(){
       //create a dummy canvas to measure string and make size the input correctly
@@ -257,7 +259,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       this.addOwnKeyBinding(separator,'_moveFocusForward');
     },
     /**
-     *
+     * If `momentObj` or `timeZone` update, reflect this in the cell
      */
     _updateInputValue: function() {
       if(this.momentObj !== undefined && this.timeZone !== undefined) {

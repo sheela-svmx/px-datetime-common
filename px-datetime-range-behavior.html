@@ -14,7 +14,6 @@ PxDatetimeBehavior.rangeMoments = {
   properties: {
     /**
      * Moment object start date & time
-     *
      */
     fromMoment: {
       type: Object,
@@ -25,7 +24,6 @@ PxDatetimeBehavior.rangeMoments = {
     },
     /**
      * Moment object end date & time
-     *
      */
     toMoment: {
       type: Object,
@@ -64,8 +62,8 @@ var pxDatetimeRangeBehavior = [{
      *    },
      *    {
      *      "displayText": "Last 12 Hours",
-     *      "startDateTime": "2013-02-04T10:44:30.652Z",
-     *      "endDateTime": "2013-02-04T22:49:30.652Z"
+     *      "startDateTime": function() {return moment().subtract(1, 'days').toISOString();},
+     *      "endDateTime": function() {return moment().startOf('day').toISOString();}
      *    }
      *   ]
      * ```
@@ -82,7 +80,7 @@ var pxDatetimeRangeBehavior = [{
     '_timeZoneChanged(timeZone)'
   ],
   /**
-   * make sure the moment obj pick up the possibly new moment locale
+   * make sure the moment obj picks up the possibly new moment locale
    */
   _localeChanged: function() {
     if(this.language !== undefined) {
@@ -186,13 +184,13 @@ var pxDatetimeTempRangeBehavior = [{
     return changed;
   },
   /**
-   * Rollback value of temp moment to use public momentObj
+   * Rollback value of temp fromMoment to use public momentObj
    */
    _rollbackTempFromMoment: function(fromMoment) {
     this.set('_tempFromMomentObj', this.fromMoment);
   },
   /**
-   * Rollback value of temp moment to use public momentObj
+   * Rollback value of temp toMoment to use public momentObj
    */
    _rollbackTempToMoment: function(toMoment) {
     this.set('_tempToMomentObj', this.toMoment);

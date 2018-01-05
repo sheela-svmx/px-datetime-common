@@ -198,7 +198,6 @@ Custom property | Description
       cells.forEach(function(cell) {
         cell.setValueFromMoment();
       });
-      // this._validateInput();
     },
     /**
      * runs when `momentFormat` is changed
@@ -261,7 +260,7 @@ Custom property | Description
       return true
     },
     /**
-     * return a string of the
+     * return a string of the separation symbols
      */
     _returnSymbol: function(i, _symbolCharArray){
       if(_symbolCharArray === null || typeof(_symbolCharArray[i]) === 'undefined'){

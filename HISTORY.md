@@ -1,3 +1,7 @@
+v2.0.4
+==================
+* cleaned up code and updated api docs
+
 v2.0.3
 ==================
 * various fixes around cells and validation

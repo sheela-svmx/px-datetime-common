@@ -85,6 +85,12 @@
 
     /**
      * Validation function for 'px-datetime-entry'
+     *
+     * @event px-moment-valid
+     * @param {element} this
+
+     * @event px-moment-invalid
+     * @param {element} this
      */
     _validateInput: function (format, tz) {
       var inputArr = Polymer.dom(this.root).querySelectorAll('.cell'),
@@ -110,8 +116,12 @@
      * Validate a complete field
      * called in px-datetime-field and px-datetime-range-field
      *
-     * @param {String} funcOrigin - The function that called validation
-     * @return validation result
+     * @param {String} funcOrigin - The function that called validation. Used for `_handleIncompleteEntries`
+     * @return validation result:
+     * - MomentObj - The validated new moment obj
+     * - False - If the new moment is invalid
+     * - FieldSame - If the new moment is the same as the old moment
+     * - FieldBlank - If the visible field(s) are blank
      */
     _validateField: function (funcOrigin) {
       var fieldNodes = new Object(),
@@ -124,14 +134,12 @@
       var dateString = (dateEntry !== null) ? this._entryInputString(fieldNodes.dateCells) : '',
           timeString = (timeEntry !== null) ? this._entryInputString(fieldNodes.timeCells) : '';
 
-      if ((this.hideTime && !dateString) || ((!this.hideDate && !this.hideTime) && (!dateString || !timeString))) {
-        return this._handleIncompleteEntries(funcOrigin, dateEntry, fieldNodes);
-      }
-      else if (this.hideDate && !timeString) {
-        return this._handleIncompleteEntries(funcOrigin, timeEntry, fieldNodes);
-      }
 
-      if ((this.hideDate && !timeString) || (this.hideTime && !dateString) || ((!this.hideDate && !this.hideTime) && (!dateString || !timeString))) {
+      // If the timeString is incomplete when only the time entry is showing or
+      // if the dateString is incomplete when only the date entry is showing or
+      // if either dateString or timeSting are incomplete when both entries are showing
+      // run `_handleIncompleteEntries()`
+      if ( (this.hideDate && !timeString) || (this.hideTime && !dateString) || ((!this.hideDate && !this.hideTime) && (!dateString || !timeString)) ) {
         var entry = this.hideDate ? timeEntry : dateEntry;
         return this._handleIncompleteEntries(funcOrigin, entry, fieldNodes);
       }
@@ -179,7 +187,7 @@
       }
     },
     /**
-     * Turn off validation error, set isValid to true, and fire event.
+     * Reset field to valid
      *
      * @param {Object} submittedMoment - valid momentObj
      */
@@ -196,6 +204,7 @@
       this.fire('px-moment-valid', { "element": this });
     },
     /**
+     * Set field to invalid
      * Set validation Error Message, turn on validation error, set isValid to false, and fire event.
      *
      * @param {Object} submittedMoment - Invalid momentObj
@@ -315,7 +324,7 @@
     },
     /**
      * Checking to see if all cells are empty
-     * If a cell as a value return false
+     * If a cell has a value return false
      *
      * @param {Object} cells - Date or time cell nodes
      */
