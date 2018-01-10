@@ -1,3 +1,7 @@
+v2.1.0
+==================
+* added `spaceBetween` for px-datetime-buttons
+
 v2.0.4
 ==================
 * cleaned up code and updated api docs
