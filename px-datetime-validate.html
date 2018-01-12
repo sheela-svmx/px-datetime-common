@@ -23,18 +23,6 @@
         notify: true
       },
       /**
-       * Boolean stating if the neighbor, dependent component has passed validation
-       *
-       * Example: 'px-datetime-entry' can be either a date input or a time input. If you want a full date-time, you need both.
-       * If 'this' is a time input, you want the neighbor date input to also have passed validation before accepting the full date-time.
-       *
-       * @private
-       */
-      neighborValid: {
-        type: Boolean,
-        value: true
-      },
-      /**
        * String used to describe the current invalid state
        */
       validationErrorMessage: {
@@ -125,7 +113,6 @@
      */
     _validateField: function (funcOrigin) {
       var fieldNodes = new Object(),
-          invalidObj = new Object(),
           dateEntry = Polymer.dom(this.root).querySelector('#date'),
           timeEntry = Polymer.dom(this.root).querySelector('#time');
 
@@ -164,25 +151,45 @@
         if (!/S/.test(dateTimeFormat)) { dateTimeMoment.millisecond(this.momentObj.millisecond()); }
       }
 
-      invalidObj.futureSelection = this.blockFutureDates && dateTimeMoment.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
-      invalidObj.pastSelection   = this.blockPastDates && dateTimeMoment.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
-      invalidObj.pastMaxSelection   = this.maxDate && dateTimeMoment.isAfter(this.maxDate);
-      invalidObj.beforeMinSelection = this.minDate && dateTimeMoment.isBefore(this.minDate);
+      return this._validateMomentObj(dateTimeMoment);
+    },
+    /**
+     * Validate a moment object
+     * called in from _validateField and px-datetime-field
+     *
+     * @param {Object} momentObj - Moment object getting validated
+     * @return validation result:
+     * - MomentObj - The validated new moment obj
+     * - False - If the new moment is invalid
+     * - FieldSame - If the new moment is the same as the old moment
+     */
+    _validateMomentObj: function (validatingMomentObj) {
+      //If null is passed in clear the validation errors
+      if (validatingMomentObj === null ) {
+        this._validField(validatingMomentObj);
+        return;
+      }
 
-      if ((dateTimeMoment.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
-        this._validField(dateTimeMoment);
+      var invalidObj = new Object();
+      invalidObj.futureSelection = this.blockFutureDates && validatingMomentObj.isAfter(Px.moment.tz(Px.moment(), this.timeZone));
+      invalidObj.pastSelection   = this.blockPastDates && validatingMomentObj.isBefore(Px.moment.tz(Px.moment(), this.timeZone));
+      invalidObj.pastMaxSelection   = this.maxDate && validatingMomentObj.isAfter(this.maxDate);
+      invalidObj.beforeMinSelection = this.minDate && validatingMomentObj.isBefore(this.minDate);
 
-        //if the neighbor is valid, momentObj is undefined or different from current moment obj return the new momentObj
-        if (this.neighborValid) {
-          if (!this.momentObj || (this.momentObj && !this.momentObj.isSame(dateTimeMoment))) {
-            return dateTimeMoment;
-          }
-          else { return 'FieldSame'; }
+      if ((validatingMomentObj.isValid() && !invalidObj.futureSelection && !invalidObj.pastSelection && !invalidObj.pastMaxSelection && !invalidObj.beforeMinSelection)) {
+        this._validField(validatingMomentObj);
+
+        //if the momentObj is null or not that same as this.momentObj return validatingMomentObj
+        if (!this.momentObj || !this.momentObj.isSame(validatingMomentObj)) {
+          return validatingMomentObj;
+        }
+        else if (this.momentObj.isSame(validatingMomentObj)) {
+          return 'FieldSame';
         }
 
       }
       else {
-        this._invalidField(dateTimeMoment, invalidObj);
+        this._invalidField(validatingMomentObj, invalidObj);
         return false;
       }
     },
@@ -194,11 +201,11 @@
     _validField: function (submittedMoment) {
       if (!this.hideDate) {
         var dateEntry = Polymer.dom(this.root).querySelector('#date');
-        dateEntry.toggleClass('validation-error', false, dateEntry.$.wrapper);
+        if(dateEntry !== null){dateEntry.toggleClass('validation-error', false, dateEntry.$.wrapper);}
       }
       if (!this.hideTime) {
         var timeEntry = Polymer.dom(this.root).querySelector('#time');
-        timeEntry.toggleClass('validation-error', false, timeEntry.$.wrapper);
+        if(timeEntry !== null){timeEntry.toggleClass('validation-error', false, timeEntry.$.wrapper);}
       }
       this.set('fieldIsValid', true);
       this.fire('px-moment-valid', { "element": this });

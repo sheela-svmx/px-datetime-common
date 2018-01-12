@@ -1,3 +1,7 @@
+v2.0.5
+==================
+* added `_validateMomentObj()` to validation
+
 v2.0.4
 ==================
 * cleaned up code and updated api docs
