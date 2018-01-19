@@ -1,3 +1,7 @@
+v2.0.6
+==================
+* added `sudo:required` to travis
+
 v2.0.5
 ==================
 * added `_validateMomentObj()` to validation
