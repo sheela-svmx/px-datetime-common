@@ -1,28 +1,25 @@
-<link rel="import" href="../px-moment-imports/px-moment-imports.html" />
-<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../px-moment-imports/px-moment-imports.html"/>
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html"/>
 
 <script>
-/**
+(function() {
+  var PxDatetimeBehavior = window.PxDatetimeBehavior = (window.PxDatetimeBehavior || {});
 
-  ```pxDatetimeButtonBehavior```
-
-  This behavior is for ```px-datetime``` components that can have apply/cancel buttons.
-
-  @polymerBehavior pxDatetimeButtonBehavior
-
-*/
-
-var pxDatetimeButtonBehavior = [{
-
-  properties: {
-    /**
-     * Whether to show Apply and Cancel buttons in the components
-     */
-    showButtons: {
-      type: Boolean,
-      value: false
+  /**
+   * For components that can have apply/cancel buttons
+   *
+   * @polymerBehavior PxDatetimeBehavior.Buttons
+   */
+  PxDatetimeBehavior.Buttons = [{
+    properties: {
+      /**
+       * Whether to show Apply and Cancel buttons in the components
+       */
+      showButtons: {
+        type: Boolean,
+        value: false
+      }
     }
-  }
-}, Polymer.IronA11yKeysBehavior];
-
+  }, Polymer.IronA11yKeysBehavior];
+})();
 </script>

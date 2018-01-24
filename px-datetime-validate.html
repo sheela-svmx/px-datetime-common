@@ -1,16 +1,16 @@
-<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html"/>
+
 <script>
+(function() {
+  var PxDatetimeBehavior = window.PxDatetimeBehavior = (window.PxDatetimeBehavior || {});
+
   /**
-    ```validate```
-
-    A collection of validation scripts for px-datetime components
-
-    Dependencies: momentjs
-
-    @polymerBehavior validate
-  */
-
-  var validate = [Polymer.AppLocalizeBehavior, {
+   * Collection of validation scripts for px-datetime components
+   * Dependencies: momentjs
+   *
+   * @polymerBehavior PxDatetimeBehavior.Validate
+   */
+  PxDatetimeBehavior.Validate = [Polymer.AppLocalizeBehavior, {
     properties: {
       /**
        * Boolean stating if the current component is valid. Gets updated in '_validateInput'
@@ -349,6 +349,5 @@
       return isBlank;
     }
   }];
-
-
+})();
 </script>
