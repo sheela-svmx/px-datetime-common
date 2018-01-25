@@ -8,9 +8,9 @@
    * For all `px-{datetime}-{picker}` components.
    * Dependencies: momentjs
    *
-   * @polymerBehavior PxDatetimeBehavior.SingleDate
+   * @polymerBehavior PxDatetimeBehavior.SingleMoment
    */
-  PxDatetimeBehavior.SingleDate = [{
+  PxDatetimeBehavior.SingleMoment = [{
     properties: {
       /**
        * Moment value with the date or time to display.  Will be parsed according to the moment format. (See momentFormat property.)
@@ -103,6 +103,6 @@
         this.set('_tempMomentObj', newMom);
       }
     }
-  }, PxDatetimeBehavior.SingleDate];
+  }, PxDatetimeBehavior.SingleMoment];
 })();
 </script>
