@@ -1,3 +1,11 @@
+v3.0.0
+==================
+* Renames all behaviors to explicitly use the PxDatetimeBehavior namespace
+* Ensures that all behaviors are declared in a way that will attach them to the
+  window even if executed in an IIFE or other non-global-level way when loaded
+  by customer applications
+* Small code cleanup
+
 v2.0.6
 ==================
 * added `sudo:required` to travis
