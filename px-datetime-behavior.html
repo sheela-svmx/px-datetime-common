@@ -90,7 +90,7 @@
      * Make sure the moment obj pick up the possibly new moment locale
      */
      _localeChangedTemp: function() {
-      if(this.language !== undefined && this.momentObj) {
+      if(this.language !== undefined && this._tempMomentObj) {
         this.set('_tempMomentObj', this._tempMomentObj.locale(Px.moment.locale()));
       }
     },

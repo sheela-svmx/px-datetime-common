@@ -1,3 +1,7 @@
+v3.0.1
+==================
+* fixed typo in `_localeChangedTemp` that mistakenly allowed `this._tempMomentObj` to equal null
+
 v3.0.0
 ==================
 * Renames all behaviors to explicitly use the PxDatetimeBehavior namespace
