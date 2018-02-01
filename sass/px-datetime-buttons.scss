@@ -21,6 +21,14 @@ $inuit-enable-btn--disabled        : true;
 @import "px-buttons-design/_objects.buttons.scss";
 
 //component
+.dt-btn-wrapper {
+  display: flex;
+}
+
+:host([space-between]) .dt-btn-wrapper {
+  width: 100%;
+  justify-content: space-between;
+}
 
 //trumps
 $inuit-enable-margins--small      : true;

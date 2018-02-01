@@ -19,7 +19,7 @@ Date time button component.
 <dom-module id="px-datetime-buttons">
   <template>
     <style include="px-datetime-buttons-styles"></style>
-    <div class="flex">
+    <div class="dt-btn-wrapper">
       <template is="dom-if" if="{{ !hideCancel }}">
         <button type="button" class="btn u-mr-" on-tap="_fireCancelEvent">[[localize('Cancel')]]</button>
       </template>
@@ -71,6 +71,14 @@ Date time button component.
        */
       submitIcon: {
         type: String
+      },
+      /**
+       * If true buttons will be set to `justify-content: space-between;`
+       */
+      spaceBetween: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
       },
       /**
        * List of key/values to be included for translating this component

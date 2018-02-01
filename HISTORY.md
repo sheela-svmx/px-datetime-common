@@ -1,3 +1,7 @@
+v3.1.0
+==================
+* added `spaceBetween` property in `px-datetime-buttons.html` to allow a different layout of the buttons
+
 v3.0.1
 ==================
 * fixed typo in `_localeChangedTemp` that mistakenly allowed `this._tempMomentObj` to equal null
