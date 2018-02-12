@@ -1,3 +1,7 @@
+v3.1.1
+==================
+* reduce icon-set imports
+
 v3.1.0
 ==================
 * added `spaceBetween` property in `px-datetime-buttons.html` to allow a different layout of the buttons
