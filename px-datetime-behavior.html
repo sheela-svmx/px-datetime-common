@@ -98,7 +98,7 @@
      * Makes sure the moment object reflects the right timezone.
      */
      _timeZoneChangedTemp: function() {
-      if(this.timeZone !== undefined && this.momentObj) {
+      if(this.timeZone !== undefined && this._tempMomentObj) {
         var newMom = this._tempMomentObj.clone().tz(this.timeZone);
         this.set('_tempMomentObj', newMom);
       }

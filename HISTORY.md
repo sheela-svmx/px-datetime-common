@@ -1,3 +1,7 @@
+v3.1.2
+==================
+* fix copy/paste error
+
 v3.1.1
 ==================
 * reduce icon-set imports
