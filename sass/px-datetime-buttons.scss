@@ -23,6 +23,12 @@ $inuit-enable-btn--disabled        : true;
 //component
 .dt-btn-wrapper {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+:host {
+  width: 100%;
 }
 
 :host([space-between]) .dt-btn-wrapper {

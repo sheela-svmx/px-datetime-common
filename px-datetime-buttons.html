@@ -20,17 +20,22 @@ Date time button component.
   <template>
     <style include="px-datetime-buttons-styles"></style>
     <div class="dt-btn-wrapper">
-      <template is="dom-if" if="{{ !hideCancel }}">
-        <button type="button" class="btn u-mr-" on-tap="_fireCancelEvent">[[localize('Cancel')]]</button>
-      </template>
-      <template is="dom-if" if="{{ !hideSubmit }}">
-        <button class$="{{submitBtnClasses('btn btn--primary', isSubmitButtonValid)}}"
-                type="button"
-                on-tap="_fireSubmitEvent"
-                id="submitButton"
-                disabled="{{!isSubmitButtonValid}}">
-        <i class$="{{submitIcon}}"></i>[[localize('Apply')]]</button>
-      </template>
+        <div>
+          <template is="dom-if" if="{{ !hideClear }}">
+            <button type="button" class="btn" on-tap="_fireClearEvent">[[localize('Clear')]]</button>
+          </template>
+        </div>
+        <template is="dom-if" if="{{ !hideCancel }}">
+          <button type="button" class="btn u-mr-" on-tap="_fireCancelEvent">[[localize('Cancel')]]</button>
+        </template>
+        <template is="dom-if" if="{{ !hideSubmit }}">
+          <button class$="{{submitBtnClasses('btn btn--primary', isSubmitButtonValid)}}"
+                  type="button"
+                  on-tap="_fireSubmitEvent"
+                  id="submitButton"
+                  disabled="{{!isSubmitButtonValid}}">
+          <i class$="{{submitIcon}}"></i>[[localize('Apply')]]</button>
+        </template>
     </div>
   </template>
 </dom-module>
@@ -59,10 +64,17 @@ Date time button component.
         type:Boolean,
         value: false
       },
-       /**
-        * Hides the Cancel button when true
-        */
+      /**
+       * Hides the Cancel button when true
+       */
       hideCancel:{
+        type:Boolean,
+        value: false
+      },
+      /**
+       * Hides the Clear button when true
+       */
+      hideClear:{
         type:Boolean,
         value: false
       },
@@ -88,6 +100,7 @@ Date time button component.
         value: function() {
           return {
             'en': {
+              'Clear': 'Clear',
               'Cancel': 'Cancel',
               'Apply': 'Apply'
             }
@@ -115,19 +128,33 @@ Date time button component.
       '_submitButtonState(isSubmitButtonValid)'
     ],
     /**
+     * Fires when 'px-datetime-button-clear-clicked' is changed
      *
+     * @event px-datetime-button-clear-clicked
+     */
+    _fireClearEvent:function(){
+      this.fire('px-datetime-button-clear-clicked');
+    },
+    /**
+     * Fires when 'px-datetime-button-clicked' is changed
+     *
+     * @event px-datetime-button-clicked
+     * @param {Boolean} action - false
      */
     _fireCancelEvent:function(){
       this.fire('px-datetime-button-clicked',{ action:false });
     },
     /**
+     * Fires when 'px-datetime-button-clicked' is changed
      *
+     * @event px-datetime-button-clicked
+     * @param {Boolean} action - true
      */
     _fireSubmitEvent:function(){
       this.fire('px-datetime-button-clicked',{ action:true });
     },
     /**
-     *
+     * helper function to decide whether add the btn--disabled class or not
      */
     submitBtnClasses: function(base, submitButtonValid) {
       return (submitButtonValid) ? base : base + ' btn--disabled';
