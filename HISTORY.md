@@ -1,3 +1,7 @@
+v3.1.3
+==================
+* reflected showButtons prop to attribute for styling
+
 v3.1.2
 ==================
 * fix copy/paste error
