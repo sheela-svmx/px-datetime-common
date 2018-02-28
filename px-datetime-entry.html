@@ -39,7 +39,7 @@ Custom property | Description
 
     <div id="wrapper" class="flex flex--middle">
       <div class="flex flex--middle dt-flex--no-shrink">
-          <div class$="{{_getIconClass(hideIcon)}}" on-tap="_iconClicked">
+          <button class$="{{_getIconClass(hideIcon)}} btn btn--bare dt-icon-button" on-tap="_iconClicked">
               <span class="a11y">{{dateOrTime}}</span>
               <template is="dom-if" if="{{!hideIcon}}">
                 <px-icon
@@ -48,7 +48,7 @@ Custom property | Description
                   icon="[[_setIcon(dateOrTime)]]">
                 </px-icon>
               </template>
-          </div>
+          </button>
           <template is="dom-repeat" items="{{_cellFormatArray}}">
             <px-datetime-entry-cell
               id="cell{{index}}"

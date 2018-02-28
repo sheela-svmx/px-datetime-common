@@ -1,3 +1,7 @@
+v3.1.4
+==================
+* the icons are now able to be tabbed to
+
 v3.1.3
 ==================
 * reflected showButtons prop to attribute for styling

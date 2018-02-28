@@ -33,6 +33,8 @@ $inuit-enable-validation-states : true;
 @import "px-forms-design/_base.forms.scss";
 
 // Objects
+$inuit-enable-btn--bare : true;
+@import 'px-buttons-design/_objects.buttons.scss';
 
 // Component
 
@@ -50,7 +52,16 @@ $inuit-enable-validation-states : true;
   color: var(--px-datetime-icon-color, gray);
   --iron-icon-width: calculateRem(16px);
   --iron-icon-height: calculateRem(16px);
-  cursor: pointer;
+}
+.dt-icon-button{
+  min-width: auto;
+}
+.dt-icon-button:hover,
+.dt-icon-button:focus {
+  --px-datetime-icon-color: var(--px-datetime-icon-color--hover, blue) ;
+}
+.dt-icon-button:active {
+  --px-datetime-icon-color: var(--px-datetime-icon-color--pressed, darkblue);
 }
 
 .dt-entry-symbol {
