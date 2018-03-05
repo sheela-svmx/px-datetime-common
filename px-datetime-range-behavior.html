@@ -202,13 +202,11 @@
      */
      _timeZoneChangedTemp: function() {
       if(this.timeZone !== undefined) {
-        if(this.fromMoment) {
-          var newMom = this._tempFromMomentObj.clone().tz(this.timeZone);
-          this.set('_tempFromMomentObj', newMom);
+        if(this._tempFromMomentObj) {
+          this.set('_tempFromMomentObj', this._tempFromMomentObj.clone().tz(this.timeZone));
         }
-        if(this.toMoment) {
-          newMom = this._tempToMomentObj.clone().tz(this.timeZone);
-          this.set('_tempToMomentObj', newMom);
+        if(this._tempToMomentObj) {
+          this.set('_tempToMomentObj', this._tempToMomentObj.clone().tz(this.timeZone));
         }
       }
     },

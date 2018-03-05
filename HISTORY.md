@@ -1,3 +1,7 @@
+v3.1.5
+==================
+* fix null check in range-behavior
+
 v3.1.4
 ==================
 * the icons are now able to be tabbed to
