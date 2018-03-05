@@ -189,10 +189,10 @@
      */
      _localeChangedTemp: function() {
       if(this.language !== undefined) {
-        if(this.fromMoment) {
+        if(this._tempFromMomentObj) {
           this.set('_tempFromMomentObj', this._tempFromMomentObj.locale(Px.moment.locale()));
         }
-        if(this.toMoment) {
+        if(this._tempToMomentObj) {
           this.set('_tempToMomentObj', this._tempToMomentObj.locale(Px.moment.locale()));
         }
       }
