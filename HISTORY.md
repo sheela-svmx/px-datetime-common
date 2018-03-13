@@ -1,3 +1,7 @@
+v3.1.7
+==================
+* change ordering of timezone dropdown
+
 v3.1.6
 ==================
 * fix null check in range-behavior
