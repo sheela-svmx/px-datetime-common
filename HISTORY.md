@@ -1,3 +1,7 @@
+v3.2.0
+==================
+* Added ability to hoist timezone dropdown
+
 v3.1.7
 ==================
 * change ordering of timezone dropdown
