@@ -7,6 +7,8 @@
 <link rel="import" href="../px-icon-set/px-icon.html"/>
 <link rel="import" href="../px-dropdown/px-dropdown.html"/>
 <link rel="import" href="css/px-datetime-entry-styles.html"/>
+<link rel="import" href="../px-overlay/px-overlay-behavior.html"/>
+
 
 <!--
 Range field component which displays a time or date and font awesome icon.
@@ -81,7 +83,9 @@ Custom property | Description
             disable-clear
             items="[[_getTimeZoneList(showTimeZone)]]"
             on-focus="_handleDropdownFocus"
-            on-blur="_handleDropdownBlur">
+            on-blur="_handleDropdownBlur"
+            hoist="[[hoist]]"
+            container-type="[[containerType]]">
           </px-dropdown>
         </template>
         <template is="dom-if" if="{{_showTimeZoneText(showTimeZone)}}">
@@ -99,7 +103,8 @@ Custom property | Description
 
     behaviors: [
       PxDatetimeBehavior.SingleMoment,
-      PxDatetimeBehavior.Validate
+      PxDatetimeBehavior.Validate,
+      PxOverlayBehavior.sharedProperties
     ],
 
     properties: {
@@ -163,6 +168,13 @@ Custom property | Description
       isSelected: {
         type: Boolean,
         notify: true
+      },
+      /**
+       * Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context
+       */
+       hoist: {
+        type: Boolean,
+        value: false
       }
     },
 
