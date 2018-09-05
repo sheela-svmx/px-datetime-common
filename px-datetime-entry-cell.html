@@ -43,9 +43,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
   <template>
     <style include="px-datetime-entry-cell-styles"></style>
     <input
-      id="dtEntry"
       order="{{order}}"
-      class="text-input--bare"
+      class="datetime-entry-input text-input--bare"
       on-focus="_handleFocus"
       on-blur="_handleBlur"
       on-paste="_handlePaste"
@@ -170,7 +169,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      * Clears the input value for the cell.
      */
     clear: function() {
-      this.$.dtEntry.value = '';
+      this.$$('.datetime-entry-input').value = '';
     },
     /**
      * Sets the value of the cell to the current moment obj
@@ -180,7 +179,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       if(!this.momentObj) {
         this.clear();
       } else {
-        this.$.dtEntry.value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
+        this.$$('.datetime-entry-input').value = this.momentObj.tz(this.timeZone).format(this.momentFormat);
       }
     },
     _computeIsNumber: function(momentFormat) {
@@ -232,7 +231,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _sizeInputs: function(){
       //create a dummy canvas to measure string and make size the input correctly
-      var style = window.getComputedStyle(this.$.dtEntry, null),
+      var style = window.getComputedStyle(this.$$('.datetime-entry-input'), null),
           fontSize = style.getPropertyValue('font-size'),
           fontFamily = style.getPropertyValue('font-family'),
           c = document.createElement('canvas'),
@@ -246,14 +245,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         return;
       }
       ctx.font = fontSize + " " + fontFamily;
-      if(this.$.dtEntry.value) {
-        length = ctx.measureText(this.$.dtEntry.value.toUpperCase()).width;
+      if(this.$$('.datetime-entry-input').value) {
+        length = ctx.measureText(this.$$('.datetime-entry-input').value.toUpperCase()).width;
       }
       else {
-        length = ctx.measureText(this.$.dtEntry.placeholder).width;
+        length = ctx.measureText(this.$$('.datetime-entry-input').placeholder).width;
       }
       length = Math.ceil(length);
-      this.$.dtEntry.style['width'] = length + 'px';
+      this.$$('.datetime-entry-input').style['width'] = length + 'px';
     },
     /**
      * Sets up regular key bindings
@@ -320,7 +319,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _wraparound: function(evt) {
       var key = evt.detail.combo;
-          dtEntryValue = this.$.dtEntry.value,
+          dtEntryValue = this.$$('.datetime-entry-input').value,
           currentVal = dtEntryValue ? parseInt(dtEntryValue) : (this._min - 1),
           isUpDown = false;
 
@@ -328,14 +327,14 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         currentVal++;
         currentVal = currentVal > this._max ? this._min : currentVal;
         currentVal = currentVal < this._min ? this._min : currentVal;
-        this.$.dtEntry.value = currentVal;
+        this.$$('.datetime-entry-input').value = currentVal;
         evt.preventDefault();
       }
       else if(key === 'down') {
         currentVal--;
         currentVal = currentVal > this._max ? this._max : currentVal;
         currentVal = currentVal < this._min ? this._max : currentVal;
-        this.$.dtEntry.value = currentVal;
+        this.$$('.datetime-entry-input').value = currentVal;
         evt.preventDefault();
       }
     },
@@ -345,19 +344,19 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
     _checkValue: function(){
       //if our format requires two digits and we only have one, add a 0 in front
-      if(this.$.dtEntry.value && this.$.dtEntry.value.length === 1 &&
+      if(this.$$('.datetime-entry-input').value && this.$$('.datetime-entry-input').value.length === 1 &&
        /^(?:MM|DD|HH|hh|kk|mm|ss|YY)$/.test(this.momentFormat)){
-        this.$.dtEntry.value =  '0' + this.$.dtEntry.value;
+        this.$$('.datetime-entry-input').value =  '0' + this.$$('.datetime-entry-input').value;
       }
       //if the format is YYYY or Y and the input is 2 characters then convert the input to a 4 character year representation
-      else if(this.$.dtEntry.value && this.$.dtEntry.value.length === 2 && this.momentFormat === 'YYYY'){
-        var mo = Px.moment(this.$.dtEntry.value, 'YY');
-        this.$.dtEntry.value = mo.format(this.momentFormat);
+      else if(this.$$('.datetime-entry-input').value && this.$$('.datetime-entry-input').value.length === 2 && this.momentFormat === 'YYYY'){
+        var mo = Px.moment(this.$$('.datetime-entry-input').value, 'YY');
+        this.$$('.datetime-entry-input').value = mo.format(this.momentFormat);
       }
-      else if(this.$.dtEntry.value && this.momentFormat[0] === 'S' && this.$.dtEntry.value.length < this.momentFormat.length){
-        var dtNumber = parseInt(this.$.dtEntry.value);
-        dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.$.dtEntry.value.length));
-        this.$.dtEntry.value =  dtNumber.toString();
+      else if(this.$$('.datetime-entry-input').value && this.momentFormat[0] === 'S' && this.$$('.datetime-entry-input').value.length < this.momentFormat.length){
+        var dtNumber = parseInt(this.$$('.datetime-entry-input').value);
+        dtNumber = dtNumber.toPrecision(this.momentFormat.length) * Math.pow(10, (this.momentFormat.length - this.$$('.datetime-entry-input').value.length));
+        this.$$('.datetime-entry-input').value =  dtNumber.toString();
       }
       this._sizeInputs();
     },
@@ -389,7 +388,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         this._moveFocusForward();
 
       } else if(key === 'up' || key === 'down'){
-        if(this.$.dtEntry.value === 'AM' || this.$.dtEntry.value === 'am'){
+        if(this.$$('.datetime-entry-input').value === 'AM' || this.$$('.datetime-entry-input').value === 'am'){
           this._setAMPM('PM');
         } else {
           this._setAMPM('AM');
@@ -401,7 +400,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
      */
      _setAMPM: function(ampm){
        var mo = Px.moment.tz('01:00:00 ' + ampm, 'hh:mm:ss ' + this.momentFormat, this.timeZone);
-       this.$.dtEntry.value = mo.tz(this.timeZone).format(this.momentFormat);
+       this.$$('.datetime-entry-input').value = mo.tz(this.timeZone).format(this.momentFormat);
      },
      /**
      * Prevent the delete button from navigating back
@@ -559,13 +558,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         }
 
         //already at full length, delete current value and let this new value be applied
-        if(this._cellLength !== -1 && this.$.dtEntry.value.length === this._cellLength) {
-          this.$.dtEntry.value = '';
+        if(this._cellLength !== -1 && this.$$('.datetime-entry-input').value.length === this._cellLength) {
+          this.$$('.datetime-entry-input').value = '';
           this._addSeparatorKeyBinding();
         }
 
         // if it is full, we're done with this cell, go to the next
-        if(this.$.dtEntry.value.length === this._cellLength - 1) {
+        if(this.$$('.datetime-entry-input').value.length === this._cellLength - 1) {
           this._moveFocusForward();
         }
       }

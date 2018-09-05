@@ -247,7 +247,7 @@ limitations under the License.
     _entryInputString: function (cells) {
       var outputStr = ""
       for (var i = 0; i < cells.length; i++) {
-        var value = Polymer.dom(cells[i].root).querySelector('#dtEntry').value;
+        var value = Polymer.dom(cells[i].root).querySelector('.datetime-entry-input').value;
         if (value === '') {
           return '';
         }
@@ -355,7 +355,7 @@ limitations under the License.
       var isBlank = true;
       if (cells && cells.length) {
         for (i = 0; i < cells.length; i++) {
-          var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
+          var cellInput = Polymer.dom(cells[i].root).querySelectorAll('.datetime-entry-input');
           if (cellInput[0].value !== "") {
             isBlank = false;
             break;

@@ -1,3 +1,8 @@
+v3.2.1
+==================
+* Removed id #dtEntry from px-datetime-entry-cell and replaced with class variable .datetime-entry-input.
+* This ensures no duplicate non-unique id error that chrome console checks for.
+
 v3.2.0
 ==================
 * Added ability to hoist timezone dropdown

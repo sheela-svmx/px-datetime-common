@@ -38,7 +38,7 @@ suite('px-datetime-entry-cell', function () {
   test('the date cells have a value if momentObj is set', function (done) {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell');
     for (i = 0; i < cells.length; i++) {
-      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
+      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('.datetime-entry-input');
       assert.notEqual(cellInput[0].value, '');
     }
     done();
@@ -48,7 +48,7 @@ suite('px-datetime-entry-cell', function () {
   test('the time cells have a value if momentObj is set', function (done) {
     var cells = Polymer.dom(timeEntry.root).querySelectorAll('px-datetime-entry-cell');
     for (i = 0; i < cells.length; i++) {
-      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
+      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('.datetime-entry-input');
       assert.notEqual(cellInput[0].value, '');
     }
     done();
@@ -235,7 +235,7 @@ suite('px-datetime-entry-cell', function () {
   test('AM/PM', function (done) {
     var cells = Polymer.dom(timeFixt.root).querySelectorAll('px-datetime-entry-cell'),
         lastCell = cells[cells.length - 1],
-        lastInput = Polymer.dom(lastCell.root).querySelectorAll('#dtEntry');
+        lastInput = Polymer.dom(lastCell.root).querySelectorAll('.datetime-entry-input');
 
     flush(function () {
       MockInteractions.pressAndReleaseKeyOn(lastCell, 65, [], 'a');
@@ -631,7 +631,7 @@ suite('px-datetime-entry-cell empty', function () {
   test('the date cells are empty if momentObj is not set', function (done) {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell');
     for (i = 0; i < cells.length; i++) {
-      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
+      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('.datetime-entry-input');
       assert.equal(cellInput[0].value, '');
     }
     done();
@@ -641,7 +641,7 @@ suite('px-datetime-entry-cell empty', function () {
   test('the time cells are empty if momentObj is not set', function (done) {
     var cells = Polymer.dom(timeEntry.root).querySelectorAll('px-datetime-entry-cell');
     for (i = 0; i < cells.length; i++) {
-      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('#dtEntry');
+      var cellInput = Polymer.dom(cells[i].root).querySelectorAll('.datetime-entry-input');
       assert.equal(cellInput[0].value, '');
     }
     done();
@@ -653,7 +653,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -666,7 +666,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -681,7 +681,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
@@ -692,7 +692,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
@@ -705,7 +705,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
@@ -716,7 +716,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('31', {within: 1000, every: 100}, done);
@@ -729,7 +729,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
@@ -740,7 +740,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('31', {within: 1000, every: 100}, done);
@@ -754,7 +754,7 @@ suite('px-datetime-entry-cell empty', function () {
 
   //   flush(function () {
   //   var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-  //       theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+  //       theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
   //   MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
   //   expect(theInput[0].value).to.eventuallyEqual('00', {within: 1000, every: 100}, done);
@@ -765,7 +765,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('9999', {within: 1000, every: 100}, done);
@@ -778,7 +778,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
@@ -789,7 +789,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('99', {within: 1000, every: 100}, done);
@@ -802,7 +802,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
@@ -813,7 +813,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('23', {within: 1000, every: 100}, done);
@@ -826,7 +826,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('0', {within: 1000, every: 100}, done);
@@ -837,7 +837,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('23', {within: 1000, every: 100}, done);
@@ -850,7 +850,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
@@ -861,7 +861,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
@@ -872,7 +872,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     theInput[0].value = "00";
     cells[0]._handleBlur();
@@ -886,7 +886,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
@@ -897,7 +897,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
     expect(theInput[0].value).to.eventuallyEqual('12', {within: 1000, every: 100}, done);
@@ -908,7 +908,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     theInput[0].value = "00";
     cells[0]._handleBlur();
@@ -923,7 +923,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -935,7 +935,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -947,7 +947,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
     theInput[0].value = "0";
     cells[0]._handleBlur();
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
@@ -961,7 +961,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
     expect(theInput[0].value).to.eventuallyEqual('1', {within: 1000, every: 100}, done);
@@ -972,7 +972,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown')
     expect(theInput[0].value).to.eventuallyEqual('24', {within: 1000, every: 100}, done);
@@ -983,7 +983,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -998,7 +998,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1011,7 +1011,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1026,7 +1026,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1039,7 +1039,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1054,7 +1054,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1067,7 +1067,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1082,7 +1082,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1095,7 +1095,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1110,7 +1110,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1123,7 +1123,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1138,7 +1138,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1151,7 +1151,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1166,7 +1166,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1179,7 +1179,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
@@ -1194,7 +1194,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1208,7 +1208,7 @@ suite('px-datetime-entry-cell empty', function () {
 
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
     MockInteractions.pressAndReleaseKeyOn(cells[0], 38, [], 'ArrowUp');
 
@@ -1234,7 +1234,7 @@ suite('px-datetime-entry-cell invalid', function () {
 
       flush(()=>{
         var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-            theMonthInput = Polymer.dom(cells[1].root).querySelectorAll('#dtEntry');
+            theMonthInput = Polymer.dom(cells[1].root).querySelectorAll('.datetime-entry-input');
 
         theMonthInput[0].value = "99";
         cells[1]._handleBlur();
@@ -1247,7 +1247,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "M";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1261,7 +1261,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "M";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1275,7 +1275,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "M";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1291,7 +1291,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "MM";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1305,7 +1305,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1319,7 +1319,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1336,7 +1336,7 @@ suite('px-datetime-entry-cell invalid', function () {
   //   dateFixt.momentFormat = "YYYY/MM";
   //   flush(function () {
   //   var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-  //       theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+  //       theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
   //     theInput[0].value = "99";
   //     cells[0]._handleBlur();
@@ -1350,7 +1350,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "YYYY/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1367,7 +1367,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "YY/MM";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1381,7 +1381,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "YY/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1397,7 +1397,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "H";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1411,7 +1411,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "H";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1427,7 +1427,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "HH";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1441,7 +1441,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "HH";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1457,7 +1457,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "h";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1471,7 +1471,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "h";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1485,8 +1485,8 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "h/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1503,7 +1503,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "hh";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1517,7 +1517,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "hh";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1531,8 +1531,8 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "hh/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1549,7 +1549,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "k";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1563,7 +1563,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "k";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1577,8 +1577,8 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "k/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1595,7 +1595,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "kk";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1609,7 +1609,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "kk";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1623,8 +1623,8 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "kk/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1641,7 +1641,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "m";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1655,7 +1655,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "m";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1671,7 +1671,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "mm";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1685,7 +1685,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "mm";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1701,7 +1701,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "s";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1715,7 +1715,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "s";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1731,7 +1731,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "ss";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1745,7 +1745,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "ss";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1761,7 +1761,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "S/MM";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1775,7 +1775,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "S/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1791,7 +1791,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "SS/MM";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "99";
       cells[0]._handleBlur();
@@ -1805,7 +1805,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "SS/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "00";
       cells[0]._handleBlur();
@@ -1821,7 +1821,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "SSS/MM";
     flush(function () {
     var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-        theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+        theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "999";
       cells[0]._handleBlur();
@@ -1835,7 +1835,7 @@ suite('px-datetime-entry-cell invalid', function () {
     dateFixt.momentFormat = "SSS/MM";
     flush(function () {
       var cells = Polymer.dom(dateFixt.root).querySelectorAll('px-datetime-entry-cell'),
-          theInput = Polymer.dom(cells[0].root).querySelectorAll('#dtEntry');
+          theInput = Polymer.dom(cells[0].root).querySelectorAll('.datetime-entry-input');
 
       theInput[0].value = "000";
       cells[0]._handleBlur();
