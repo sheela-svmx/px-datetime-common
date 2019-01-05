@@ -246,7 +246,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       ctx.font = fontSize + " " + fontFamily;
       if(this.$$('.datetime-entry-input').value) {
-        length = ctx.measureText(this.$$('.datetime-entry-input').value.toUpperCase()).width;
+        length = ctx.measureText(this.$$('.datetime-entry-input').value.toUpperCase()).width + 1;
       }
       else {
         length = ctx.measureText(this.$$('.datetime-entry-input').placeholder).width;
@@ -269,7 +269,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     /**
      * Sets up separator keybindings
      */
-     _addSeparatorKeyBinding: function(){
+    _addSeparatorKeyBinding: function(){
       var separator = (this.symbol.trim() === '') ? 'space' : this.symbol.trim();
       this.addOwnKeyBinding(separator,'_moveFocusForward');
     },
@@ -345,7 +345,7 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     _checkValue: function(){
       //if our format requires two digits and we only have one, add a 0 in front
       if(this.$$('.datetime-entry-input').value && this.$$('.datetime-entry-input').value.length === 1 &&
-       /^(?:MM|DD|HH|hh|kk|mm|ss|YY)$/.test(this.momentFormat)){
+        /^(?:MM|DD|HH|hh|kk|mm|ss|YY)$/.test(this.momentFormat)){
         this.$$('.datetime-entry-input').value =  '0' + this.$$('.datetime-entry-input').value;
       }
       //if the format is YYYY or Y and the input is 2 characters then convert the input to a 4 character year representation
@@ -398,10 +398,10 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
     /**
      * Sets the AM/PM value.
      */
-     _setAMPM: function(ampm){
-       var mo = Px.moment.tz('01:00:00 ' + ampm, 'hh:mm:ss ' + this.momentFormat, this.timeZone);
-       this.$$('.datetime-entry-input').value = mo.tz(this.timeZone).format(this.momentFormat);
-     },
+    _setAMPM: function(ampm){
+      var mo = Px.moment.tz('01:00:00 ' + ampm, 'hh:mm:ss ' + this.momentFormat, this.timeZone);
+      this.$$('.datetime-entry-input').value = mo.tz(this.timeZone).format(this.momentFormat);
+    },
      /**
      * Prevent the delete button from navigating back
      */
