@@ -86,6 +86,14 @@ $inuit-enable-btn--bare : true;
   flex: 0 0 auto;
 }
 
+// When not rendered inside of a px-datetime-input, the dt-icon renders at full size.
+:host-context(.px-datetime-common-demo) {
+  .dt-icon {
+    max-width: 32px;
+    max-height: 32px;
+  }
+}
+
 
 // Trumps
 $inuit-enable-margins--tiny     : true;

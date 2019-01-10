@@ -57,36 +57,36 @@ Custom property | Description
 
     <div id="wrapper" class="flex flex--middle">
       <div class="flex flex--middle dt-flex--no-shrink">
-          <button class$="{{_getIconClass(hideIcon)}} btn btn--bare dt-icon-button" on-tap="_iconClicked">
-              <span class="a11y">{{dateOrTime}}</span>
-              <template is="dom-if" if="{{!hideIcon}}">
-                <px-icon
-                  id="icon"
-                  class="dt-icon"
-                  icon="[[_setIcon(dateOrTime)]]">
-                </px-icon>
-              </template>
-          </button>
-          <template is="dom-repeat" items="{{_cellFormatArray}}">
-            <px-datetime-entry-cell
-              id="cell{{index}}"
-              class="cell"
-              order='{{index}}'
-              moment-obj="[[momentObj]]"
-              moment-format='[[item]]'
-              symbol=[[_returnSymbol(index,_symbolCharArray)]]
-              time-zone="[[timeZone]]"
-              is-selected="{{isSelected}}"
-              resources="[[resources]]"
-              language="[[language]]"
-              formats="[[formats]]">
-            </px-datetime-entry-cell>
-            <template is="dom-if" if={{_isSymbol(index,_symbolCharArray)}}>
-              <div class="dt-entry-symbol">
-                {{_returnSymbol(index,_symbolCharArray)}}
-              </div>
+        <button class$="{{_getIconClass(hideIcon)}} btn btn--bare dt-icon-button" on-tap="_iconClicked">
+            <span class="a11y">{{dateOrTime}}</span>
+            <template is="dom-if" if="{{!hideIcon}}">
+              <px-icon
+                id="icon"
+                class="dt-icon"
+                icon="[[_setIcon(dateOrTime)]]">
+              </px-icon>
             </template>
+        </button>
+        <template is="dom-repeat" items="{{_cellFormatArray}}">
+          <px-datetime-entry-cell
+            id="cell{{index}}"
+            class="cell"
+            order='{{index}}'
+            moment-obj="[[momentObj]]"
+            moment-format='[[item]]'
+            symbol=[[_returnSymbol(index,_symbolCharArray)]]
+            time-zone="[[timeZone]]"
+            is-selected="{{isSelected}}"
+            resources="[[resources]]"
+            language="[[language]]"
+            formats="[[formats]]">
+          </px-datetime-entry-cell>
+          <template is="dom-if" if={{_isSymbol(index,_symbolCharArray)}}>
+            <div class="dt-entry-symbol">
+              {{_returnSymbol(index,_symbolCharArray)}}
+            </div>
           </template>
+        </template>
       </div>
       <div class$="{{_getTimeZoneTextClass(showTimeZone, isValid)}}">
         <template is="dom-if" if="{{_showTimeZoneDropdown(showTimeZone)}}">
@@ -188,7 +188,7 @@ Custom property | Description
       /**
        * Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context
        */
-       hoist: {
+      hoist: {
         type: Boolean,
         value: false
       }
@@ -201,6 +201,7 @@ Custom property | Description
       'px-request-datetime-entry-paste': '_handlePaste',
       'px-dropdown-selection-changed': '_updateTimeZone'
     },
+
     /**
      * calls `_formatChanged` if `momentFormat` is defined
      */
@@ -221,22 +222,24 @@ Custom property | Description
     /**
      * Resets the input value for each entry-cell input field to the current momentObj.
      */
-     setValueFromMoment: function() {
+    setValueFromMoment: function() {
       var cells = Polymer.dom(this.root).querySelectorAll('.cell');
       cells.forEach(function(cell) {
         cell.setValueFromMoment();
       });
     },
     /**
-     * runs when `momentFormat` is changed
+     * Runs when `momentFormat` is changed
      * Updates `_cellFormatArray` and `_symbolCharArray` if one of them as changed
+     *
+     * This will also always size the symbols, regardless if the format changes - to ensure that
+     * the symbols are sized properly during all render steps
      */
     _formatChanged: function(newMomentFormat) {
       if(newMomentFormat !== undefined) {
         var format = this._splitFormat(newMomentFormat);
 
         if (format._cellFormatArray !== this._cellFormatArray || format._symbolCharArray !== this._symbolCharArray) {
-
           this._cellFormatArray = format._cellFormatArray;
           this._symbolCharArray = format._symbolCharArray;
 
@@ -263,6 +266,7 @@ Custom property | Description
 
       symbols.forEach(function(symbol, index) {
         length = ctx.measureText(symbol.innerHTML.trim().replace('&nbsp;',' ')).width;
+        length = Math.ceil(length);
         symbol.style['width'] = length + 'px';
       });
     },

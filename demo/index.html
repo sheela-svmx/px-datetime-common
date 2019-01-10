@@ -52,10 +52,9 @@ limitations under the License.
       <px-demo-code-editor slot="px-demo-code-editor" props="{{props}}" config="[[chosenConfig]]"></px-demo-code-editor>
 
       <!-- Component ---------------------------------------------------------->
-      <px-demo-component slot="px-demo-component">
-        <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
+      <px-demo-component slot="px-demo-component" class="px-datetime-common-demo">
+        <p class="u-mb0">Event fired: <strong>px-datetime-submitted</strong></p>
         <p class="zeta u-mt0">See API Reference below for more details</p>
-
         <px-datetime-entry
             block-future-dates="{{props.blockFutureDates.value}}"
             block-past-dates="{{props.blockPastDates.value}}"

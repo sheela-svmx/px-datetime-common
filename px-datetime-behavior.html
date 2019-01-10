@@ -99,13 +99,13 @@ limitations under the License.
     /**
      * Rollback value of temp moment to use public momentObj
      */
-     _rollbackTempMoment: function() {
+    _rollbackTempMoment: function() {
       this.set('_tempMomentObj', this.momentObj);
     },
     /**
      * Make sure the moment obj pick up the possibly new moment locale
      */
-     _localeChangedTemp: function() {
+    _localeChangedTemp: function() {
       if(this.language !== undefined && this._tempMomentObj) {
         this.set('_tempMomentObj', this._tempMomentObj.locale(Px.moment.locale()));
       }
@@ -113,7 +113,7 @@ limitations under the License.
     /**
      * Makes sure the moment object reflects the right timezone.
      */
-     _timeZoneChangedTemp: function() {
+    _timeZoneChangedTemp: function() {
       if(this.timeZone !== undefined && this._tempMomentObj) {
         var newMom = this._tempMomentObj.clone().tz(this.timeZone);
         this.set('_tempMomentObj', newMom);
