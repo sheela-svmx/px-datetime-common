@@ -1,3 +1,14 @@
+v3.3.3
+==================
+* Fixed regression in px-icon sizes.
+
+v3.2.2
+==================
+* Updated both `px-datetime-entry` and `px-dateteime-entry-cell` to use `Math.ceil(length)` due to the inconsistency of rounding widths that include decimals between major browser platforms. ([article](https://cruft.io/posts/percentage-calculations-in-ie/) & [example, view in different browsers](http://jsfiddle.net/q5BQs/1271/))
+* Added `1` to the calculated width of the `px-datetime-entry` since the input number was being cut off in multiple browsers (it was only visible properly in Chrome)
+* Cleaned up multiple eslint / formatting errors throughout the `px-datetime-common` files
+* Added minor contextual css that only applies to rendering of the `px-datetime-entry` component to "fix" the improper rendering of the icon within the `px-datetime-common` demo (icon is rendering full size)
+
 v3.2.1
 ==================
 * Removed id #dtEntry from px-datetime-entry-cell and replaced with class variable .datetime-entry-input.
