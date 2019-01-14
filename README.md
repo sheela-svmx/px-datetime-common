@@ -1,4 +1,4 @@
-# px-datetime-common [![Build Status](https://travis-ci.org/PredixDev/px-datetime-common.svg?branch=master)](https://travis-ci.org/PredixDev/px-datetime-common)
+# px-datetime-common [![Build Status](https://travis-ci.org/predixdesignsystem/px-datetime-common.svg?branch=master)](https://travis-ci.org/predixdesignsystem/px-datetime-common)
 -----------------------------------------------
 
 ## Overview
@@ -6,8 +6,6 @@
 `Px-datetime-common` is a Predix UI component which provides the underlying logic and validation for all of the other Px datetime components. This component is not intended to be used on its own.
 
 ## Getting Started
-
-Read https://github.com/pages/PX/technical-principles/
 
 From the component's directory...
 
@@ -38,4 +36,4 @@ Navigate to the root of that server (e.g. http://localhost:8080/) in a browser t
 ### Known Issues
 
 
-Please use [Github Issues](https://github.com/PredixDev/px-datetime-common/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/predixdesignsystem/px-datetime-common/issues) to submit any bugs you might find.
