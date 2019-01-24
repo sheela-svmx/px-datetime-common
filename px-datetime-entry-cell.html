@@ -246,12 +246,13 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
       }
       ctx.font = fontSize + " " + fontFamily;
       if(this.$$('.datetime-entry-input').value) {
-        length = ctx.measureText(this.$$('.datetime-entry-input').value.toUpperCase()).width + 1;
+        length = ctx.measureText(this.$$('.datetime-entry-input').value.toUpperCase()).width;
       }
       else {
         length = ctx.measureText(this.$$('.datetime-entry-input').placeholder).width;
       }
-      length = Math.ceil(length);
+      // input doesn't have enough spacing on Edge and Firefox for value & placeholder text
+      length = Math.ceil(length) + 2;
       this.$$('.datetime-entry-input').style['width'] = length + 'px';
     },
     /**
