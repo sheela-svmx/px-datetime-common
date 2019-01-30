@@ -2,7 +2,7 @@ v3.2.4
 ==================
 * Fixed DateTime field spacing issue when default value MM/DD/YY on Edge and Firefox.
 
-v3.3.3
+v3.2.3
 ==================
 * Fixed regression in px-icon sizes.
 
