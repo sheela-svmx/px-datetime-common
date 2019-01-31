@@ -249,7 +249,8 @@ Datetime input element. Includes iron-ally-keys-behavior to limit keystrokes to 
         length = ctx.measureText(this.$$('.datetime-entry-input').value.toUpperCase()).width + 1;
       }
       else {
-        length = ctx.measureText(this.$$('.datetime-entry-input').placeholder).width;
+        // the extra width is needed for the placeholder ONLY on Edge and Firefox
+        length = ctx.measureText(this.$$('.datetime-entry-input').placeholder).width + 2;
       }
       length = Math.ceil(length);
       this.$$('.datetime-entry-input').style['width'] = length + 'px';
