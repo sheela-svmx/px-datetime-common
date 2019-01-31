@@ -1016,7 +1016,8 @@ suite('px-datetime-entry-cell empty', function () {
     MockInteractions.pressAndReleaseKeyOn(cells[0], 40, [], 'ArrowDown');
 
     expect(theInput[0].value)
-      .to.eventuallyEqual('59', {within: 1000, every: 100}, done);
+      .to.eventuallyEqual('59', {within: 1000, every: 100});
+      done();
     });
   });
 
