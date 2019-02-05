@@ -1,7 +1,9 @@
 {
   "name": "px-datetime-common",
   "version": "3.2.5",
-  "main": ["px-datetime-common.html"],
+  "main": [
+    "px-datetime-common.html"
+  ],
   "ignore": [
     "*.enc",
     "**/.*",
