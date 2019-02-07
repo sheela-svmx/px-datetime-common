@@ -1,3 +1,7 @@
+v3.2.5
+==================
+* Fixed DateTime icon spacing issue when the rendering direction is "rtl" Right-To-Left.
+
 v3.2.4
 ==================
 * Fixed DateTime field spacing issue when default value MM/DD/YY on Edge and Firefox.
