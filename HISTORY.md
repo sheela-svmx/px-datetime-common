@@ -1,3 +1,7 @@
+v3.2.6
+==================
+* Minor spell Check error.
+
 v3.2.5
 ==================
 * Fixed DateTime icon spacing issue when the rendering direction is "rtl" Right-To-Left.
