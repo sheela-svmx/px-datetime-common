@@ -61,15 +61,8 @@ $inuit-enable-btn--bare : true;
 }
 .dt-icon-button{
   min-width: auto;
-  /*
-    These margins are for pages that are rendered from "Right-To-Left" or "Left-To-Right"
-    If the writing direction is left-to-right, this value overrides margin-left.
-    If the writing direction is right-to-left, this value overrides margin-right.
-  */
-  -webkit-margin-start: .33333rem;
-  -moz-margin-start: .33333rem;
-  -webkit-margin-end: .33333rem;
-  -moz-margin-end: .33333rem;
+  margin-right: .33333rem;
+  margin-left: .33333rem;
 }
 .dt-icon-button:hover,
 .dt-icon-button:focus {

@@ -1,3 +1,7 @@
+v3.2.7
+==================
+* Add margin right and margin left.
+
 v3.2.6
 ==================
 * Minor spell Check error.
